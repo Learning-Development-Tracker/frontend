@@ -1,0 +1,22 @@
+<div class="login-component">
+    <div>
+        <p>Email:</p>
+        <input type="email" (input)="onEmailChange($event)" placeholder="Email...">
+    </div>
+
+    <div>
+        <p>Username:</p>
+        <input type="text" (input)="onUsernameChange($event)" placeholder="Username...">
+    </div>
+   
+    <div>
+        <p>Password:</p>
+        <input type="password" (input)="onPasswordChange($event)" placeholder="Password...">
+    </div>
+
+    <div class="error-message-pane">
+        <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
+    </div>
+    
+    <app-custom-button [label]="'Login'" (buttonClicked)="loginClick()"></app-custom-button>
+</div>

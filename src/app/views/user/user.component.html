@@ -1,1 +1,11 @@
-<p>user works!</p>
+<div class="user-screen">
+    <app-login class="app-login"
+        (loginButtonClicked)="onLoginClick()"
+        (emailChanged)="onEmailChanged($event)" 
+        (usernameChanged)="onUsernameChanged($event)" 
+        (passwordChanged)="onPasswordChanged($event)"
+        [errMessage]="errMessage"
+        >
+    >
+    </app-login>
+</div>

@@ -1,0 +1,36 @@
+.login-component {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    border: 1px solid var(--purple);
+    padding: 2em;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.login-component > * {
+    flex: 1;
+    position: relative;
+}
+
+.login-component input {
+    outline: none;
+    padding: 0.3em;
+    border: 1px solid var(--purple);
+    border-radius: 0.2em;
+}
+
+
+.error-message-pane {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    color: var(--red);
+}
+
+.error-message {
+    white-space: nowrap; /* Prevent text from wrapping */
+}

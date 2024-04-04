@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-button',
@@ -11,13 +11,14 @@ export class CustomBottonComponent implements OnInit{
   @Input() backgroundColor: string = 'var(--purple)';
   @Input() textColor: string = 'var(--white)';
   @Input() label: string = 'Next';
+  @Output() buttonClicked = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit(): void {
     
   }
 
-  clicks() {
-    console.log("button clicked!!")
+  onClick(){
+    this.buttonClicked.emit();
   }
 }

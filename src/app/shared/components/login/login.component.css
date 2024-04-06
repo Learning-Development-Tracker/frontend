@@ -1,14 +1,29 @@
 .login-component {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    border: 1px solid var(--purple);
-    padding: 2em;
-    border-radius: 1em;
-    overflow: hidden;
+    gap: 20px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 920px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.container-left {
+    background-color: #512da8;
+    background: linear-gradient(to right, #5c6bc0, #512da8);
+    color: #fff;
+    border-radius: 20px 0 0 20px;
+}
+
+.container-left img {
+    width: 125%;
+    height: 100%;
+    object-fit: fill;
+    margin-left: -45%;
+}
+
+.container-right {
+    width: 50%;
 }
 
 .login-component > * {

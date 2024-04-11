@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { LoginModel } from '../../models/login.model';
 
 @Component({
   selector: 'app-user',
@@ -54,17 +55,5 @@ export class UserComponent implements OnInit{
         this.errMessage = err.error;
         console.log(err, "<<<<< ERROR")
       });
-  }
-}
-
-export class LoginModel {
-  email: string;
-  username: string;
-  password: string;
-
-  constructor() {
-    this.email = "";
-    this.username = "";
-    this.password = "";
   }
 }

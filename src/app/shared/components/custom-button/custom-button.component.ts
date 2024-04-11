@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class CustomBottonComponent implements OnInit{
   @Input() backgroundColor: string = 'var(--purple)';
   @Input() textColor: string = 'var(--white)';
+  @Input() width: string = 'auto'
   @Input() label: string = 'Next';
   @Output() buttonClicked = new EventEmitter<void>();
   constructor() { }

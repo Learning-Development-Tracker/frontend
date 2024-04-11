@@ -5,6 +5,7 @@
 @import "primeng/resources/primeng.css";
 
 :root {
+   --dark-blue: #512da8;
    --purple: #A020F0;
    --white: #ffffff;
    --black: #000000;

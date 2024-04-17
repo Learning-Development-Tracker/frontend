@@ -1,28 +1,24 @@
 .login-component {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
     background-color: #fff;
-    width: 748px;
-    height: 410px;
-    max-width: 100%;
-    max-width: 800px;
-    max-height: 480px;
+    height: 400px;
+    max-width: 700px;
+    max-height: 450px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
 .container-left {
-    position: absolute;
     background-color: var(--dark-blue);
     background: linear-gradient(to right, #5c6bc0, var(--dark-blue));
     color: #fff;
     border-radius: 10px 0 0 10px;
     top: 0;
     height: 100%;
-    z-index: 1000;
+    width: 50%;
 }
 
 .container-left img {
@@ -32,12 +28,12 @@
 }
 
 .container-right form {
-    position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 0 40px;
     height: 100%;
+    font-size: x-small;
 }
 
 .container-right input {
@@ -49,36 +45,84 @@
     border-radius: 8px;
     width: 90%;
     outline: none;
+    block-size: fit-content;
 }
 
-.container-right h2, label {
+.name-block,
+.password-block,
+.first-input,
+.second-input {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 90%;
+    height: 40px;
+}
+
+.container-right .eyeicon-1,
+.eyeicon-2,
+.eyeicon-3 {
+    position: absolute;
+    top: 35%;
+    right: 15%;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+#check0, #check1, #check2,
+#check3, #check4, #check5 > span {
+    font-size: smaller;
+}
+
+.fa-check {
+    color: green;
+    margin: 0 5px;
+}
+
+.fa-xmark {
+    color: red;
+    margin: 0 5px;
+}
+
+.container-right h2,
+label,
+p.info {
     color: var(--dark-blue);
 }
 
 .container-right p {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 10px;
     letter-spacing: 0.3px;
-    margin: 10px 0 0;
+    margin: 10px 0;
 }
 
 .container-right a {
     color: var(--dark-blue);
-    font-size: 13px;
+    font-size: 10px;
     text-decoration: none;
     margin: 0 0 20px;
 }
 
-.eyeicon {
-    position: absolute;
-    cursor: pointer;
-    right: 5em;
-    bottom: 5em;
+.first-input input {
+    width: 90%;
+    height: 25px;
 }
 
-.login-component > * {
+.modal-container {
+    padding: 1rem;
+}
+
+.modal-container button {
+    border: none;
+    padding: 0.625rem;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    width: 10rem;
+    margin: 0.2rem;
+}
+
+.login-component>* {
     flex: 1;
-    position: relative;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -92,12 +136,21 @@
     border-radius: 0.2em;
 }
 
-
 .error-message {
     display: flex;
     flex-direction: column;
     font-size: 10px;
     color: var(--red);
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
 }
 
+@media screen and (max-width: 450px) {
+    .container-left {
+        display: none;
+    }
+
+    .container-right {
+        width: 100%;
+    }
+}

@@ -8,22 +8,19 @@
 
 :root {
    --dark-blue: #512da8;
-   --purple: #A020F0;
+   --purple: #522A8B;
    --white: #ffffff;
    --black: #000000;
    --red: #FF5733;
+   --container-background: #EBDDFF;
 }
 html {
    scroll-behavior: smooth;
    width: 100vw;
    height: 100vh;
    box-sizing: border-box;
-}
-
-html {
    overflow: hidden;
-   scroll-behavior: smooth;
-   font-family: 'Roboto', sans-serif;
+   font-family: 'Montserrat', sans-serif;
 }
 html, body {
    padding: 0;

@@ -9,12 +9,14 @@ import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard/admin-dashboard.component';
+import { DropdownComponent } from '../../dropdown/dropdown.component';
+import { Options } from '../../dropdown/options';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
-    AdminDashboardComponent
+    AdminDashboardComponent, DropdownComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
@@ -22,7 +24,32 @@ import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard
 export class AdminComponent {
   back: string = 'Back';
   constructor(private router: Router) { }
-
+  public optionsList1: Options[] = [
+    {
+      value:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book. \
+        It has survived not only five centuries, but also the leap into electronic typesetting, \
+        remaining essentially unchanged. It was popularised in the 1960s with the release of \
+        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing \
+        software like Aldus PageMaker including versions of Lorem Ipsum.",
+    },
+    {
+      value:
+        "It is a long established fact that a reader will be distracted by the readable \
+        content of a page when looking at its layout. The point of using Lorem Ipsum is \
+        that it has a more-or-less normal distribution of letters, as opposed to using \
+        'Content here, content here', making it look like readable English. \
+        Many desktop publishing packages and web page editors now use Lorem Ipsum as their \
+        default model text, and a search for 'lorem ipsum' will uncover many web sites \
+        still in their infancy. Various versions have evolved over the years, \
+        sometimes by accident, sometimes on purpose (injected humour and the like).",
+    },
+    { value: 'Hello World' },
+    { value: 'Apple' },
+    { value: 'Orange' },
+  ];
   backHome() {
     this.router.navigate(['/']);
   }

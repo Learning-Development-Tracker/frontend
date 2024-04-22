@@ -1,0 +1,41 @@
+:host ::ng-deep.p-datatable-table tr:nth-child(even) {
+    background-color: #E8D8FF;
+}
+
+.p-header {
+    background-color: #D1C2F2;
+}
+
+:host ::ng-deep.p-tag {
+    background-color: transparent !important;
+    color: black;
+    border-color: #8C55D9 !important;
+    border: 1px;
+    border-style: solid;
+    font-weight: normal;
+}
+
+.action-button {
+    cursor: pointer;
+    background-repeat: no-repeat;
+}
+
+.edit-img {
+    background-image: url("/assets/img/Edit.png");
+    color: #8C55D9;
+    padding-left: 1em;
+    padding-right: 2em;
+}
+
+.del-img {
+    background-image: url("/assets/img/Delete.png");
+    color: #D54147;
+    padding-left: 1em;
+}
+
+.eye-img {
+    background-image: url("/assets/img/View.png");
+    color: #8C55D9;
+    background-color: transparent;
+    padding-right: 2em;
+}

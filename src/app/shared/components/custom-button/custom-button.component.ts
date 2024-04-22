@@ -11,6 +11,7 @@ export class CustomBottonComponent implements OnInit{
   @Input() backgroundColor: string = 'var(--purple)';
   @Input() textColor: string = 'var(--white)';
   @Input() width: string = 'auto'
+  @Input() margin: string = 'auto';
   @Input() label: string = 'Next';
   @Output() buttonClicked = new EventEmitter<void>();
   constructor() { }

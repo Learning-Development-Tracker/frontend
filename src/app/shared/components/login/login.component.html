@@ -1,28 +1,176 @@
 <div class="login-component" id="login">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <div class="container-left">
         <img src="./../../../assets/bg.png">
     </div>
-    <div class="container-right">
-        <form id="mainForm" novalidate>
-            <h2>Sign in</h2>
+    <div class="container-right" [ngSwitch]="forgotPassword">
+        <div *ngSwitchDefault>
+            <form id="mainForm" novalidate>
+                <h2>Sign in</h2>
 
-            <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
-            
-            <label for="username">Username</label>
-            <input type="text" id="username" (input)="onUsernameChange($event)" placeholder="Enter your username"
-                autocomplete="off">
-            <!-- <i class="icon"></i> -->
+                <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
 
-            <label for="password">Password</label>
-            <input [type]="changeType()" id="password" (input)="onPasswordChange($event)" placeholder="Enter your password"
-                autocomplete="off">
-                <span class="eyeicon" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
-            <a href="#">Forgot Password?</a>
-
-            <app-custom-button [label]="'Sign In'" [width]="width" [backgroundColor]="buttonColor" (buttonClicked)="loginClick()"></app-custom-button>
-        </form>
+                <label for="username">Username</label>
+                <div class="name-block">
+                    <input type="text" id="username" (input)="onUsernameChange($event)" placeholder="Enter your username"
+                        autocomplete="off">
+                </div>
+                <label for="password">Password</label>
+                <div class="password-block">
+                    <input [type]="changeType()" id="password" (input)="onPasswordChange($event)"
+                        placeholder="Enter your password" autocomplete="off">
+                    <span class="eyeicon-1" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                </div>
+                <a (click)="openModalTemplate1(vcrPass)">Forgot Password?</a>
+                <app-custom-button [label]="'Sign In'" [width]="buttonWidth" [backgroundColor]="buttonColor"
+                    (buttonClicked)="loginClick()"></app-custom-button>
+            </form>
+        </div>
+        <div *ngSwitchCase="resetPassword">
+            <form id="secondForm" novalidate>
+                <h2>Reset Password Request</h2>
+                <p class="info">Please enter your username or email. <br>
+                    A link will be sent to your email in order for you to reset your password.</p>
+                <div class="name-block">
+                    <input type="email" id="email" (input)="onEmailChange($event)" placeholder="Input Email"
+                        autocomplete="off">
+                </div>
+                <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
+                <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
+                    (buttonClicked)="openModalTemplate2(vcrReset)"></app-custom-button>
+            </form>
+        </div>
+        <div *ngSwitchCase="createPassword">
+            <form id="thirdForm" novalidate>
+                <h2>Create New Password</h2>
+                <label for="enter-password">Enter New Password</label>
+                <div class="first-input">
+                    <input [type]="changeType()" id="enter-password" (input)="onPasswordChange($event)"
+                        placeholder="Input password" autocomplete="off">
+                    <span class="eyeicon-2" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                </div>
+                <label for="confirm-password">Confirm New Password</label>
+                <div class="second-input">
+                    <input [type]="changeTypeConfirm()" id="confirm-password" (input)="onPasswordChange($event)"
+                        placeholder="Input password" autocomplete="off">
+                    <span class="eyeicon-3" (click)="showPWConfirm()"><i
+                            [ngClass]="changeVisibilityConfirm()"></i></span>
+                </div>
+                <div id="check0">
+                    <span><i class="fa-solid fa-check"></i>Password must be at least 8 characters long</span>
+                </div>
+                <div id="check1">
+                    <span><i class="fa-solid fa-check"></i>Password must contain an uppercase letter</span>
+                </div>
+                <div id="check2">
+                    <span><i class="fa-solid fa-check"></i>Password must contain a lowercase letter</span>
+                </div>
+                <div id="check3">
+                    <span><i class="fa-solid fa-check"></i>Password must contain a number</span>
+                </div>
+                <div id="check4">
+                    <span><i class="fa-solid fa-check"></i>Password must contain any of the following symbols
+                        &#40;#$-_!]</span>
+                </div>
+                <div id="check5">
+                    <span><i class="fa-solid fa-xmark"></i>New password and confirm new password must match</span>
+                </div>
+                <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
+                    (buttonClicked)="openModalTemplate3(vcrCreate)"></app-custom-button>
+            </form>
+        </div>
+        <div *ngSwitchCase="updatePassword">
+            <form id="fourthForm" novalidate>
+                <h2>Update Password</h2>
+                <p class="info">
+                    Changing of password is mandatory for first time users.
+                </p>
+                <label for="enter-password">Enter New Password</label>
+                <div class="first-input">
+                    <input [type]="changeType()" id="enter-password" (input)="onPasswordChange($event)"
+                        placeholder="Input password" autocomplete="off">
+                    <span class="eyeicon-2" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                </div>
+                <label for="confirm-password">Confirm New Password</label>
+                <div class="second-input">
+                    <input [type]="changeTypeConfirm()" id="confirm-password" (input)="onPasswordChange($event)"
+                        placeholder="Input password" autocomplete="off">
+                    <span class="eyeicon-3" (click)="showPWConfirm()"><i
+                            [ngClass]="changeVisibilityConfirm()"></i></span>
+                </div>
+                <div id="check0">
+                    <span><i class="fa-solid fa-check"></i>Password must be at least 8 characters long</span>
+                </div>
+                <div id="check1">
+                    <span><i class="fa-solid fa-check"></i>Password must contain an uppercase letter</span>
+                </div>
+                <div id="check2">
+                    <span><i class="fa-solid fa-check"></i>Password must contain a lowercase letter</span>
+                </div>
+                <div id="check3">
+                    <span><i class="fa-solid fa-check"></i>Password must contain a number</span>
+                </div>
+                <div id="check4">
+                    <span><i class="fa-solid fa-check"></i>Password must contain any of the following symbols
+                        &#40;#$-_!]</span>
+                </div>
+                <div id="check5">
+                    <span><i class="fa-solid fa-xmark"></i>New password and confirm new password must match</span>
+                </div>
+                <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
+                    (buttonClicked)="openModalTemplate4(vcrUpdate)"></app-custom-button>
+            </form>
+        </div>
     </div>
-
+    <ng-template #vcrPass>
+        <div class="modal-container">
+            <app-custom-button [label]="'Reset Password'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="resetPass()"></app-custom-button>
+            <app-custom-button [label]="'Create New Password'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="createPass()"></app-custom-button>
+            <app-custom-button [label]="'Update Password'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="updatePass()"></app-custom-button>
+        </div>
+    </ng-template>
+    <ng-template #vcrReset>
+        <div class="modal-container">
+            <div class="title">
+                <h2>Success</h2>
+            </div>
+            <div class="content">
+                <p class="current">
+                    Successfully reset password
+                </p>
+            </div>
+            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+        </div>
+    </ng-template>
+    <ng-template #vcrCreate>
+        <div class="modal-container">
+            <div class="title">
+                <h2>Success</h2>
+            </div>
+            <div class="content">
+                <p class="current">
+                    Successfully created password
+                </p>
+            </div>
+            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+        </div>
+    </ng-template>
+    <ng-template #vcrUpdate>
+        <div class="modal-container">
+            <div class="title">
+                <h2>Success</h2>
+            </div>
+            <div class="content">
+                <p class="current">
+                    Successfully updated password
+                </p>
+            </div>
+            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+        </div>
+    </ng-template>
 </div>

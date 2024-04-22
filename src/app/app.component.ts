@@ -5,10 +5,17 @@ import { ApproverComponent } from './views/approver/approver.component';
 import { UserComponent } from './views/user/user.component';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-root',
-  standalone: true, 
-  imports: [RouterOutlet, AdminComponent, ApproverComponent, UserComponent, UserComponent, HttpClientModule],
+  standalone: true,
+  imports: [
+    RouterOutlet, 
+    AdminComponent, 
+    ApproverComponent, 
+    UserComponent, 
+    HttpClientModule, 
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

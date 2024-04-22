@@ -1,15 +1,11 @@
 <div class="admin">
-    <!-- <app-header class="app-header"></app-header>
-    <app-custom-button 
-        [backgroundColor]="'var(--purple)'">
-    </app-custom-button>
-    <app-custom-button 
-        [backgroundColor]="'var(--white)'" 
-        [textColor]="'var(--purple)'" 
-        [label]="'Back'">
-    </app-custom-button> -->
     <app-header></app-header>
-    <app-custom-button [label]="back" (buttonClicked)="backHome()"></app-custom-button>
-    <app-info-card [certificationInfo]="data"></app-info-card>
+    <ng-container>
+        <div style="padding: 0px;" class="col-md-12 titleScreen">
+            <app-admin-dashboard></app-admin-dashboard>
+        </div>
+    </ng-container>
+    <!-- <app-dropdown [options]="optionsList1"></app-dropdown>
+    <app-custom-button [label]="back" (buttonClicked)="backHome()"></app-custom-button> -->
     <app-footer></app-footer>
 </div>

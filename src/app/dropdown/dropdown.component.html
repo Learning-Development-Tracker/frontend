@@ -18,7 +18,7 @@
     <ul class="list-group" *ngIf="isDropDownOpen">
       <li
         [ngClass]="item.isActive ? 'activeOption' : ''"
-        (click)="selectOption($event, index)"
+        (click)="selectOption($event, index, item)"
         *ngFor="let item of options; let index = index"
         class="item list-group-item"
       >

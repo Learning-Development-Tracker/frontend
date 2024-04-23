@@ -1,11 +1,18 @@
 <div class="admin">
     <app-header></app-header>
-    <ng-container>
+    <!-- <ng-container>
         <div style="padding: 0px;" class="col-md-12 titleScreen">
             <app-admin-dashboard></app-admin-dashboard>
         </div>
-    </ng-container>
-    <!-- <app-dropdown [options]="optionsList1"></app-dropdown>
-    <app-custom-button [label]="back" (buttonClicked)="backHome()"></app-custom-button> -->
-    <app-footer></app-footer>
+    </ng-container> -->
+    <app-dropdown [options]="optionsList1" (optionSelected)="onOptionSelected($event)"></app-dropdown>
+    <app-custom-button [label]="back" (buttonClicked)="backHome()"></app-custom-button>
+    <!-- <app-accordion>
+        <app-custom-button [label]="back" (buttonClicked)="backHome()"></app-custom-button>
+        <h2>Sample</h2>
+    </app-accordion> -->
+    <!-- <search-filter></search-filter> -->
+    <!-- <app-badge></app-badge> -->
+    <!-- <app-calendar></app-calendar>
+    <app-footer></app-footer> -->
 </div>

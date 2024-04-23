@@ -34,7 +34,7 @@ li {
 .input-group {
     position: relative;
     display: flex;
-    align-items: ;
+    /* align-items: ; */
 }
 
 .input-group-prepend {
@@ -60,7 +60,7 @@ li {
 .col-auto {
     box-sizing: border-box;
     width: auto;
-    max-width: 100%;
+    /* max-width: 100%; */
 }
 
 .mb-2 {
@@ -89,6 +89,8 @@ li {
     flex-direction: column;
     margin-bottom: 0;
     border-radius: .25rem;
+    position: fixed; 
+    z-index: 999;
 }
 
 .list-group-item {

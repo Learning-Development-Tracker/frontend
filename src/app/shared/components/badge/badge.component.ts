@@ -7,7 +7,7 @@ import { BadgeModule } from 'primeng/badge';
   standalone: true,
   imports: [FormsModule,BadgeModule],
   templateUrl: './badge.component.html',
-  styleUrl: './badge-button.component.css'
+  // styleUrl: './badge-button.component.css'
 })
 export class BadgeComponent {
  

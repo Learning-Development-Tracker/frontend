@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Options } from './options';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgClass, NgFor, NgIf } from '@angular/common';
@@ -16,6 +16,7 @@ export class DropdownComponent {
   public dropdown: string = '';
 
   @Input('options') options!: Options[];
+  @Output() optionSelected = new EventEmitter<{ value: string, isActive: boolean }>();
 
   ngOnInit() {
     this.options.forEach((opt) => {
@@ -28,7 +29,8 @@ export class DropdownComponent {
     this.isDropDownOpen = !this.isDropDownOpen;
   }
 
-  selectOption(evt: any, optionIndex: number) {
+  selectOption(evt: any, optionIndex: number, item: any) {
+    this.optionSelected.emit(item)
     this.toggleDropdown();
     this.options.forEach((opt: any, index: number) => {
       opt.isActive = optionIndex === index;

@@ -9,6 +9,6 @@ import { AccordionModule } from 'primeng/accordion';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   encapsulation: ViewEncapsulation.None
 })
-export class CustomBottonComponent {
+export class CustomAccordionComponent {
   headerText: string = "Certification"
 }

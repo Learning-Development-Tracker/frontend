@@ -13,13 +13,17 @@ import { InfoCardComponent } from '../../shared/components/info-card/info-card.c
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { CustomAccordionComponent } from '../../shared/components/accordion/accordion.component';
+import { FilterComponent } from '../../shared/components/search-filter/filter.component';
+import { BadgeComponent } from '../../shared/components/badge/badge.component';
+import { CalendarComponent } from '../../shared/components/calendar/calendar.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
     AdminDashboardComponent, DropdownComponent
-  , InfoCardComponent],
+  , InfoCardComponent, CustomAccordionComponent ,FilterComponent, BadgeComponent, CalendarComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -59,5 +63,12 @@ export class AdminComponent {
 
   backHome() {
     this.router.navigate(['/']);
+  }
+
+  selectedOption: { value: string, isActive: boolean } | null = null;
+
+  onOptionSelected(option: { value: string, isActive: boolean }) {
+    this.selectedOption = option;
+    console.log('Selected:', this.selectedOption);
   }
 }

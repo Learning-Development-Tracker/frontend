@@ -5,24 +5,27 @@ import { CustomBottonComponent } from '../../shared/components/custom-button/cus
 
 import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { Options } from '../../dropdown/options';
+import { certificationInfo } from '../../shared/constants/info-card.constant';
+import { DropdownComponent } from '../../dropdown/dropdown.component';
+import { AdminDashboardComponent } from './views/admin-dashboard/admin-dashboard.component';
+import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
-import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard/admin-dashboard.component';
-import { DropdownComponent } from '../../dropdown/dropdown.component';
-import { Options } from '../../dropdown/options';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
     AdminDashboardComponent, DropdownComponent
-  ],
+  , InfoCardComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
   back: string = 'Back';
+  data: any;
   constructor(private router: Router) { }
   public optionsList1: Options[] = [
     {
@@ -50,6 +53,10 @@ export class AdminComponent {
     { value: 'Apple' },
     { value: 'Orange' },
   ];
+  ngOnInit(): void {
+    this.data = certificationInfo;
+  }
+
   backHome() {
     this.router.navigate(['/']);
   }

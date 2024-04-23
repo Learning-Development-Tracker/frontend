@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-button',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './custom-button.component.html',
   styleUrl: './custom-button.component.css'
 })

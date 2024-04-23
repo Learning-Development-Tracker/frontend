@@ -1,5 +1,20 @@
-<p-table [value]="data" [columns]="columns" (sort)="onSort($event)" styleClass="p-datatable-striped"
-    [tableStyle]="{ 'min-width': '50rem' }">
+<p-table #dt1 [value]="data" [columns]="columns" (sort)="onSort($event)" styleClass="p-datatable-striped"
+    [tableStyle]="{ 'min-width': '50rem' }"> 
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <div class="search"> 
+            <i class="pi pi-search"></i>
+            <span class="p-input-icon-left ml-auto">
+                <input pInputText type="text" (input)="onSearchChange($event)" placeholder="Search keyword" />
+            </span>
+            </div>
+            <div *ngIf="showButton" class="actions" > 
+                <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar"></app-custom-button>
+                <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
+                <app-custom-button label="Add" margin="5px" icon="pi pi-plus"></app-custom-button>
+            </div>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
@@ -20,6 +20,13 @@ export class TableComponent implements OnInit {
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() showButton: boolean = false;
+
+  onSearchChange(event: any) {
+    const value = event.target.value.toLowerCase();
+    this.searchChange.emit(value);
+  }
 
 
   onSort(event: SortEvent) {
@@ -45,6 +52,15 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.showButton = this.checkIfButtonShouldBeVisible();
   }
+
+  checkIfButtonShouldBeVisible(): boolean {
+     if(this.showButton){
+      return true
+     }  else {
+      return false
+     }
+    }
 
 }

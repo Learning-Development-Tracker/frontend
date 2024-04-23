@@ -14,6 +14,8 @@ export class CustomBottonComponent implements OnInit{
   @Input() width: string = 'auto'
   @Input() margin: string = 'auto';
   @Input() label: string = 'Next';
+  
+  @Input() icon: string = 'pi pi-angle-double-right';
   @Output() buttonClicked = new EventEmitter<void>();
   constructor() { }
 

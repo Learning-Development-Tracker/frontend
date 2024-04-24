@@ -1,10 +1,10 @@
-<div class="sidebar" [ngClass]="collapsed ? 'sidebar-collapsed': ''" >
+<div class="sidebar" >
     <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">LD</button>
-        <div class="logo-text" *ngIf="collapsed">Tracker</div>
-        <button class="btn-close" *ngIf="collapsed" (click)="closeSidebar()">
+        <button class="logo">LD</button>
+        <div class="logo-text" >Tracker</div>
+        <!-- <button class="btn-close" *ngIf="collapsed" (click)="closeSidebar()">
             <i class="pi pi-times"></i>
-        </button>
+        </button> -->
     </div>
     <div class="scrollwrap scrollwrap_delayed">
         <ul class="sidebar-nav">
@@ -13,8 +13,8 @@
                    *ngIf="data.items && data.items.length > 0"
                 >
                     <i class="sidebar-link-icon" [class]="data.icon"></i>
-                    <span class="sidebar-link-text" *ngIf="collapsed">{{data.label}}</span>
-                    <i *ngIf="data.items && collapsed" class="menu-collapse-icon"
+                    <span class="sidebar-link-text">{{data.label}}</span>
+                    <i class="menu-collapse-icon"
                         [ngClass]="!data.expanded ? 'pi pi-caret-right' : 'pi pi-caret-down'"
                     ></i>
                 </a>
@@ -26,7 +26,7 @@
                     [routerLinkActiveOptions]="{exact: true}"
                 >
                 <i class="sidebar-link-icon" [class]="data.icon"></i>
-                <span class="sidebar-link-text" *ngIf="collapsed">{{data.label}}</span>
+                <span class="sidebar-link-text" >{{data.label}}</span>
                 </a>
                 <div *ngIf="collapsed && data.items && data.items.length > 0">
                     <app-sublevel-menu

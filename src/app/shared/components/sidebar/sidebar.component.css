@@ -1,10 +1,9 @@
 .sidebar {
     background-color: var(--white);
     transition: all .5s ease;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
-    width: 5rem;
     height: 100vh;
     box-shadow: 0.063rem 0 1.25rem 0 #c4bfbf;
 }
@@ -48,10 +47,6 @@
             font-size: 24px;
         }
     }
-}
-
-.sidebar-collapsed{
-    width: 16.5625rem;
 }
 
 .sidebar-nav{

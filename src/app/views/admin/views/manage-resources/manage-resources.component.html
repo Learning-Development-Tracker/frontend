@@ -1,3 +1,25 @@
 <div class="main-manage-resources">
-    <p>Manage Resources</p>
+    <div class="tabs">
+        <a (click)="onChangeTab('Certificate')">Certification</a>
+        <a (click)="onChangeTab('Training')">Training</a>
+        <a (click)="onChangeTab('Reports')">Reports</a>
+    </div>
+    
+    <ng-container *ngIf="activeTab === 'Certification'">
+        <div class="tabs-details">
+            Certifications Details
+        </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab === 'Reports'">
+        <div class="tabs-details">
+            Reports Details
+        </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab === 'Training'">
+        <div class="tabs-details">
+            Training Details
+        </div>
+    </ng-container>
 </div>
+
+

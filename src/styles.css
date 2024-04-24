@@ -16,6 +16,10 @@
    --black: #000000;
    --red: #FF5733;
    --container-background: #EBDDFF;
+   --light-green: #D5FFCD;
+   --light-purple: #EBDDFF;
+   --light-red: #FFCECE;
+   --green: #85DD74;
 }
 html {
    scroll-behavior: smooth;

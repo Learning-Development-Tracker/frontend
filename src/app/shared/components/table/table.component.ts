@@ -21,7 +21,7 @@ export class TableComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
-  @Input() showButton: boolean = false;
+  @Input() showButtonManageTrainings: boolean = false;
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
@@ -52,11 +52,11 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.showButton = this.checkIfButtonShouldBeVisible();
+    this.showButtonManageTrainings = this.checkIfButtonShouldBeVisible();
   }
 
   checkIfButtonShouldBeVisible(): boolean {
-     if(this.showButton){
+     if(this.showButtonManageTrainings){
       return true
      }  else {
       return false

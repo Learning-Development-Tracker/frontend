@@ -6,6 +6,10 @@
     background-color: #D1C2F2;
 }
 
+.pi-search{
+    margin-right: 10px;
+}
+
 :host ::ng-deep.p-tag {
     background-color: transparent !important;
     color: black;
@@ -38,4 +42,15 @@
     color: #8C55D9;
     background-color: transparent;
     padding-right: 2em;
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Align items to the start of the container (left-aligned) */
+}
+
+.actions {
+    margin-left: auto; /* Pushes the button container to the right */
+    align-self: flex-end; /* Aligns the button container to the end of the flex container */
 }

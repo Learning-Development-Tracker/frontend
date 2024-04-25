@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+
+}
+
+.container {
+    /* max-width: 600px; */
+    width: 100%;
+    background-color: #FFF;
+    padding: 30px 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.container nav {
+    position: relative;
+    height: 50px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container nav::after {
+    content: "";
+    background: silver;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 47px;
+    filter: blur(0.5px);
+}
+
+.container nav label {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#blog:checked~nav label .home,
+#blog:checked~nav label .blog,
+#blog:checked~nav label .code,
+#blog:checked~nav label .help,
+#blog:checked~nav label .about {
+    color: #6F55Ca;
+}
+
+input[type='radio'] {
+    display: none;
+}
+
+.container nav .slider {
+    position: absolute;
+    height: 4.5px;
+    background-color: #6F55CA;
+    border-radius: 20px;
+    width: 25%;
+    z-index: 1;
+    left: 0;
+    bottom: 0;
+    transition: all 0.3s ease;
+    filter: blur(0.4px);
+}
+
+#info:checked~nav .slider {
+    left: 0%;
+}
+
+#skill:checked~nav .slider {
+    left: 25%;
+}
+
+#train:checked~nav .slider {
+    left: 50%;
+}
+
+#cert:checked~nav .slider {
+    left: 75%;
+}
+
+#info:checked~nav .info {
+    color: #6F55CA;
+}
+
+#skill:checked~nav .skill {
+    color: #6F55CA;
+}
+
+#train:checked~nav .train {
+    color: #6F55CA;
+}
+
+#cert:checked~nav .cert {
+    color: #6F55CA;
+}
+
+
+section {
+    filter: blur(0.3px);
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section .content {
+    display: none;
+    margin-bottom: 20px;
+}
+
+section .content .title {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 30px 0 10px 0;
+}
+
+#info:checked~section .content-1 {
+    display: block;
+}
+
+#skill:checked~section .content-2 {
+    display: block;
+}
+
+#train:checked~section .content-3 {
+    display: block;
+}
+
+#cert:checked~section .content-4 {
+    display: grid;
+}
+
+.content-4 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.title {
+    grid-row: 1 / 3;
+    grid-column: 1 / 2;
+}
+
+.content-4 p {
+    grid-row: 3 / 3;
+    grid-column: 1 / 2;
+}
+
+app-certification {
+    grid-row: span 3;
+    grid-column: 2 / 2;
+    background: dodgerblue;
+}

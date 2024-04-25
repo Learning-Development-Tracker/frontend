@@ -13,11 +13,12 @@ import { InfoCardComponent } from '../../shared/components/info-card/info-card.c
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { ManageResourcesComponent } from './views/manage-resources/manage-resources.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
+  imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
     AdminDashboardComponent, DropdownComponent
   , InfoCardComponent],
   templateUrl: './admin.component.html',

@@ -1,0 +1,26 @@
+<ng-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <label class="subHeader" *ngIf="!isResource">
+                    Manage Resources
+                </label>
+                <label class="subHeader" *ngIf="isResource">
+                    Resource Details
+                </label>
+            </div>
+            <div class="col-md-12">
+                <div class="contentScreen">
+                    <p-card class="contentCard">
+                        <div class="row" *ngIf="!isResource">
+                            <app-custom-button [label]="'Resource Details'" (buttonClicked)="resourceDtl()"></app-custom-button>
+                        </div>
+                        <div class="row" *ngIf="isResource">
+                            <app-resource-details></app-resource-details>
+                        </div>
+                    </p-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,6 +1,13 @@
+.search-box-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 20px;
+  top: -1px;
+}
+
 .search-container {
   width: 400px;
-  margin: auto;
   position: relative;
 }
 
@@ -11,10 +18,11 @@
 }
 
 .search-field {
-  width: calc(100% - 40px);
+  width: 400px;
   padding: 10px;
   margin: 10px 0 0 0;
   display: inline-block;
+  position: relative;
   font-size: 18px;
   border: 1px solid #ccc;
   border-radius: 7px;
@@ -25,9 +33,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  position: relative;
-  right: 0;
-  top: 0;
+  position: absolute;
+  bottom:-1px;
+  right: 7px;
+  top: 10;
   height: 100%;
 }
 
@@ -51,7 +60,7 @@ li {
   border-radius: 10px;
   border: 1px solid black;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 
 li:hover {
@@ -63,6 +72,7 @@ li:hover {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .remove-button:focus {
@@ -92,4 +102,11 @@ li:hover {
 
 .done-button:hover {
   opacity: 0.5;
+}
+
+.filter-div {
+height: 105%;
+width: 110%;
+right: 10px;
+align-items: left !important;
 }

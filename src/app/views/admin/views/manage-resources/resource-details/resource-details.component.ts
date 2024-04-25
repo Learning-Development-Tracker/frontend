@@ -14,7 +14,9 @@ import { ViewPersonalInfoComponent } from './../resource-details/view-personal-i
   standalone: true,
   imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent],
   templateUrl: './resource-details.component.html',
-  styleUrl: './resource-details.component.css'
+  styleUrl: './resource-details.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  encapsulation: ViewEncapsulation.None
 })
 export class ResourceDetailsComponent implements OnInit{
 

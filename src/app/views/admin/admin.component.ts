@@ -5,10 +5,13 @@ import { CustomBottonComponent } from '../../shared/components/custom-button/cus
 
 import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
-import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+import { certificationInfo } from '../../shared/constants/info-card.constant';
+import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+import { ManageResourcesComponent } from './views/manage-resources/manage-resources.component';
 import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard/admin-dashboard.component';
 import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
 import { Options } from '../../shared/components/dropdown/options';
@@ -19,8 +22,9 @@ import { CertificationComponent } from '../certification/certification.component
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
-    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent, TempTabSliderComponent, CertificationComponent],
+  imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
+    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent, TempTabSliderComponent, CertificationComponent
+  , InfoCardComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -54,9 +58,8 @@ export class AdminComponent {
     { value: 'Apple' },
     { value: 'Orange' },
   ];
-
-  onSelectOption(value: string) {
-    console.log(value);
+  ngOnInit(): void {
+    this.data = certificationInfo;
   }
 
   backHome() {

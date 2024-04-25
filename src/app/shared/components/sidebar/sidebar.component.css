@@ -1,10 +1,9 @@
 .sidebar {
     background-color: var(--white);
     transition: all .5s ease;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
-    width: 5rem;
     height: 100vh;
     box-shadow: 0.063rem 0 1.25rem 0 #c4bfbf;
 }
@@ -15,7 +14,7 @@
     padding: 0.938rem 0.938rem 0 0.938rem;
 
     .logo {
-        background-color: var(--black);
+        background-color: var(--purple);
         text-align: center;
         width: 3rem;
         min-width: 3rem;
@@ -32,7 +31,7 @@
         margin-left: 0.5rem;
         font-size: 24px;
         font-weight: 700;
-        color: var(--black);
+        color: var(--purple);
     }
 
     .btn-close {
@@ -50,10 +49,6 @@
     }
 }
 
-.sidebar-collapsed{
-    width: 16.5625rem;
-}
-
 .sidebar-nav{
     list-style: none;
     padding: 0.938rem;
@@ -62,6 +57,7 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    
 
 
     .sidebar-nav-item {
@@ -72,7 +68,7 @@
             display: flex;
             align-items: center;
             height: 3rem;
-            color: var(--black);
+            color: var(--purple);
             text-decoration: none;
             transition: all .3s ease;
             border-radius: 0.583rem;
@@ -97,6 +93,10 @@
         .sidebar-nav-link{
             background-color: var(--purple);
             color: var(--white);
+            
+            .menu-collapse-icon{
+              color: var(--white);
+            }
         }
     }
 
@@ -128,7 +128,7 @@
     min-width: 2rem;
     margin: auto 0.5rem auto auto;
     text-align: center;
-    color: var(--black);
+    color: var(--purple);
 }
 
 .sublevel-nav {
@@ -163,6 +163,7 @@
         .sublevel-nav-link:hover {
             background-color: var(--purple);
             color: var(--white);
+
         }
     }
 }
@@ -172,7 +173,7 @@
 .scrollwrap{
     overflow-y: auto;
     visibility: hidden;
-    height: calc(100% -3.65rem);
+    height: calc(100% -3.65rem );
 }
 
 .sidebar-nav,

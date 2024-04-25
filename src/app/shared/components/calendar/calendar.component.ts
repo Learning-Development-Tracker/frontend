@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, Output, EventEmitter  } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 
@@ -11,5 +11,12 @@ import { FormsModule } from '@angular/forms';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CalendarComponent {
-  date: Date = new Date();
+  @Output() dateSelected = new EventEmitter<Date>();
+
+  onDateSelect(date: Date) {
+    this.dateSelected.emit(date);
+  }
+
+  @Input() selectedDate!: Date;
+  
 }

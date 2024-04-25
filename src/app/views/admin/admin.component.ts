@@ -5,21 +5,25 @@ import { CustomBottonComponent } from '../../shared/components/custom-button/cus
 
 import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
-import { Options } from '../../dropdown/options';
 import { certificationInfo } from '../../shared/constants/info-card.constant';
-import { DropdownComponent } from '../../dropdown/dropdown.component';
-import { AdminDashboardComponent } from './views/admin-dashboard/admin-dashboard.component';
 import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { ManageResourcesComponent } from './views/manage-resources/manage-resources.component';
+import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard/admin-dashboard.component';
+import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
+import { Options } from '../../shared/components/dropdown/options';
+import { BodyComponent } from './views/body/body.component';
+import { TempTabSliderComponent } from '../../shared/components/temp-tab-slider/temp-tab-slider.component';
+import { CertificationComponent } from '../certification/certification.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
-    AdminDashboardComponent, DropdownComponent
+    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent, TempTabSliderComponent, CertificationComponent
   , InfoCardComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'

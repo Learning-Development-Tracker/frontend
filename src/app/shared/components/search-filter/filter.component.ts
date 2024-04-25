@@ -11,7 +11,15 @@ import { FormsModule} from '@angular/forms';
 })
 export class FilterComponent implements OnInit{
   searchQuery: string = '';
-  items: string[] = ['Another Item 1', 'Another Item 2', 'Different Item 1', 'Different Item 2'];
+  items: string[] = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Another Item 1',
+    'Another Item 2',
+    'Different Item 1',
+    'Different Item 2'
+  ];
   searchResults: string[] = [];
   selectedItems: string[] = [];
   showBoxContainer: boolean = false;
@@ -19,25 +27,32 @@ export class FilterComponent implements OnInit{
   constructor() { }
 
   ngOnInit(): void {
-    this.filterItems();
+    this.filterItems('');
   }
 
-  filterItems(): void {
-    this.searchResults = this.items.filter(item =>
-      !this.selectedItems.includes(item) && item.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+  filterItems(event: any): void {
+    this.searchQuery = event.target.value;
+    if (this.searchQuery.trim() !== '') {
+      this.searchResults = this.items.filter(item =>
+        !this.selectedItems.includes(item) &&
+        item.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      this.searchResults = [];
+    }
   }
 
   addToBox(item: string): void {
     this.selectedItems.push(item);
     this.removeItemFromSearchResults(item);
-    this.filterItems(); // Update search results
   }
 
   removeFromBox(item: string): void {
-    this.selectedItems = this.selectedItems.filter(selectedItem => selectedItem !== item);
-    this.items.push(item);
-    this.filterItems(); // Update search results
+    const index = this.selectedItems.findIndex(i => i === item);
+    if (index !== -1) {
+      this.selectedItems.splice(index, 1);
+      this.filterItems({ target: { value: this.searchQuery } }); // Update search results
+    }
   }
 
   private removeItemFromSearchResults(item: string): void {
@@ -49,7 +64,11 @@ export class FilterComponent implements OnInit{
   }
 
   onDone(): void {
-    this.toggleBoxContainer();
-    console.log('Selected Items:', this.selectedItems);
+    this.searchQuery = this.selectedItems.join(', ');
+    this.showBoxContainer = false;
+  }
+
+  get displayedSearchQuery(): string {
+    return this.searchQuery;
   }
 }

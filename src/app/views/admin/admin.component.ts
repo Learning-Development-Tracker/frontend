@@ -13,12 +13,14 @@ import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard
 import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
 import { Options } from '../../shared/components/dropdown/options';
 import { BodyComponent } from './views/body/body.component';
+import { TempTabSliderComponent } from '../../shared/components/temp-tab-slider/temp-tab-slider.component';
+import { CertificationComponent } from '../certification/certification.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule,
-    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent],
+    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent, TempTabSliderComponent, CertificationComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })

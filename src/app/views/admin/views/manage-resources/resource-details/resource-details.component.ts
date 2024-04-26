@@ -23,6 +23,5 @@ export class ResourceDetailsComponent implements OnInit{
   items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
   ngOnInit(): void {
-   
   }
 }

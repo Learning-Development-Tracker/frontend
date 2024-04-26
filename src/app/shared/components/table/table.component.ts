@@ -16,7 +16,7 @@ export class TableComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
-  @Output() sortChange: EventEmitter<SortEvent> = new EventEmitter<SortEvent>();
+  @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
@@ -29,7 +29,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  onSort(event: SortEvent) {
+  onSort(event: any) {
     this.sortChange.emit(event);
   }
 

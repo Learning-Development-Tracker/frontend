@@ -5,13 +5,13 @@ import * as PDFObject from 'pdfobject';
 import { DataService } from './data.service';
 
 @Component({
-  selector: 'app-certification',
+  selector: 'app-view-certification',
   standalone: true,
   imports: [],
-  templateUrl: './certification.component.html',
-  styleUrl: './certification.component.css'
+  templateUrl: './view-certification.component.html',
+  styleUrl: './view-certification.component.css'
 })
-export class CertificationComponent implements AfterContentInit {
+export class ViewCertificationComponent implements AfterContentInit {
   dataService = inject(DataService);
   trustedUrl: any = '';
   

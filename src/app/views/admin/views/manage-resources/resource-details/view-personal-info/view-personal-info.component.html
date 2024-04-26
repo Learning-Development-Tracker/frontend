@@ -1,1 +1,60 @@
-<p>view-personal-info works!</p>
+<div>
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <label>Last Name:</label>
+                <p>{{ employee.lastName }}</p>
+            </div>
+            <div class="container">
+                <label>First Name:</label>
+                <p>{{ employee.firstName }}</p>
+            </div>
+            <div class="container">
+                <label>Middle Name:</label>
+                <p>{{ employee.middleName }}</p>
+            </div>
+            <div class="container">
+                <label>Suffix:</label>
+                <p>{{ employee.suffix }}</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container">
+                <label>Gender:</label>
+                <p>{{ employee.gender }}</p>
+            </div>
+            <div class="container">
+                <label>Email Address:</label>
+                <p>{{ employee.emailAddress }}</p>
+            </div>
+            <div class="container">
+                <label>Career Step:</label>
+                <p>{{ employee.careerStep }}</p>
+            </div>
+            <div class="container">
+                <label>Employee ID:</label>
+                <p>{{ employee.idetifier }}</p>
+            </div>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <label>Region:</label>
+                <p>{{ employee.region }}</p>
+            </div>
+            <div class="container">
+                <label>Role/s:</label>
+                <p>{{ employee.roles }}</p>
+            </div>
+            <div class="container">
+                <label>Team/s:</label>
+                <p>{{ employee.teams }}</p>
+            </div>
+            <div class="container">
+                <label>Employment Status:</label>
+                <p [ngStyle]="{ color: employee.employmentStatus === 'Active' ? 'green' : 'red' }">{{ employee.employmentStatus }}</p>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>

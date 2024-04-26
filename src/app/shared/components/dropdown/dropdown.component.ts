@@ -33,6 +33,6 @@ export class DropdownComponent {
       opt.isActive = optionIndex === index;
     });
     this.dropdown = evt.target.innerHTML;
-    this.selectedOption.emit(this.dropdown);
+    this.selectedOption.emit(this.dropdown.trim());
   }
 }

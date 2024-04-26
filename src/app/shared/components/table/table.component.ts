@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
   globalFilter: string = '';
   filters: { [key: string]: any } = {};
   filterMode: string = 'global';
-  @Output() sortChange: EventEmitter<SortEvent> = new EventEmitter<SortEvent>();
+  @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
@@ -33,7 +33,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  onSort(event: SortEvent) {
+  onSort(event: any) {
     this.sortChange.emit(event);
   }
 

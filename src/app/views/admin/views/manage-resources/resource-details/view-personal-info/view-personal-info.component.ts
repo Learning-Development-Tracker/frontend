@@ -23,4 +23,4 @@ export class ViewPersonalInfoComponent {
     teams: 'N/A',
     employmentStatus: 'Active'
   };
-}
+

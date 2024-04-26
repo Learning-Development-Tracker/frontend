@@ -28,7 +28,7 @@
                 <i class="sidebar-link-icon" [class]="data.icon"></i>
                 <span class="sidebar-link-text" >{{data.label}}</span>
                 </a>
-                <div *ngIf="collapsed && data.items && data.items.length > 0">
+                <div *ngIf="data.items && data.items.length > 0">
                     <app-sublevel-menu
                         [data]="data"
                         [collapsed]="collapsed"

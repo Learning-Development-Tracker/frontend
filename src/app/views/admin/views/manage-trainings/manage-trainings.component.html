@@ -1,13 +1,15 @@
 <div class="manage-trainings">
     <h1>Manage Training List</h1>
-    <app-table 
-        [data]="filteredData" 
+    <div class="table">
+        <app-table 
+        [data]="trainingList" 
         [columns]="tableColumn" 
         (sortChange)="onSort($event)" 
         (view)="onView($event)" 
         (edit)="onEdit($event)" 
         (delete)="onDelete($event)"
-        (searchChange)="onSearchChange($event)"
         [showButtonManageTrainings]="true"
     ></app-table>
+    </div>
+    
 </div>

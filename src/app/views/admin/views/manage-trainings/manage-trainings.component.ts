@@ -54,6 +54,10 @@ export class ManageTrainingsComponent implements OnInit {
     console.log('Sorting event: ', event);
   }
 
+  onSort2(event: any){
+    console.log('Sorting event2: ', event);
+  }
+
   onView(item: any){
     console.log('View Item: ', item)
   }

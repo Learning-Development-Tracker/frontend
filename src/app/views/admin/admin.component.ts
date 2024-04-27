@@ -13,18 +13,13 @@ import { ChartModule } from 'primeng/chart';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { ManageResourcesComponent } from './views/manage-resources/manage-resources.component';
 import { AdminDashboardComponent } from '../../views/admin/views/admin-dashboard/admin-dashboard.component';
-import { DropdownComponent } from '../../shared/components/dropdown/dropdown.component';
-import { Options } from '../../shared/components/dropdown/options';
 import { BodyComponent } from './views/body/body.component';
-import { TempTabSliderComponent } from '../../shared/components/temp-tab-slider/temp-tab-slider.component';
-import { CertificationComponent } from '../certification/certification.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
-    AdminDashboardComponent, DropdownComponent, SidebarComponent, BodyComponent, TempTabSliderComponent, CertificationComponent
-  , InfoCardComponent],
+    AdminDashboardComponent, SidebarComponent, BodyComponent, InfoCardComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -32,32 +27,7 @@ export class AdminComponent {
   back: string = 'Back';
   data: any;
   constructor(private router: Router) { }
-  public optionsList1: Options[] = [
-    {
-      value:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \
-        when an unknown printer took a galley of type and scrambled it to make a type specimen book. \
-        It has survived not only five centuries, but also the leap into electronic typesetting, \
-        remaining essentially unchanged. It was popularised in the 1960s with the release of \
-        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing \
-        software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-      value:
-        "It is a long established fact that a reader will be distracted by the readable \
-        content of a page when looking at its layout. The point of using Lorem Ipsum is \
-        that it has a more-or-less normal distribution of letters, as opposed to using \
-        'Content here, content here', making it look like readable English. \
-        Many desktop publishing packages and web page editors now use Lorem Ipsum as their \
-        default model text, and a search for 'lorem ipsum' will uncover many web sites \
-        still in their infancy. Various versions have evolved over the years, \
-        sometimes by accident, sometimes on purpose (injected humour and the like).",
-    },
-    { value: 'Hello World' },
-    { value: 'Apple' },
-    { value: 'Orange' },
-  ];
+  
   ngOnInit(): void {
     this.data = certificationInfo;
   }

@@ -1,6 +1,6 @@
-export interface ModalOptions {
+export interface PopupOptions {
     animations?: {
-        modal?: {
+        popup?: {
           enter?: string;
           leave?: string;
         };

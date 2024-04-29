@@ -1,3 +1,5 @@
+import { SelectItem } from "primeng/api";
+
 export interface AddUserInterface  {
     label: string;
     placeholder: string;
@@ -33,3 +35,8 @@ export interface Certification {
     date_certified?: Date;
 }
 export type ValidKeysCertification = keyof Certification;
+export interface MultiSelectItemGroup {
+    label: string;
+    value?: any;
+    items?: SelectItem[];
+}

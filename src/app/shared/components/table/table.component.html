@@ -1,11 +1,15 @@
-<p-table #dt1 [value]="data" [columns]="columns" (sort)="onSort($event)" styleClass="p-datatable-striped"
+<p-table #dt1 
+    [value]="data" 
+    [columns]="columns"
+    styleClass="p-datatable-striped"
+    (sort)="onSort($event)" 
     [tableStyle]="{ 'min-width': '50rem' }"> 
     <ng-template pTemplate="caption">
         <div class="flex">
             <div class="search"> 
             <i class="pi pi-search"></i>
             <span class="p-input-icon-left ml-auto">
-                <input pInputText type="text" (input)="onSearchChange($event)" placeholder="Search keyword" />
+                <input pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
             </span>
             </div>
             <div *ngIf="showButtonManageTrainings" class="actions" > 
@@ -18,11 +22,13 @@
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">
-                {{col.header}}<p-sortIcon></p-sortIcon></th>
+                {{col.header}}
+                <p-sortIcon></p-sortIcon>
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
+        <tr *ngIf="matchesGlobalFilter(rowData)">
             <ng-container *ngFor="let col of columns">
                 <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'actions'; else tags">
                     {{ rowData[col.field] }}

@@ -10,7 +10,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <ul *ngIf="collapsed && data.items && data.items.length > 0"
+    <ul *ngIf="data.items && data.items.length > 0"
     [@submenu] = "expanded 
       ? {value: 'visible', params: {transitionParams: '400ms cubic-bezier(0.86, 0, 0.07, 1)', height: '*'}}
       : {value: 'hidden',
@@ -24,8 +24,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
           *ngIf="item.items && item.items.length > 0"
         >
           <i class="sublevel-link-icon pi pi-circle"></i>  
-          <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
-          <i class="menu-collapse-icon" *ngIf="item.items && collapsed"
+          <span class="sublevel-link-text" >{{item.label}}</span>
+          <i class="menu-collapse-icon" *ngIf="item.items"
             [ngClass]="!item.expanded ? 'pi pi-caret-right' : 'pi pi-caret-down'"
           ></i>
         </a>
@@ -36,7 +36,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
           [routerLinkActiveOptions]="{exact: true}"
         >
           <i class="sublevel-link-icon pi pi-circle"></i>  
-          <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
+          <span class="sublevel-link-text" >{{item.label}}</span>
         </a>
         <div *ngIf="item.items && item.items.length > 0">
           <app-sublevel-menu

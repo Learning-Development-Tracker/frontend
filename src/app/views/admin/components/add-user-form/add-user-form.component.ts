@@ -185,7 +185,24 @@ export class AddUserFormComponent {
   saveResource() {
     const formValue: any = this.form.value; // Get the form's current value
     this.resourceInfos.certifications = formValue.items;
-    console.log(this.resourceInfos, "Added <<<<<")
+    
+    const formData = new FormData();
+
+    this.items.controls.forEach((item, index) => {
+      const itemGroup = item as FormGroup;
+      const file = itemGroup.get('fileupload')?.value;
+
+      console.log(file, "file")
+
+      if (file) {
+        formData.append(`file_${index}`, file);
+      }
+
+      formData.append(`name_${index}`, itemGroup.get('name')?.value);
+      formData.append(`calendar_${index}`, itemGroup.get('calendar')?.value);
+    })
+
     console.log(this.form.value, "this.form.value <<<<<")
+  
   }
 }

@@ -1,7 +1,7 @@
 export class trainingsModel {
     constructor( 
         processId: number,
-        trainingId: number,
+        id: number,
         duration: number,
         startDt: Date,
         fee: number,

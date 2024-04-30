@@ -1,67 +1,67 @@
 import { Component, ElementRef, ViewChild, HostListener, AfterViewInit } from '@angular/core';
-import { ModalService } from './modal.service';
-import { ModalOptions } from './modal-options';
+import { PopupService } from './popupl.service';
+import { PopupOptions } from './popup-options';
 import { Observable, fromEvent, zip } from 'rxjs';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-popup',
   standalone: true,
   imports: [],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css'
+  templateUrl: './popup.component.html',
+  styleUrl: './popup.component.css'
 })  
-export class ModalComponent implements AfterViewInit {
-  @ViewChild('modal') modal!: ElementRef<HTMLDivElement>;
+export class PopupComponent implements AfterViewInit {
+  @ViewChild('popup') popup!: ElementRef<HTMLDivElement>;
   @ViewChild('overlay') overlay!: ElementRef<HTMLDivElement>;
-  options!: ModalOptions | undefined;
-  modalAnimationEnd!: Observable<Event>;
-  modalLeaveAnimation!: string;
+  options!: PopupOptions | undefined;
+  popupAnimationEnd!: Observable<Event>;
+  popupLeaveAnimation!: string;
   overlayLeaveAnimation!: string;
   overlayAnimationEnd!: Observable<Event>;
-  modalLeaveTiming!: number;
+  popupLeaveTiming!: number;
   overlayLeaveTiming!: number;
 
   constructor(
-    private modalService: ModalService,
+    private popupService: PopupService,
     private element: ElementRef
   ) {}
 
   ngAfterViewInit(): void {
-    this.options = this.modalService.options;
+    this.options = this.popupService.options;
     this.addOptions();
     this.addEnterAnimations();
   }
 
   addEnterAnimations() {
-    this.modal.nativeElement.style.animation =
-      this.options?.animations?.modal?.enter || '';
+    this.popup.nativeElement.style.animation =
+      this.options?.animations?.popup?.enter || '';
     this.overlay.nativeElement.style.animation =
       this.options?.animations?.overlay?.enter || '';
   }
 
   addOptions() {
     // Style overload
-    this.modal.nativeElement.style.minWidth =
+    this.popup.nativeElement.style.minWidth =
       this.options?.size?.minWidth || 'auto';
-    this.modal.nativeElement.style.width = this.options?.size?.width || 'auto';
-    this.modal.nativeElement.style.maxWidth =
+    this.popup.nativeElement.style.width = this.options?.size?.width || 'auto';
+    this.popup.nativeElement.style.maxWidth =
       this.options?.size?.maxWidth || 'auto';
-    this.modal.nativeElement.style.minHeight =
+    this.popup.nativeElement.style.minHeight =
       this.options?.size?.minHeight || 'auto';
-    this.modal.nativeElement.style.height =
+    this.popup.nativeElement.style.height =
       this.options?.size?.height || 'auto';
-    this.modal.nativeElement.style.maxHeight =
+    this.popup.nativeElement.style.maxHeight =
       this.options?.size?.maxHeight || 'auto';
 
-    this.modalLeaveAnimation = this.options?.animations?.modal?.leave || '';
+    this.popupLeaveAnimation = this.options?.animations?.popup?.leave || '';
     this.overlayLeaveAnimation = this.options?.animations?.overlay?.leave || '';
 
-    this.modalAnimationEnd = this.animationendEvent(this.modal.nativeElement);
+    this.popupAnimationEnd = this.animationendEvent(this.popup.nativeElement);
     this.overlayAnimationEnd = this.animationendEvent(
       this.overlay.nativeElement
     );
 
-    this.modalLeaveTiming = this.getAnimationTime(this.modalLeaveAnimation);
+    this.popupLeaveTiming = this.getAnimationTime(this.popupLeaveAnimation);
     this.overlayLeaveTiming = this.getAnimationTime(this.overlayLeaveAnimation);
   }
   
@@ -71,12 +71,12 @@ export class ModalComponent implements AfterViewInit {
   
   @HostListener('document:keydown.escape')
   onEscape() {
-    this.modalService.close();
+    this.popupService.close();
   }
 
   onClose() {
     // outside click
-    this.modalService.close();
+    this.popupService.close();
   }
 
   removeElementIfNoAnimation(element: HTMLDivElement, animation: string) {
@@ -86,46 +86,46 @@ export class ModalComponent implements AfterViewInit {
   }
 
   close() {
-    this.modal.nativeElement.style.animation = this.modalLeaveAnimation;
+    this.popup.nativeElement.style.animation = this.popupLeaveAnimation;
     this.overlay.nativeElement.style.animation = this.overlayLeaveAnimation;
 
     // Goal here is to clean up the DOM to not have 'dead elements'
     // No animations on both elements
     if (
-      !this.options?.animations?.modal?.leave &&
+      !this.options?.animations?.popup?.leave &&
       !this.options?.animations?.overlay?.leave
     ) {
-      this.modalService.options = undefined;
+      this.popupService.options = undefined;
       this.element.nativeElement.remove();
       return;
     }
 
     // Remove element if not animated
     this.removeElementIfNoAnimation(
-      this.modal.nativeElement,
-      this.modalLeaveAnimation
+      this.popup.nativeElement,
+      this.popupLeaveAnimation
     );
     this.removeElementIfNoAnimation(
       this.overlay.nativeElement,
       this.overlayLeaveAnimation
     );
 
-    // Both elements are animated, remove modal as soon as longest one ends
-    if (this.modalLeaveTiming > this.overlayLeaveTiming) {
-      this.modalAnimationEnd.subscribe(() => {
+    // Both elements are animated, remove popup as soon as longest one ends
+    if (this.popupLeaveTiming > this.overlayLeaveTiming) {
+      this.popupAnimationEnd.subscribe(() => {
         this.element.nativeElement.remove();
       });
-    } else if (this.modalLeaveTiming < this.overlayLeaveTiming) {
+    } else if (this.popupLeaveTiming < this.overlayLeaveTiming) {
       this.overlayAnimationEnd.subscribe(() => {
         this.element.nativeElement.remove();
       });
     } else {
-      zip(this.modalAnimationEnd, this.overlayAnimationEnd).subscribe(() => {
+      zip(this.popupAnimationEnd, this.overlayAnimationEnd).subscribe(() => {
         this.element.nativeElement.remove();
       });
     }
 
-    this.modalService.options = undefined;
+    this.popupService.options = undefined;
   }
 
   getAnimationTime(animation: string) {

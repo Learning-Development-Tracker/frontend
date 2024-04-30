@@ -65,8 +65,9 @@
     color: var(--white);
     border: 1px solid var(--purple);
     border-radius: 0.5em;
-    /* cursor: pointer; */
     transition: transform 0.2s ease;
+    width: 81px;
+    height: 37px;
   }
 
   .label-form{

@@ -15,6 +15,7 @@ export class DialogBoxComponent {
   @Input() msg: string | undefined;
   @Input() isOpen: boolean = false;
   @Output() dialogClosed = new EventEmitter<void>();
+  @Output() dialogProceed = new EventEmitter<void>();
 
   constructor(){}
 
@@ -22,9 +23,14 @@ export class DialogBoxComponent {
 
   }
 
-  onClose() {
+  onCancelClose() {
     this.isOpen = false
     this.dialogClosed.emit();
+  }
+
+  onProceedClose() {
+    this.isOpen = false
+    this.dialogProceed.emit();
   }
 
 }

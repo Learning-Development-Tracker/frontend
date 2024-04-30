@@ -21,12 +21,16 @@
         <div class="button-dialog-box">
             <app-custom-button 
                 [label]="'No, thanks'" 
-                (buttonClicked)="onClose()"
+                (buttonClicked)="onCancelClose()"
                 [backgroundColor]="'var(--white)'" 
                 [textColor]="'var(--purple)'"
-                >
+            >
             </app-custom-button>
-            <app-custom-button [label]="'Yes, Please'" (buttonClicked)="onClose()"></app-custom-button>
+            <app-custom-button 
+                [label]="'Yes, Please'" 
+                (buttonClicked)="onProceedClose()"
+            >
+            </app-custom-button>
         </div>
     </ng-container>
 </div>

@@ -6,21 +6,26 @@ import { CustomBottonComponent } from '../../../../shared/components/custom-butt
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { ManageTrainingService } from '../../../../service/manage-training.service';
 import { trainingsModel } from '../../../../models/trainings.model';
+import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent],
+  imports: [TableComponent, CustomBottonComponent, ViewTrainingsComponent, CommonModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })
+
 export class ManageTrainingsComponent implements OnInit {
   filteredData: any[] = [];
   trainingsObj: any[] = [];
   trainingList: any[] = [];
-  tableColumn: any[] = [];
+  tableColumn: any[] = [];  
+  viewData: any[] = [];
   public errMessage: any;
+  showViewManage: boolean = true;
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }
@@ -30,7 +35,7 @@ export class ManageTrainingsComponent implements OnInit {
     this.tableColumn = [
       { header: 'Name', field: 'trainingName' },
       { header: 'Total Hours', field: 'duration' },
-      { header: 'Type', field: 'typeCert' },
+      { header: 'Type', field: 'type' },
       { header: 'Actions', field: 'actions' }
     ];
 
@@ -58,8 +63,11 @@ export class ManageTrainingsComponent implements OnInit {
     console.log('Sorting event2: ', event);
   }
 
-  onView(item: any){
-    console.log('View Item: ', item)
+  onView(rowData: any){
+    console.log('View Item: ', rowData);
+    this.viewData = rowData;
+    this.toggleShowViewTraining();   
+
   }
 
   onEdit(item: any){
@@ -72,7 +80,18 @@ export class ManageTrainingsComponent implements OnInit {
 
   onSearchChange(value: string) {  
     this.filteredData = this.trainingList.filter(item => item.trainingName.toLowerCase().includes(value.toLowerCase()));
+  }   
+ 
+
+  toggleShowViewTraining() {
+    this.showViewManage = !this.showViewManage;
+    // this.showViewTrainingDtl = !this.showViewTrainingDtl;  
+    // console.log('this.showViewManage', this.showViewManage);
+    // console.log('this.showViewTrainingDtl', this.showViewTrainingDtl);
   }
-  
-  
+
+ 
 }
+
+  
+

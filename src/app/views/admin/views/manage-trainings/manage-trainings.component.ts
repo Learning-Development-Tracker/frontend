@@ -4,65 +4,70 @@ import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { ManageTrainingService } from '../../../../service/manage-training.service';
+import { trainingsModel } from '../../../../models/trainings.model';
+import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent],
+  imports: [TableComponent, CustomBottonComponent, ViewTrainingsComponent, CommonModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })
+
 export class ManageTrainingsComponent implements OnInit {
   filteredData: any[] = [];
+  trainingsObj: any[] = [];
   trainingList: any[] = [];
-  tableColumn: any[] = [];
-  
+  tableColumn: any[] = [];  
+  viewData: any[] = [];
+  public errMessage: any;
+  showViewManage: boolean = true;
+
+  constructor(private manageTrainingService: ManageTrainingService,
+  ) { }
 
   ngOnInit(): void {
-
-    this.trainingList = [
-      { trainingId: 1, trainingTitle: 'Introduction to JavaScript', trainingTotalHrs: 10, trainingType: 'Online' },
-      { trainingId: 2, trainingTitle: 'Advanced React Development', trainingTotalHrs: 20, trainingType: 'In-person' },
-      { trainingId: 3, trainingTitle: 'Python for Data Science', trainingTotalHrs: 15, trainingType: 'Online' },
-      { trainingId: 4, trainingTitle: 'Java Fundamentals', trainingTotalHrs: 12, trainingType: 'Online' },
-      { trainingId: 5, trainingTitle: 'Introduction to Angular', trainingTotalHrs: 18, trainingType: 'In-person' },
-      { trainingId: 6, trainingTitle: 'Web Development Bootcamp', trainingTotalHrs: 30, trainingType: 'Online' },
-      { trainingId: 7, trainingTitle: 'Data Structures and Algorithms', trainingTotalHrs: 25, trainingType: 'In-person' },
-      { trainingId: 8, trainingTitle: 'Machine Learning Basics', trainingTotalHrs: 20, trainingType: 'Online' },
-      { trainingId: 9, trainingTitle: 'React Native Essentials', trainingTotalHrs: 22, trainingType: 'In-person' },
-      { trainingId: 10, trainingTitle: 'Introduction to TypeScript', trainingTotalHrs: 8, trainingType: 'Online' },
-      { trainingId: 11, trainingTitle: 'Node.js for Backend Development', trainingTotalHrs: 15, trainingType: 'Online' },
-      { trainingId: 12, trainingTitle: 'Vue.js Fundamentals', trainingTotalHrs: 12, trainingType: 'In-person' },
-      { trainingId: 13, trainingTitle: 'Artificial Intelligence Basics', trainingTotalHrs: 20, trainingType: 'Online' },
-      { trainingId: 14, trainingTitle: 'Cybersecurity Essentials', trainingTotalHrs: 18, trainingType: 'In-person' },
-      { trainingId: 15, trainingTitle: 'Docker Fundamentals', trainingTotalHrs: 10, trainingType: 'Online' },
-      { trainingId: 16, trainingTitle: 'GraphQL Basics', trainingTotalHrs: 15, trainingType: 'Online' },
-      { trainingId: 17, trainingTitle: 'Amazon Web Services (AWS) Foundations', trainingTotalHrs: 20, trainingType: 'In-person' },
-      { trainingId: 18, trainingTitle: 'SQL Database Management', trainingTotalHrs: 12, trainingType: 'Online' },
-      { trainingId: 19, trainingTitle: 'Responsive Web Design', trainingTotalHrs: 15, trainingType: 'Online' },
-      { trainingId: 20, trainingTitle: 'Android App Development', trainingTotalHrs: 25, trainingType: 'In-person' }
-    ];
-  
+    this.getTraining();
     this.tableColumn = [
-      { header: 'Name', field: 'trainingTitle' },
-      { header: 'Total Hours', field: 'trainingTotalHrs' },
-      { header: 'Type', field: 'trainingType' },
+      { header: 'Name', field: 'trainingName' },
+      { header: 'Total Hours', field: 'duration' },
+      { header: 'Type', field: 'type' },
       { header: 'Actions', field: 'actions' }
     ];
 
     this.filteredData = this.trainingList;
   }
 
-  
+  getTraining() {
+    this.manageTrainingService.getTrainingList()
+    .subscribe((res: any) => {
+      this.errMessage="";
+      this.trainingList = res.data;
+      console.log(this.trainingList, "<<<<<< RES")
+    }, err => {
+      this.errMessage = err.error;
+      console.log(err, "<<<<< ERROR")
+    });
+  }
     
 
   onSort(event: SortEvent){
     console.log('Sorting event: ', event);
   }
 
-  onView(item: any){
-    console.log('View Item: ', item)
+  onSort2(event: any){
+    console.log('Sorting event2: ', event);
+  }
+
+  onView(rowData: any){
+    console.log('View Item: ', rowData);
+    this.viewData = rowData;
+    this.toggleShowViewTraining();   
+
   }
 
   onEdit(item: any){
@@ -73,10 +78,20 @@ export class ManageTrainingsComponent implements OnInit {
     console.log('Delete Item: ', item)
   }
 
-  onSearchChange(value: string) {
-     
-     this.filteredData = this.trainingList.filter(item => item.trainingTitle.toLowerCase().includes(value.toLowerCase()));
+  onSearchChange(value: string) {  
+    this.filteredData = this.trainingList.filter(item => item.trainingName.toLowerCase().includes(value.toLowerCase()));
+  }   
+ 
+
+  toggleShowViewTraining() {
+    this.showViewManage = !this.showViewManage;
+    // this.showViewTrainingDtl = !this.showViewTrainingDtl;  
+    // console.log('this.showViewManage', this.showViewManage);
+    // console.log('this.showViewTrainingDtl', this.showViewTrainingDtl);
   }
-  
-  
+
+ 
 }
+
+  
+

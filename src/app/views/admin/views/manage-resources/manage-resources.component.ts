@@ -11,13 +11,24 @@ import { ViewSkillsetComponent } from './resource-details/view-skillset/view-ski
 import { ViewPersonalInfoComponent } from './resource-details/view-personal-info/view-personal-info.component';
 import { ResourceDetailsComponent } from './resource-details/resource-details.component';
 import { CustomBottonComponent } from './../../../../shared/components/custom-button/custom-button.component';
+import { AddUserFormComponent } from '../../components/add-user-form/add-user-form.component';
 
 
 @Component({
   selector: 'app-manage-resources',
   standalone: true,
-  imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, 
-    ViewPersonalInfoComponent,ResourceDetailsComponent,CustomBottonComponent, CommonModule],
+  imports: [
+    CardModule, 
+    ProgressBarModule, 
+    TabViewModule, 
+    TabViewComponent, 
+    ViewSkillsetComponent, 
+    ViewPersonalInfoComponent,
+    ResourceDetailsComponent,
+    CustomBottonComponent, 
+    CommonModule, 
+    AddUserFormComponent
+  ],
   templateUrl: './manage-resources.component.html',
   styleUrl: './manage-resources.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -27,12 +38,28 @@ export class ManageResourcesComponent implements OnInit{
   items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
   isResource: boolean = false;
+  isOpen: boolean = false;
+
   ngOnInit(): void {
    
   }
 
   resourceDtl(){
     this.isResource=true;
+  }
+
+  onOpenClick() {
+    this.isOpen = true;
+    console.log(this.isOpen,"<<<<<<< IS OPEN")
+  }
+
+  onCloseClick() {
+    this.isOpen = false;
+  }
+
+  isOpenChange(event: any){
+    console.log(event, "<<<<<<< event")
+    this.isOpen = false;
   }
   
 }

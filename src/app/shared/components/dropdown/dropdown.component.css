@@ -54,8 +54,7 @@ li {
 
 .col-auto {
     box-sizing: border-box;
-    width: auto;
-    max-width: 100%;
+    width: calc(100vw - 50px);
 }
 
 .mb-2 {

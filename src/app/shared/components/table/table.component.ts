@@ -4,11 +4,12 @@ import { Table, TableModule } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -16,7 +17,10 @@ export class TableComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() columns: any[] = [];
-  @Output() sortChange: EventEmitter<SortEvent> = new EventEmitter<SortEvent>();
+  globalFilter: string = '';
+  filters: { [key: string]: any } = {};
+  filterMode: string = 'global';
+  @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
@@ -29,7 +33,7 @@ export class TableComponent implements OnInit {
   }
 
 
-  onSort(event: SortEvent) {
+  onSort(event: any) {
     this.sortChange.emit(event);
   }
 
@@ -61,6 +65,21 @@ export class TableComponent implements OnInit {
      }  else {
       return false
      }
+  }
+  matchesGlobalFilter(row: any): boolean {
+    if (!this.globalFilter) {
+        return true; 
     }
+
+    const filterValue = this.globalFilter.toLowerCase();
+
+    for (let col of this.columns) {
+        if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
+            return true; 
+        }
+    }
+
+    return false;
+  }
 
 }

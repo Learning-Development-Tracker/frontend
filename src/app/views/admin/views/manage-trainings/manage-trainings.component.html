@@ -1,13 +1,24 @@
 <div class="manage-trainings">
     <h1>Manage Training List</h1>
-    <app-table 
-        [data]="filteredData" 
-        [columns]="tableColumn" 
-        (sortChange)="onSort($event)" 
-        (view)="onView($event)" 
-        (edit)="onEdit($event)" 
-        (delete)="onDelete($event)"
-        (searchChange)="onSearchChange($event)"
-        [showButtonManageTrainings]="true"
-    ></app-table>
+    <div class="table"  >
+        <app-table 
+            *ngIf="showViewManage"
+            [data]="trainingList" 
+            [columns]="tableColumn" 
+            (sortChange)="onSort($event)" 
+            (view)="onView($event)" 
+            (edit)="onEdit($event)" 
+            (delete)="onDelete($event)"
+            [showButtonManageTrainings]="true"
+            (sort)="onSort2($event)"
+        ></app-table>  
+        <view-trainings  
+            *ngIf="!showViewManage" 
+            [showViewManage]="showViewManage"
+            (showViewManageChange)="showViewManage = $event"
+            [data]="viewData">
+        </view-trainings>
+    </div>   
+    
+    
 </div>

@@ -16,6 +16,9 @@ export class ManageTrainingService {
     getTrainingList(){
         return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getTrainingList", {  });
     }
-  
+
+    deleteTraining(id: number){
+        return this.httpClient.delete(this.configService.apiUrl + this.baseUrl + "/deleteTraining/" + id);
+    }
 
 }

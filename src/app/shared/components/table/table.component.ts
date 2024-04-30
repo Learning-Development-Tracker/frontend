@@ -45,8 +45,8 @@ export class TableComponent implements OnInit {
     this.edit.emit(employee);
   }
 
-  onDelete(employee: any) {
-    this.delete.emit(employee);
+  onDelete(rowData: any) {
+    this.delete.emit(rowData);
   }
 
   hasTrainings(rowData: any): boolean {

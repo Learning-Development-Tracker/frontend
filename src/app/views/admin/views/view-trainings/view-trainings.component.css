@@ -66,8 +66,9 @@
     border: 1px solid var(--purple);
     border-radius: 0.5em;
     transition: transform 0.2s ease;
-    width: 81px;
-    height: 37px;
+    width: 86px;
+    height: 32px;
+    gap: 10px
   }
 
   .label-form{

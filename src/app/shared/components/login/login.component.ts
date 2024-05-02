@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { PopupService } from './popupl.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PopupOptions } from './popup-options';
 import { matchpassword, minimuminput, lowCase, upCase, oneDIgit, oneSymbol, charLen } from './matchpassword.validator';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from '../../../authentication/login.services';
+import { Register } from '../../../models/register';
 
 @Component({
   selector: 'app-login',
@@ -46,19 +49,35 @@ export class LoginComponent {
   disableBtn: boolean = true;
   thirdForm: FormGroup;
   fourthForm: FormGroup;
-
-  constructor(private popupService: PopupService) {
+  userEmail: string = '';
+  userReg: Register = {
+    email: '',
+    username: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    phoneNo: '',
+    position: '',
+    positionCode: ''
+  }; 
+  popupTitle: string = '';
+  popupContent: string = '';
+  constructor(
+    private popupService: PopupService,
+    private loginService: LoginService
+  ) {
     this.thirdForm = new FormGroup({
       NewPassword: new FormControl(null, [Validators.required]),
       ConfirmPassword: new FormControl(null, [Validators.required])
     }, {
       validators: [
-        matchpassword, 
+        matchpassword,
         minimuminput,
-        lowCase, 
-        upCase, 
-        oneDIgit, 
-        oneSymbol, 
+        lowCase,
+        upCase,
+        oneDIgit,
+        oneSymbol,
         charLen
       ]
     });
@@ -68,12 +87,12 @@ export class LoginComponent {
       ConfirmPassword: new FormControl(null, [Validators.required])
     }, {
       validators: [
-        matchpassword, 
+        matchpassword,
         minimuminput,
-        lowCase, 
-        upCase, 
-        oneDIgit, 
-        oneSymbol, 
+        lowCase,
+        upCase,
+        oneDIgit,
+        oneSymbol,
         charLen
       ]
     });
@@ -177,7 +196,49 @@ export class LoginComponent {
   }
 
   openPopupTemplate2(view: TemplateRef<Element>) {
-    this.popupService.open(this.vcrReset, view, this.options);
+    // email format: FirstName.MiddleName.LastName@lpstech.com
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    function generateString(length: number) {
+      let result = ' ';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+    let fullName = this.userEmail.match("^.*(?=@)");
+    let rmvNameDots = fullName![0].split(".");
+    let nameSingleChar = rmvNameDots[0].match("^.{0,1}");
+    let uName = fullName![0];
+    if (rmvNameDots.length == 3) {
+      uName = nameSingleChar![0].concat(rmvNameDots![2]);
+    }
+    this.userReg = {
+      email: this.userEmail,
+      username: uName,
+      password: generateString(8),
+      firstName: rmvNameDots![0],
+      lastName: rmvNameDots![2],
+      address: 'address',
+      phoneNo: '09991234567',
+      position: 'position',
+      positionCode: 'positioncode'
+    }
+    this.loginService.addUserLogin(this.userReg).subscribe(
+      (res: any) => {
+        this.popupTitle = res.status.charAt(0).toUpperCase() + res.status.slice(1);
+        if (res.status=='error') {
+          this.userReg.password = '';
+          this.popupContent = res.message;
+        } else {
+          this.popupContent = 'Successfully reset password.';
+        }
+        this.popupService.open(this.vcrReset, view, this.options);
+      },
+      (error: HttpErrorResponse) => {
+        this.errMessage = error.statusText;
+      }
+    )
   }
 
   openPopupTemplate3(view: TemplateRef<Element>) {
@@ -224,7 +285,7 @@ export class LoginComponent {
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
-  
+
   onInputNoLowCaseForm3 = () => {
     let thirdFormError = this.thirdForm.errors?.['caselowerror'];
     let boolMatch = this.thirdForm.untouched
@@ -261,7 +322,7 @@ export class LoginComponent {
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
-  
+
   onInputNoLowCaseForm4 = () => {
     let fourthFormError = this.fourthForm.errors?.['caselowerror'];
     let boolMatch = this.fourthForm.untouched
@@ -281,10 +342,10 @@ export class LoginComponent {
   }
 
   createPass() {
-    console.warn(this.thirdForm.value)
+    console.log(this.thirdForm.value)
   }
 
   updatePass() {
-    console.warn(this.fourthForm.value)
+    console.log(this.fourthForm.value)
   }
 }

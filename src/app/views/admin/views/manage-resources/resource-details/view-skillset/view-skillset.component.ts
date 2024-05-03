@@ -3,13 +3,18 @@ import { DropdownComponent } from '../../../../../../shared/components/dropdown/
 import { CommonModule } from '@angular/common';
 import { BadgeModule } from 'primeng/badge';
 import { DropdownModule } from 'primeng/dropdown';
+import { AdminService } from '../../../../../../service/admin.service';
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { SkillDetail} from '../../../../../../models/skills.model';
 
 @Component({
   selector: 'app-view-skillset',
   standalone: true,
   imports: [DropdownComponent,CommonModule, BadgeModule, DropdownModule],
   templateUrl: './view-skillset.component.html',
-  styleUrl: './view-skillset.component.css'
+  styleUrl: './view-skillset.component.css',
+  providers: [AdminService],
 })
 export class ViewSkillsetComponent {
   @ViewChild(DropdownComponent)
@@ -18,20 +23,19 @@ export class ViewSkillsetComponent {
   skillOption:any=[]
   public selectedType:any='All'
   badgeLabel: any
-  frontEnd : any = [
-    {skillName: "Angular JS"},
-    {skillName: "Vue JS"},
-    {skillName: "React JS"},
-  ]
-  backEnd : any = [
-    {skillName: "JAVA"},
-    {skillName: "Spring"},
-  ]
-  testingTools : any = [
-    {skillName: "Selenium"},
-  ]
+
+  constructor(
+    private adminService: AdminService,
+  ) {}
+  private ngUnsubscribe: Subject<any> = new Subject();
+  public incident: SkillDetail = new SkillDetail();
+
+  frontEnd : any = []
+  backEnd : any = []
+  testingTools : any = []
 
   ngOnInit() {
+    this.getMemberSkillSet();
     this.skillOption= [
       { label: 'Front End', value: 'Front End' },
       { label: 'Back End', value: 'Back End' },
@@ -46,6 +50,19 @@ export class ViewSkillsetComponent {
     console.log( this.fiterOption);
   }
 
-  
+  getMemberSkillSet(){
+    this.adminService.getMemberSkillSet("LPS2024000000002").pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe((resp) => {
+      if (resp.status == 'SUCCESS') {
+        console.log("resp",resp);
+        this.frontEnd = resp.data.filter((item: { type: string; }) => item.type == 'Front End');
+        this.backEnd = resp.data.filter((item: { type: string; }) => item.type == 'Back End');
+        this.testingTools = resp.data.filter((item: { type: string; }) => item.type == 'Testing Tools');
+      }
+    }, (error: any) => {
+      
+    });
+  }
 
 }

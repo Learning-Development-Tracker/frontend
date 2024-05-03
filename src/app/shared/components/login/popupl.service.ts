@@ -1,13 +1,13 @@
 import { ComponentRef, EnvironmentInjector, Injectable, ViewContainerRef, TemplateRef, Type } from '@angular/core';
-import { ModalComponent } from './modal.component';
-import { ModalOptions } from './modal-options';
+import { PopupComponent } from './popup.component';
+import { PopupOptions } from './popup-options';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModalService {
-  newModalComponent!: ComponentRef<ModalComponent>;
-  options!: ModalOptions | undefined;
+export class PopupService {
+  newPopupComponent!: ComponentRef<PopupComponent>;
+  options!: PopupOptions | undefined;
 
   constructor(
     private injector: EnvironmentInjector
@@ -16,13 +16,13 @@ export class ModalService {
   open(
     vcrOrComponent: ViewContainerRef,
     content: TemplateRef<Element>,
-    options?: ModalOptions
+    options?: PopupOptions
   ): void;
 
   open<C>(
     vcrOrComponent: ViewContainerRef,
     param2?: TemplateRef<Element>,
-    options?: ModalOptions
+    options?: PopupOptions
   ) {
       this.openWithTemplate(vcrOrComponent, param2 as TemplateRef<Element>);
       this.options = options;
@@ -36,13 +36,13 @@ export class ModalService {
 
     const innerContent = vcr.createEmbeddedView(content);
 
-    this.newModalComponent = vcr.createComponent(ModalComponent, {
+    this.newPopupComponent = vcr.createComponent(PopupComponent, {
       environmentInjector: this.injector,
       projectableNodes: [innerContent.rootNodes],
     });
   }
 
   close() {
-    this.newModalComponent.instance.close();
+    this.newPopupComponent.instance.close();
   }
 }

@@ -26,6 +26,7 @@ export class TableComponent implements OnInit {
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
+  @Input() showButtonManageResources: boolean = false;
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();

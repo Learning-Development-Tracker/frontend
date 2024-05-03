@@ -12,7 +12,7 @@
             <div class="col-md-12 ">
                 <div class="contentScreen">
                     <p-card class="contentCard table">
-                        <div class="row" *ngIf="!isResource">
+                        <div class="row" *ngIf="!isResource showButtonManageResources">
                             <app-table 
                                 [data]="resourceList" 
                                 [columns]="tableColumn" 

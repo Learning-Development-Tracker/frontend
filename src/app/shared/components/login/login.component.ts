@@ -1,14 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
-import { ModalService } from '../modal/modal.service';
-import { FormsModule } from '@angular/forms';
+import { PopupService } from './popupl.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ModalOptions } from '../modal/modal-options';
+import { PopupOptions } from './popup-options';
+import { matchpassword, minimuminput, lowCase, upCase, oneDIgit, oneSymbol, charLen } from './matchpassword.validator';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CustomBottonComponent, FormsModule, CommonModule],
+  imports: [
+    CustomBottonComponent,
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -36,8 +41,43 @@ export class LoginComponent {
   resetPassword: string = 'resetPW';
   createPassword: string = 'newPW';
   updatePassword: string = 'updPW';
+  isUsernameInput: boolean = false;
+  isPasswordInput: boolean = false;
+  disableBtn: boolean = true;
+  thirdForm: FormGroup;
+  fourthForm: FormGroup;
 
-  constructor(private modalService: ModalService) { }
+  constructor(private popupService: PopupService) {
+    this.thirdForm = new FormGroup({
+      NewPassword: new FormControl(null, [Validators.required]),
+      ConfirmPassword: new FormControl(null, [Validators.required])
+    }, {
+      validators: [
+        matchpassword, 
+        minimuminput,
+        lowCase, 
+        upCase, 
+        oneDIgit, 
+        oneSymbol, 
+        charLen
+      ]
+    });
+
+    this.fourthForm = new FormGroup({
+      NewPassword: new FormControl(null, [Validators.required]),
+      ConfirmPassword: new FormControl(null, [Validators.required])
+    }, {
+      validators: [
+        matchpassword, 
+        minimuminput,
+        lowCase, 
+        upCase, 
+        oneDIgit, 
+        oneSymbol, 
+        charLen
+      ]
+    });
+  }
 
   onEmailChange(email: Event) {
     const target = email.target as HTMLInputElement;
@@ -46,13 +86,34 @@ export class LoginComponent {
 
   onPasswordChange(password: Event) {
     const target = password.target as HTMLInputElement;
+    if (!target.value) {
+      this.isPasswordInput = false;
+    } else {
+      this.isPasswordInput = true;
+    }
+    this.onInputValidate();
     this.passwordChanged.emit(target.value);
   }
 
   onUsernameChange(username: Event) {
-    this.errMessage = "Invalid username and/or password";
     const target = username.target as HTMLInputElement;
+    if (!target.value) {
+      this.isUsernameInput = false;
+    } else {
+      this.isUsernameInput = true;
+    }
+    this.onInputValidate();
     this.usernameChanged.emit(target.value);
+  }
+
+  onInputValidate() {
+    if (!this.isUsernameInput || !this.isPasswordInput) {
+      this.errMessage = "Invalid username and/or password";
+      this.disableBtn = true;
+    } else {
+      this.errMessage = "";
+      this.disableBtn = false;
+    }
   }
 
   loginClick() {
@@ -83,10 +144,10 @@ export class LoginComponent {
     return this.visibleConfirm ? 'password' : 'text';
   }
 
-  openModalTemplate1(view: TemplateRef<Element>) {
-    this.modalService.open(this.vcrPassword, view, {
+  openPopupTemplate1(view: TemplateRef<Element>) {
+    this.popupService.open(this.vcrPassword, view, {
       animations: {
-        modal: {
+        popup: {
           enter: 'enter-slide-down 0.8s',
         },
         overlay: {
@@ -100,49 +161,130 @@ export class LoginComponent {
     });
   }
 
- options:ModalOptions = {
-  animations: {
-    modal: {
-      enter: 'enter-slide-down 0.8s',
+  options: PopupOptions = {
+    animations: {
+      popup: {
+        enter: 'enter-slide-down 0.8s',
+      },
+      overlay: {
+        enter: 'fade-in 0.8s',
+        leave: 'fade-out 0.3s forwards',
+      },
     },
-    overlay: {
-      enter: 'fade-in 0.8s',
-      leave: 'fade-out 0.3s forwards',
-    },
-  },
-  size: {
-    width: '24rem',
+    size: {
+      width: '24rem',
+    }
   }
-}
 
-openModalTemplate2(view: TemplateRef<Element>) {
-  this.modalService.open(this.vcrReset, view, this.options);
-}
+  openPopupTemplate2(view: TemplateRef<Element>) {
+    this.popupService.open(this.vcrReset, view, this.options);
+  }
 
-openModalTemplate3(view: TemplateRef<Element>) {
-  this.modalService.open(this.vcrCreate, view, this.options);
-}
+  openPopupTemplate3(view: TemplateRef<Element>) {
+    this.popupService.open(this.vcrCreate, view, this.options);
+  }
 
-openModalTemplate4(view: TemplateRef<Element>) {
-  this.modalService.open(this.vcrUpdate, view, this.options);
-}
+  openPopupTemplate4(view: TemplateRef<Element>) {
+    this.popupService.open(this.vcrUpdate, view, this.options);
+  }
 
-close() {
-  this.modalService.close();
-}
+  close() {
+    this.popupService.close();
+  }
 
-resetPass() {
-  this.forgotPassword = this.resetPassword;
-  this.close();
-}
+  openResetPass() {
+    this.forgotPassword = this.resetPassword;
+    this.close();
+  }
 
-createPass() {
-  this.forgotPassword = this.createPassword;
-  this.close();
-}
+  openCreatePass() {
+    this.forgotPassword = this.createPassword;
+    this.close();
+  }
 
-updatePass() {
-  this.forgotPassword = this.updatePassword;
-  this.close();
-}
+  openUpdatePass() {
+    this.forgotPassword = this.updatePassword;
+    this.close();
+  }
+
+  onInputNotMatchForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['passwordmatcherror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+
+  onInputMinCharsForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['charlengtherror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+
+  onInputNoUpcaseForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['caseuperror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+  
+  onInputNoLowCaseForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['caselowerror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+
+  onInputNoNumForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['digiterror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+
+  onInputNoSymbolForm3 = () => {
+    let thirdFormError = this.thirdForm.errors?.['symbolerror'];
+    let boolMatch = this.thirdForm.untouched
+    return thirdFormError || boolMatch
+  }
+
+
+  onInputNotMatchForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['passwordmatcherror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+
+  onInputMinCharsForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['charlengtherror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+
+  onInputNoUpcaseForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['caseuperror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+  
+  onInputNoLowCaseForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['caselowerror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+
+  onInputNoNumForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['digiterror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+
+  onInputNoSymbolForm4 = () => {
+    let fourthFormError = this.fourthForm.errors?.['symbolerror'];
+    let boolMatch = this.fourthForm.untouched
+    return fourthFormError || boolMatch
+  }
+
+  createPass() {
+    console.warn(this.thirdForm.value)
+  }
+
+  updatePass() {
+    console.warn(this.fourthForm.value)
+  }
 }

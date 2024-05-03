@@ -1,0 +1,32 @@
+<ng-container>
+    <div class="row main-screen">
+        <div class="col-md-12">
+            <div class="row">
+                <label class="subHeader" *ngIf="!isResource">
+                    Manage Resources
+                </label>
+                <label class="subHeader" *ngIf="isResource">
+                    Resource Details
+                </label>
+            </div>
+            <div class="col-md-12 ">
+                <div class="contentScreen">
+                    <p-card class="contentCard table">
+                        <div class="row" *ngIf="!isResource">
+                            <app-table 
+                                [data]="resourceList" 
+                                [columns]="tableColumn" 
+                                (view)="onView($event)"
+                                (delete)="onDelete($event)"
+                                [showButtonManageResources]="true"
+                            ></app-table>
+                        </div>
+                        <div class="row" *ngIf="isResource">
+                            <app-resource-details></app-resource-details>
+                        </div>
+                    </p-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

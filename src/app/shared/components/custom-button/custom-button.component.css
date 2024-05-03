@@ -15,10 +15,3 @@
 .next-button:active {
     transform: scale(0.95);
 }
-
-.next-button:disabled,
-.next-button[disabled]{
-  background-color: var(--container-background) !important;
-  border-color: var(--primary-color-light) !important;
-  color: var(--text-color) !important;
-}

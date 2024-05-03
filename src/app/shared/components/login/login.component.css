@@ -108,11 +108,11 @@ p.info {
     height: 25px;
 }
 
-.popup-container {
+.modal-container {
     padding: 1rem;
 }
 
-.popup-container button {
+.modal-container button {
     border: none;
     padding: 0.625rem;
     cursor: pointer;

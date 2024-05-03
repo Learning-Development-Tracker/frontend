@@ -8,16 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  userData: any[] = []; // Dummy data
 
-  constructor() { }
-
-  ngOnInit(): void {
-    // Initialization code here
-    this.userData.push({ username: 'UserSample', email: 'userSample@test.com' }); //Dummy data initialization
-  }
-
-  isLoggedIn(): boolean {
-    return this.userData.length > 0; 
-  }
 }

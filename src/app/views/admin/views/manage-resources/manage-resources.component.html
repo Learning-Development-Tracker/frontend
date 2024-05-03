@@ -22,7 +22,7 @@
                             ></app-table>
                         </div>
                         <div class="row" *ngIf="isResource">
-                            <app-resource-details></app-resource-details>
+                            <app-resource-details [memberDtl]="selectedMemberDtl"></app-resource-details>
                         </div>
                     </p-card>
                 </div>

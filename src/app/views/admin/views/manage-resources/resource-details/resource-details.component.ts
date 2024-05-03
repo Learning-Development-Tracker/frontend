@@ -1,6 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'primeng/accordion';
 import { MenuItem } from 'primeng/api';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -13,7 +14,7 @@ import { ViewCertificationComponent } from './view-certification/view-certificat
 @Component({
   selector: 'app-resource-details',
   standalone: true,
-  imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent, ViewCertificationComponent],
+  imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent, ViewCertificationComponent,CommonModule],
   templateUrl: './resource-details.component.html',
   styleUrl: './resource-details.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -21,8 +22,9 @@ import { ViewCertificationComponent } from './view-certification/view-certificat
 })
 export class ResourceDetailsComponent implements OnInit{
 
-  items: MenuItem[] | undefined;
-  activeItem: MenuItem | undefined;
+  @Input() memberDtl: any = {};
+
   ngOnInit(): void {
+    console.log(this.memberDtl)
   }
 }

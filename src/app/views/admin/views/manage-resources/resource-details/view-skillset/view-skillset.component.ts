@@ -1,4 +1,4 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, ViewChild, Input  } from '@angular/core';
 import { DropdownComponent } from '../../../../../../shared/components/dropdown/dropdown.component';
 import { CommonModule } from '@angular/common';
 import { BadgeModule } from 'primeng/badge';
@@ -17,6 +17,7 @@ import { SkillDetail} from '../../../../../../models/skills.model';
   providers: [AdminService],
 })
 export class ViewSkillsetComponent {
+  @Input() memberDtl: any = {};
   @ViewChild(DropdownComponent)
   dropdownComponent!: DropdownComponent;
   fiterOption:any='All';
@@ -42,6 +43,7 @@ export class ViewSkillsetComponent {
       { label: 'Testing Tools', value: 'Testing Tools' },
       { label: 'All', value: 'All' },
     ];
+    console.log(this.memberDtl)
   }
 
   onDropdownChange(event: string) {
@@ -51,7 +53,7 @@ export class ViewSkillsetComponent {
   }
 
   getMemberSkillSet(){
-    this.adminService.getMemberSkillSet("LPS2024000000002").pipe(
+    this.adminService.getMemberSkillSet(this.memberDtl.memberId).pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe((resp) => {
       if (resp.status == 'SUCCESS') {

@@ -4,7 +4,6 @@ import { CustomBottonComponent } from '../../shared/components/custom-button/cus
 import { LoginService } from '../../authentication/login.services';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { LoginModel } from '../../models/login.model';
 
@@ -22,16 +21,10 @@ export class UserComponent implements OnInit{
 
   loginObj: LoginModel = new LoginModel();
 
-  constructor(private loginService: LoginService,
-    private router: Router
-  ) { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.errMessage = "";
-  }
-
-  onEmailChanged(email: string) {
-    this.loginObj.email = email;
   }
 
   onUsernameChanged(username: string) {
@@ -42,17 +35,13 @@ export class UserComponent implements OnInit{
     this.loginObj.password = password;
   }
 
-  onLoginClick() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-      this.router.navigate(['admin']);
-    })
-    console.log("Email", this.loginObj);
-    this.loginService.login(this.loginObj.email, this.loginObj.username, this.loginObj.password)
+  onLoginClick(): any {
+    this.loginService.login(this.loginObj.username, this.loginObj.password)
       .subscribe((res: any) => {
         this.errMessage="";
         console.log(res, "<<<<<< RES")
       }, err => {
-        this.errMessage = err.error;
+        this.errMessage = String(err.error);
         console.log(err, "<<<<< ERROR")
       });
   }

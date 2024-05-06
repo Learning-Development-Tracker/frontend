@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { PopupService } from './popupl.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PopupOptions } from './popup-options';
 import { matchpassword, minimuminput, lowCase, upCase, oneDIgit, oneSymbol, charLen } from './matchpassword.validator';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from '../../../authentication/login.services';
 import { Register } from '../../../models/register';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,8 @@ import { Register } from '../../../models/register';
 export class LoginComponent {
   @ViewChild('vcrPass', { static: true, read: ViewContainerRef })
   vcrPassword!: ViewContainerRef;
+  @ViewChild('vcrLogin', { static: true, read: ViewContainerRef })
+  vcrLogin!: ViewContainerRef;
   @ViewChild('vcrReset', { static: true, read: ViewContainerRef })
   vcrReset!: ViewContainerRef;
   @ViewChild('vcrCreate', { static: true, read: ViewContainerRef })
@@ -65,7 +68,8 @@ export class LoginComponent {
   popupContent: string = '';
   constructor(
     private popupService: PopupService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {
     this.thirdForm = new FormGroup({
       NewPassword: new FormControl(null, [Validators.required]),
@@ -127,16 +131,35 @@ export class LoginComponent {
 
   onInputValidate() {
     if (!this.isUsernameInput || !this.isPasswordInput) {
-      this.errMessage = "Invalid username and/or password";
       this.disableBtn = true;
     } else {
-      this.errMessage = "";
       this.disableBtn = false;
     }
   }
 
-  loginClick() {
+  openLoginTemplate(view: TemplateRef<Element>) {
     this.loginButtonClicked.emit();
+    setTimeout(() => {
+      let errElement = document.getElementById('errMessage') as HTMLElement;
+      this.errMessage = String(errElement?.textContent);
+        if(errElement) {
+          this.popupTitle = 'Error'
+          this.popupContent = this.errMessage;
+          this.popupService.open(this.vcrLogin, view, this.options);
+        } else {
+          this.popupTitle = 'Success'
+          this.popupContent = 'Successfully logged in.';
+          this.popupService.open(this.vcrLogin, view, this.options);
+          setTimeout(() => {
+            if (errElement == undefined) {
+              this.errMessage = '';
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
+                this.router.navigate(['admin']);
+              })
+            }
+          }, 1000);
+        }
+      }, 1500);
   }
 
   showPW() {
@@ -208,17 +231,21 @@ export class LoginComponent {
     }
     let fullName = this.userEmail.match("^.*(?=@)");
     let rmvNameDots = fullName![0].split(".");
-    let nameSingleChar = rmvNameDots[0].match("^.{0,1}");
     let uName = fullName![0];
+    let firstName = rmvNameDots![0];
+    let lastName = rmvNameDots![2];
     if (rmvNameDots.length == 3) {
-      uName = nameSingleChar![0].concat(rmvNameDots![2]);
+      uName = rmvNameDots[0].concat(rmvNameDots[2]);
+    } else {
+      uName = rmvNameDots[0].concat(rmvNameDots[1]);
+      lastName = rmvNameDots![1];
     }
     this.userReg = {
       email: this.userEmail,
       username: uName,
-      password: generateString(8),
-      firstName: rmvNameDots![0],
-      lastName: rmvNameDots![2],
+      password: generateString(10),
+      firstName: firstName,
+      lastName: lastName,
       address: 'address',
       phoneNo: '09991234567',
       position: 'position',

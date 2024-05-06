@@ -7,7 +7,7 @@
             <form id="mainForm" novalidate>
                 <h2>Sign in</h2>
 
-                <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
+                <p class="error-message" id="errMessage" *ngIf="errMessage">{{ errMessage }}</p>
 
                 <label for="username">Username</label>
                 <div class="name-block">
@@ -22,7 +22,7 @@
                 </div>
                 <a (click)="openPopupTemplate1(vcrPass)">Forgot Password?</a>
                 <app-custom-button [label]="'Sign In'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                    (buttonClicked)="loginClick()" [disabled]="disableBtn"></app-custom-button>
+                    (buttonClicked)="openLoginTemplate(vcrLogin)" [disabled]="disableBtn"></app-custom-button>
             </form>
         </div>
         <div *ngSwitchCase="resetPassword">
@@ -195,6 +195,18 @@
                 [backgroundColor]="buttonColor" (buttonClicked)="openCreatePass()"></app-custom-button>
             <app-custom-button [label]="'Update Password'" [margin]="buttonMargin" [width]="buttonWidth"
                 [backgroundColor]="buttonColor" (buttonClicked)="openUpdatePass()"></app-custom-button>
+        </div>
+    </ng-template>
+    <ng-template #vcrLogin>
+        <div class="popup-container">
+            <div class="title">
+                <h2>{{popupTitle}}</h2>
+            </div>
+            <div class="content">
+                <p class="current">{{popupContent}}</p>
+            </div>
+            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
         </div>
     </ng-template>
     <ng-template #vcrReset>

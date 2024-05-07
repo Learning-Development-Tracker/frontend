@@ -54,3 +54,9 @@
     margin-left: auto; /* Pushes the button container to the right */
     align-self: flex-end; /* Aligns the button container to the end of the flex container */
 }
+
+.badge {
+    background: #F4F6F6;
+    border:1px solid #8C55D9;
+    color: #414145;
+  }

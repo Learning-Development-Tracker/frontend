@@ -6,12 +6,13 @@ import { CustomBottonComponent } from '../../../../shared/components/custom-butt
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { ManageTrainingService } from '../../../../service/manage-training.service';
 import { trainingsModel } from '../../../../models/trainings.model';
+import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent],
+  imports: [TableComponent, CustomBottonComponent, AddEditTrainingComponent],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })

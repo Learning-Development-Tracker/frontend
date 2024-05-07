@@ -5,11 +5,12 @@ import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { FormsModule } from '@angular/forms'; 
+import { AddEditTrainingComponent } from '../../../views/admin/views/add-edit-trainings/add-edit-training';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, AddEditTrainingComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -26,6 +27,21 @@ export class TableComponent implements OnInit {
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
+  @Output() add: EventEmitter<any> = new EventEmitter<any>();
+  isPopupVisible: boolean = false;
+
+  onClickedAdd() {
+    this.add.emit();
+    this.showPopup();
+  }
+
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  showPopup() {
+    this.isPopupVisible = !this.isPopupVisible;
+  }
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();

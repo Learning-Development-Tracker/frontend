@@ -88,17 +88,17 @@ export class AddEditTrainingComponent implements OnInit{
 
   isValidTraining(trainingDetails: AddTrainingModel): boolean {
     return (
-      trainingDetails.trainingName?.trim() !== ''
-      // trainingDetails.trainingType?.trim() !== '' &&
-      // trainingDetails.productName?.trim() !== '' &&
-      // trainingDetails.startDate !== undefined && // Ensure startDate is not undefined
-      // trainingDetails.dueDate !== undefined && // Ensure dueDate is not undefined
-      // this.isValidDate(trainingDetails.startDate) && // Validate startDate
-      // this.isValidDate(trainingDetails.dueDate) &&// Validate dueDate
-      // trainingDetails.description?.trim() !== '' &&
-      // trainingDetails.tags?.trim() !== '' &&
-      // trainingDetails.certName?.trim() !== '' &&
-      // this.isRadioSelected(trainingDetails)
+      trainingDetails.trainingName?.trim() !== '' &&
+      trainingDetails.trainingType?.trim() !== '' &&
+      trainingDetails.productName?.trim() !== '' &&
+      trainingDetails.startDate !== undefined && // Ensure startDate is not undefined
+      trainingDetails.dueDate !== undefined && // Ensure dueDate is not undefined
+      this.isValidDate(trainingDetails.startDate) && // Validate startDate
+      this.isValidDate(trainingDetails.dueDate) &&// Validate dueDate
+      trainingDetails.description?.trim() !== '' &&
+      trainingDetails.tags?.trim() !== '' &&
+      trainingDetails.certName?.trim() !== '' &&
+      this.isRadioSelected(trainingDetails)
     );
   }
 

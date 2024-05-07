@@ -13,7 +13,7 @@ export class AddTrainingModel {
         hasCert?: boolean;
         certName?: string;
         duration?: string;
-        fees?: number;
+        fees?: string;
       //   currency?: string;
         certLink?: string;
         radio1?: boolean;

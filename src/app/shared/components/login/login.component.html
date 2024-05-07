@@ -31,8 +31,8 @@
                 <p class="info">Please enter your username or email. <br>
                     A link will be sent to your email in order for you to reset your password.</p>
                 <div class="name-block">
-                    <input type="email" id="email" (input)="onEmailChange($event)" placeholder="Input Email"
-                        autocomplete="off">
+                    <input type="email" id="email" name="email" (input)="onEmailChange($event)" placeholder="Input Email"
+                        autocomplete="off" [(ngModel)]="userEmail">
                 </div>
                 <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
@@ -200,11 +200,13 @@
     <ng-template #vcrReset>
         <div class="popup-container">
             <div class="title">
-                <h2>Success</h2>
+                <h2>{{popupTitle}}</h2>
             </div>
             <div class="content">
-                <p class="current">
-                    Successfully reset password
+                <p class="current">{{popupContent}}</p>
+                <p>Username: {{userReg.username}}</p>
+                <p *ngIf="userReg.password !== ''">
+                    Password: {{userReg.password}}
                 </p>
             </div>
             <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"

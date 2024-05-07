@@ -3,7 +3,8 @@
     [columns]="columns"
     styleClass="p-datatable-striped"
     (sort)="onSort($event)" 
-    [tableStyle]="{ 'min-width': '50rem' }"> 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
             <div class="search"> 

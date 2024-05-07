@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
@@ -35,12 +35,14 @@ import { Subject } from "rxjs";
   providers: [ManageResourcesService]
 })
 export class ManageResourcesComponent implements OnInit{
+  @ViewChild(ResourceDetailsComponent)
   filteredData: any[] = [];
   resourceList: any[] = [];
   tableColumn: any[] = [];
   items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
   isResource: boolean = false;
+  selectedMemberDtl: any = {};
   
   constructor(
     private router: Router,
@@ -72,8 +74,11 @@ export class ManageResourcesComponent implements OnInit{
     console.log('Sorting event: ', event);
   }
 
-  onView(item: any){
-    item = this.resourceDtl()
+  onView(rowData: any){
+    console.log('View Item: ', rowData); 
+    this.resourceDtl()
+    this.selectedMemberDtl = rowData;
+    console.log('View selectedMemberDtl: ', this.selectedMemberDtl); 
   }
 
   onEdit(item: any){

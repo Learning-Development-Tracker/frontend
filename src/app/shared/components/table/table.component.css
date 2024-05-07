@@ -55,6 +55,34 @@
     align-self: flex-end; /* Aligns the button container to the end of the flex container */
 }
 
+:host ::ng-deep.p-paginator .p-paginator-page:hover {
+    background-color: #8c55d9;
+    color: white;
+    border-radius: 15px;
+    margin-left: 5px;
+ }
+
+ :host ::ng-deep.p-paginator .p-paginator-page {
+    background-color: #f0e7fd;
+    color: #8c55d9;
+    border-radius: 15px;
+    margin-left: 5px;
+ }
+
+ :host ::ng-deep.p-ripple:hover {
+    background-color: #8c55d9;
+    color: white;
+    border-radius: 15px;
+    margin-left: 5px;
+ }
+
+ :host ::ng-deep.p-ripple {
+    background-color: #f0e7fd;
+    color: #8c55d9;
+    border-radius: 15px;
+    margin-left: 5px;
+ }
+
 .badge {
     background: #F4F6F6;
     border:1px solid #8C55D9;

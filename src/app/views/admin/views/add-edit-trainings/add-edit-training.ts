@@ -44,6 +44,7 @@ export class AddEditTrainingComponent implements OnInit{
   }
 
   onSave() {
+    console.log(this.trainingDetails);
     if (!this.isValidTraining(this.trainingDetails)) {
       console.log('Please fill in the required fields.');
       return;
@@ -88,17 +89,17 @@ export class AddEditTrainingComponent implements OnInit{
 
   isValidTraining(trainingDetails: AddTrainingModel): boolean {
     return (
-      trainingDetails.trainingName?.trim() !== '' &&
-      trainingDetails.trainingType?.trim() !== '' &&
-      trainingDetails.productName?.trim() !== '' &&
-      trainingDetails.startDate !== undefined && // Ensure startDate is not undefined
-      trainingDetails.dueDate !== undefined && // Ensure dueDate is not undefined
-      this.isValidDate(trainingDetails.startDate) && // Validate startDate
-      this.isValidDate(trainingDetails.dueDate) &&// Validate dueDate
-      trainingDetails.description?.trim() !== '' &&
-      trainingDetails.tags?.trim() !== '' &&
-      trainingDetails.certName?.trim() !== '' &&
-      this.isRadioSelected(trainingDetails)
+      trainingDetails.trainingName?.trim() !== '' 
+      // trainingDetails.trainingType?.trim() !== '' &&
+      // trainingDetails.productName?.trim() !== '' &&
+      // trainingDetails.startDate !== undefined && // Ensure startDate is not undefined
+      // trainingDetails.dueDate !== undefined && // Ensure dueDate is not undefined
+      // this.isValidDate(trainingDetails.startDate) && // Validate startDate
+      // this.isValidDate(trainingDetails.dueDate) &&// Validate dueDate
+      // trainingDetails.desc?.trim() !== '' &&
+      // trainingDetails.role?.trim() !== '' &&
+      // trainingDetails.certName?.trim() !== '' 
+      // this.isRadioSelected(trainingDetails)
     );
   }
 
@@ -108,18 +109,18 @@ export class AddEditTrainingComponent implements OnInit{
     return !isNaN(date.getTime());
   }
 
-  private isRadioSelected(trainingDetails: AddTrainingModel): boolean {
-    // Check if at least one radio button is selected
-    const radio1Selected = !!trainingDetails.radio1;
-    const radio2Selected = !!trainingDetails.radio2;
-    const radio3Selected = !!trainingDetails.radio3;
+  // private isRadioSelected(trainingDetails: AddTrainingModel): boolean {
+  //   // Check if at least one radio button is selected
+  //   const radio1Selected = !!trainingDetails.radio1;
+  //   const radio2Selected = !!trainingDetails.radio2;
+  //   const radio3Selected = !!trainingDetails.radio3;
   
-    // Check if associated input values are provided when their respective radio buttons are selected
-    const radio1Valid = !radio1Selected || (radio1Selected && typeof trainingDetails.radio1value === 'number');
-    const radio2Valid = !radio2Selected || (radio2Selected && typeof trainingDetails.radio2value === 'number');
+  //   // Check if associated input values are provided when their respective radio buttons are selected
+  //   const radio1Valid = !radio1Selected || (radio1Selected && typeof trainingDetails.radio1value === 'number');
+  //   const radio2Valid = !radio2Selected || (radio2Selected && typeof trainingDetails.radio2value === 'number');
   
-    return radio1Selected || radio2Selected || radio3Selected && radio1Valid && radio2Valid;
-  }
+  //   return radio1Selected || radio2Selected || radio3Selected && radio1Valid && radio2Valid;
+  // }
 
   addMoreClicked() {
     // Toggle Add More Training Links

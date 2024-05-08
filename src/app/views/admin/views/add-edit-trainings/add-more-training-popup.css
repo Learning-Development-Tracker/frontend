@@ -45,3 +45,15 @@
   color: white;
   cursor: pointer;
 }
+
+.pi.pi-plus{
+  font-size: 18px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.pi.pi-trash{
+  font-size: 18px;
+  margin-right: 2px;
+  cursor: pointer;
+}

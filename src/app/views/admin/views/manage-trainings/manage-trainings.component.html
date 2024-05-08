@@ -30,5 +30,7 @@
                 </div>
             </div>
         </div>
+        <add-edit-training-popup *ngIf="isPopupVisible" (close)="closePopup()">
+        </add-edit-training-popup>
     </div>
 </ng-container>

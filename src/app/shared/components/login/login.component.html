@@ -26,15 +26,15 @@
             </form>
         </div>
         <div *ngSwitchCase="resetPassword">
-            <form id="secondForm" novalidate>
+            <form id="secondForm" (ngSubmit)="resetPass()" [formGroup]="secondForm" novalidate>
                 <h2>Reset Password Request</h2>
                 <p class="info">Please enter your username or email. <br>
                     A link will be sent to your email in order for you to reset your password.</p>
                 <div class="name-block">
                     <input type="email" id="email" name="email" (input)="onEmailChange($event)" placeholder="Input Email"
-                        autocomplete="off" [(ngModel)]="userEmail">
+                        autocomplete="off" formControlName="RegisterEmail">
                 </div>
-                <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
+                <p class="error-message" *ngIf="onInputEmailMismatchForm2() || errMessage">{{ errMessage }}</p>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
                     (buttonClicked)="openPopupTemplate2(vcrReset)"></app-custom-button>
             </form>
@@ -193,8 +193,6 @@
                 [backgroundColor]="buttonColor" (buttonClicked)="openResetPass()"></app-custom-button>
             <app-custom-button [label]="'Create New Password'" [margin]="buttonMargin" [width]="buttonWidth"
                 [backgroundColor]="buttonColor" (buttonClicked)="openCreatePass()"></app-custom-button>
-            <app-custom-button [label]="'Update Password'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="openUpdatePass()"></app-custom-button>
         </div>
     </ng-template>
     <ng-template #vcrLogin>
@@ -205,8 +203,14 @@
             <div class="content">
                 <p class="current">{{popupContent}}</p>
             </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            <div *ngIf="redirectAfterSuccess(); else fail;">
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="onLoginSuccess()"></app-custom-button>
+            </div>
+            <ng-template #fail>
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            </ng-template>
         </div>
     </ng-template>
     <ng-template #vcrReset>
@@ -216,13 +220,19 @@
             </div>
             <div class="content">
                 <p class="current">{{popupContent}}</p>
-                <p>Username: {{userReg.username}}</p>
-                <p *ngIf="userReg.password !== ''">
-                    Password: {{userReg.password}}
-                </p>
+                <div *ngIf="userReg.password !== ''">
+                    <p>Username: {{userReg.username}}</p>
+                    <p>Password: {{userReg.password}}</p>
+                </div>
             </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            <div *ngIf="redirectAfterSuccess(); else fail;">
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage()"></app-custom-button>
+            </div>
+            <ng-template #fail>
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            </ng-template>
         </div>
     </ng-template>
     <ng-template #vcrCreate>
@@ -242,12 +252,10 @@
     <ng-template #vcrUpdate>
         <div class="popup-container">
             <div class="title">
-                <h2>Success</h2>
+                <h2>{{popupTitle}}</h2>
             </div>
             <div class="content">
-                <p class="current">
-                    Successfully updated password
-                </p>
+                <p class="current">{{popupContent}}</p>
             </div>
             <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
                 [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>

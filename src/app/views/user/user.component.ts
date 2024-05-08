@@ -18,7 +18,8 @@ import { LoginModel } from '../../models/login.model';
 export class UserComponent implements OnInit{
 
   public errMessage: any;
-
+  public response: any;
+  unknownError: string = 'Unknown error. Please contact administrator.';
   loginObj: LoginModel = new LoginModel();
 
   constructor(private loginService: LoginService) { }
@@ -39,9 +40,14 @@ export class UserComponent implements OnInit{
     this.loginService.login(this.loginObj.username, this.loginObj.password)
       .subscribe((res: any) => {
         this.errMessage="";
+        this.response = res;
         console.log(res, "<<<<<< RES")
       }, err => {
-        this.errMessage = String(err.error);
+        if(err.error) {
+          this.errMessage = String(err.error.message);
+        } else {
+          this.errMessage = this.unknownError;
+        }
         console.log(err, "<<<<< ERROR")
       });
   }

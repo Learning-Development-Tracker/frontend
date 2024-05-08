@@ -33,9 +33,9 @@ export class ManageTrainingsComponent implements OnInit {
   ngOnInit(): void {
     this.getTraining();
     this.tableColumn = [
-      { header: 'Name', field: 'trainingName' },
+      { header: 'Name', field: 'trainingname' },
       { header: 'Total Hours', field: 'duration' },
-      { header: 'Type', field: 'type' },
+      { header: 'Type', field: 'trainingtype' },
       { header: 'Actions', field: 'actions' }
     ];
 

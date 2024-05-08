@@ -54,6 +54,10 @@ export class TableComponent implements OnInit {
     return rowData.trainings && rowData.trainings.length > 0;
   }
 
+  hasCertifications(rowData: any): boolean {
+    return rowData.certifications && rowData.certifications.length > 0;
+  }
+
   constructor() { }
 
   ngOnInit(): void {

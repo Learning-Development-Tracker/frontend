@@ -99,6 +99,7 @@ export class ManageResourcesComponent implements OnInit{
   }
 
   getResources(){
+    var cert = [];
     this.manageResourcesService.getResources().pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe((resp) => {
@@ -107,13 +108,13 @@ export class ManageResourcesComponent implements OnInit{
         //this.resourceList = resp.data;
         resp.data.forEach((item: any) => {
           let resList = 
-            { membername: item.membername,
+            { memberId: item.memberId,
+              membername: item.membername,
               employeeNum: item.employeeNum,
               roleName: item.roleName,
               teamName: item.teamName,
               memberTrainings: item.trainings,
-              certifications: item.certifications,
-              memberId: item.memberId
+              certifications: [item.certifications]
             };
             this.resourceList.push(resList);
         });

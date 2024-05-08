@@ -28,6 +28,10 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
+            <th *ngIf="showButtonManageResources" class="p-header">
+                <p-tableHeaderCheckbox>
+                </p-tableHeaderCheckbox>
+            </th>
             <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon></p-sortIcon>
@@ -36,8 +40,12 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr *ngIf="matchesGlobalFilter(rowData)">
+            <td class="table-multiple-checkbox">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
             <ng-container *ngFor="let col of columns">
-                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'actions'; else tags">
+                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'certifications' && col.field !== 'actions'; else tags">
                     {{ rowData[col.field] }}
                 </td>
                 <ng-template #tags>
@@ -52,6 +60,9 @@
                     <ng-template #button>
                         <app-custom-button label="Set Training"></app-custom-button>
                     </ng-template>
+                </td>
+                <td *ngIf="col.field == 'certifications'">
+                        <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
                 </td>
                 <td *ngIf="col.field == 'actions'">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>

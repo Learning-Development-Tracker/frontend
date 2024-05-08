@@ -43,7 +43,7 @@
         </div>
         <div class="col-4">
           <p class= "title-label">Certification Expiry Date</p>
-          <span  class="black-label">{{data.expiryDate | date: 'shortDate' }}</span>
+          <span  class="black-label">{{ data.expiryDate !== null && data.expirydate !== 'NONE' ? (data.expirydate | date: 'shortDate') : 'NONE' }}</span>
         </div>
       </div>
       <div class="row">

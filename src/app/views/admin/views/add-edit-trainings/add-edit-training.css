@@ -229,3 +229,8 @@
   margin-right: 2px;
   cursor: pointer;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* or any other styling to visually indicate disabled state */
+}

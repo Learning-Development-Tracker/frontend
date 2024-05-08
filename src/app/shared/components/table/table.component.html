@@ -12,10 +12,10 @@
                 <input pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
             </span>
             </div>
-            <div *ngIf="!isPopupVisible" class="actions" > 
+            <div *ngIf="showButtonManageTrainings" class="actions" > 
                 <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar"></app-custom-button>
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
-                <app-custom-button label="Add" margin="5px" icon="pi pi-plus" (click)="showPopup()"></app-custom-button>
+                <app-custom-button label="Add" margin="5px" icon="pi pi-plus" (buttonClicked)="addTraining()"></app-custom-button>
             </div>
         </div>
     </ng-template>
@@ -55,4 +55,3 @@
         </tr>
     </ng-template>
 </p-table>
-<add-edit-training-popup *ngIf="isPopupVisible" (close)="closePopup()"></add-edit-training-popup>

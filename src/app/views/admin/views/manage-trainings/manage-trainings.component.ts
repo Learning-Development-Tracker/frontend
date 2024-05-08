@@ -7,12 +7,13 @@ import { TableComponent } from '../../../../shared/components/table/table.compon
 import { ManageTrainingService } from '../../../../service/manage-training.service';
 import { trainingsModel } from '../../../../models/trainings.model';
 import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent, AddEditTrainingComponent],
+  imports: [TableComponent, CustomBottonComponent, AddEditTrainingComponent, CommonModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })
@@ -22,6 +23,15 @@ export class ManageTrainingsComponent implements OnInit {
   trainingList: any[] = [];
   tableColumn: any[] = [];
   public errMessage: any;
+  isPopupVisible: boolean = false;
+
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  showPopup() {
+    this.isPopupVisible = true;
+  }
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }

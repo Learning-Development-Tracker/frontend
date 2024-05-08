@@ -27,27 +27,12 @@ export class TableComponent implements OnInit {
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
-  @Output() add: EventEmitter<any> = new EventEmitter<any>();
-  isPopupVisible: boolean = false;
-
-  onClickedAdd() {
-    this.add.emit();
-    this.showPopup();
-  }
-
-  closePopup() {
-    this.isPopupVisible = false;
-  }
-
-  showPopup() {
-    this.isPopupVisible = !this.isPopupVisible;
-  }
+  @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
     this.searchChange.emit(value);
   }
-
 
   onSort(event: any) {
     this.sortChange.emit(event);
@@ -96,6 +81,10 @@ export class TableComponent implements OnInit {
     }
 
     return false;
+  }
+
+  addTraining() {
+    this.addTrainingClick.emit()
   }
 
 }

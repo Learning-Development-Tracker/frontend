@@ -6,11 +6,12 @@ import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 import { HttpClient } from '@angular/common/http';
 import { PopupComponent } from './add-more-training-popup';
 import { trainingsModel } from '../../../../models/trainings.model';
+import { ManageTrainingsComponent } from '../manage-trainings/manage-trainings.component';
 
 @Component({
   selector: 'add-edit-training-popup',
   standalone: true,
-  imports: [FormsModule, CommonModule, TableComponent, PopupComponent],
+  imports: [FormsModule, CommonModule, TableComponent, PopupComponent, ManageTrainingsComponent],
   templateUrl: './add-edit-training.html',
   styleUrl: './add-edit-training.css'
 })

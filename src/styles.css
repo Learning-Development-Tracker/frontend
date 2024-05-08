@@ -86,7 +86,8 @@ h5 {
    margin: 10px;
    width: calc(100% - 10rem);
    max-width: 82vw;
-   max-height: 80vh;
+   max-width: 82vw;
+   height: 20px;
    overflow-y: auto;
    overflow-x: auto;
 }
@@ -112,6 +113,7 @@ h5 {
    width: calc(100% - 5rem);
    min-width: 100vw;
    height: 100vh;
+   max-height: 100vh;
    z-index: 0;
    transition: all .5s ease;
    margin-top: -1.4em !important;

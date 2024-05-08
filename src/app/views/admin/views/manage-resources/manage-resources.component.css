@@ -17,6 +17,10 @@
     right: 0;
 }
 .table{
-    min-width: 80%;
+    min-width: 100%;
     width: 50rem;
+}
+
+.backButton{
+    padding-top: 20px;
 }

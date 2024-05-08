@@ -8,12 +8,13 @@ import { trainingsModel } from '../../../../models/trainings.model';
 import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dialog-box.component';
 import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.component';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule],
+  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })

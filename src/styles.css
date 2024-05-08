@@ -67,7 +67,6 @@ h5 {
    flex-direction: column;
    padding-left: 2% !important;
    padding-bottom: -30%;
-   padding-top: 1%;
    color: #522A8B;
    align-items: left;
    font-size: xx-large;
@@ -77,27 +76,22 @@ h5 {
    background-color: #EBDDFF;
 }
 
-.contentScreen{
-   display: flex;
+.contentScreen {
+   display: contents;
    margin: 10px;
-   height: 100%;
-   overflow-y: auto;
-   overflow-x: auto;
 }
 
-.contentCard{
+.contentCard {
    display: inline-table;
    margin: 10px;
-
-   min-height: 73vh;
-   max-height: 73vh;
-   max-width: 199vh;
-   min-width: 199vh;
+   width: calc(100% - 10rem);
+   max-width: 82vw;
+   max-height: 80vh;
    overflow-y: auto;
    overflow-x: auto;
 }
 
-.titleScreen{
+.titleScreen {
    background-color: #EBDDFF;
    height: 100%;
    min-height: 100%;
@@ -107,9 +101,21 @@ h5 {
    overflow-x: auto;
 }
 
-.titleLabel{
+.titleLabel {
    font-family: "Montserrat", sans-serif;
    font-weight: 500;
    font-size: large;
    color: #522A8B;
+}
+
+.main-screen {
+   width: calc(100% - 5rem);
+   min-width: 100vw;
+   height: 100vh;
+   z-index: 0;
+   transition: all .5s ease;
+   margin-top: -1.4em !important;
+   /* background-color: blue; */
+   padding: 1rem;
+   background-color: #EBDDFF;
 }

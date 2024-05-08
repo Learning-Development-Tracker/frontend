@@ -11,6 +11,7 @@
             (delete)="onDelete($event)"
             [showButtonManageTrainings]="true"
             (sort)="onSort2($event)"
+            (addTrainingClick)="showPopup()"
         ></app-table>  
         <view-trainings  
             *ngIf="!showViewManage" 
@@ -41,3 +42,8 @@
     
     
 </div>
+
+<add-edit-training-popup 
+*ngIf="isPopupVisible" 
+(close)="closePopup()">
+</add-edit-training-popup>

@@ -40,7 +40,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr *ngIf="matchesGlobalFilter(rowData)">
-            <td class="table-multiple-checkbox">
+            <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>

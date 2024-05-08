@@ -72,6 +72,7 @@ export class LoginComponent {
   passUpdFail = 'Failed password update.';
   mustEndWith = 'E-mail must end with @lpstech.com';
   logInSuccess = 'Successfully logged in.';
+  duplicateExist = 'Email already exist.'
   constructor(
     private popupService: PopupService,
     private loginService: LoginService,
@@ -284,14 +285,17 @@ export class LoginComponent {
         this.popupService.open(this.vcrReset, view, this.options);
       },
       (error: HttpErrorResponse) => {
-        if(error) {
+        if(error.error != null) {
           let errors = error.error.errors[0]
-          this.popupTitle = 'Error';
           this.popupContent = String(errors.message);
           this.errMessage = this.popupContent;
-          this.userReg.password = '';
-          this.popupService.open(this.vcrReset, view, this.options);
+        } else {
+          this.popupContent = this.duplicateExist;
+          this.errMessage = this.popupContent;
         }
+        this.popupTitle = 'Error';
+        this.userReg.password = '';
+        this.popupService.open(this.vcrReset, view, this.options);
       }
     )
   }

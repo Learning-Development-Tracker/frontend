@@ -97,3 +97,15 @@ export const charLen: ValidatorFn = (control: AbstractControl): ValidationErrors
   }
   return null;
 };
+
+export const emailPattern: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  
+  let userEmail = control.get('RegisterEmail');
+  let match = userEmail?.value?.match('[A-Za-z.]+@lpstech\.com');
+  if(!match) {
+    return {
+      emailerror : true
+    }
+  }
+  return null;
+};

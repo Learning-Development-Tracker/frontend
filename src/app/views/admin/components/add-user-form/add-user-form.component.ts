@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation } from '@angular/core';
-import { AddUserInterface, Certification, City, ValidKeys } from './add-user-from.interface';
+import { gender } from './../../../../shared/constants/add-user-form.constants';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation, SimpleChanges } from '@angular/core';
+import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ValidKeys } from './add-user-from.interface';
 import { certificationInputs, empStatusInputs, personalInfoInputs, techStacksInputs } from '../../../../shared/constants/add-user-form.constants';
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -9,6 +10,8 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } f
 import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarComponent } from '../../../../shared/components/calendar/calendar.component';
+import { AddResourceService } from '../../../../service/add-resource.service';
+import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dialog-box.component';
 
 @Component({
   selector: 'app-add-user-form',
@@ -21,7 +24,8 @@ import { CalendarComponent } from '../../../../shared/components/calendar/calend
     DropdownComponent,
     DropdownModule,
     CalendarComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DialogBoxComponent
     ],
   templateUrl: './add-user-form.component.html',
   styleUrl: './add-user-form.component.css',
@@ -30,6 +34,8 @@ import { CalendarComponent } from '../../../../shared/components/calendar/calend
 
 export class AddUserFormComponent {
   @Input() isOpen: boolean = false;
+  @Input() resource: any;
+  @Input() resourceCertifications: any;
   @Output() onCloseClick = new EventEmitter<void>();
   @Output() isOpenChange = new EventEmitter<boolean>();
 
@@ -41,8 +47,10 @@ export class AddUserFormComponent {
   public certificationDocInput = {label: 'Certificate Document', field: "certificate_doc", placeholder: 'File to be upload', type: 'file', element: 'input'};
   teamList!: SelectItemGroup[];
   skillList!: SelectItemGroup[];
-  selectedSkillOption!: City[];
-  selectedTeamOption!: City[];
+  selectedSkillOption!: DropdownInterface[];
+  selectedTeamOption!: DropdownInterface[];
+  genderOption!: any;
+  statusOption!: any;
   dateSelected!: Date;
   empStatusInputs!: any;
   textInputs: string[] = [];
@@ -50,28 +58,96 @@ export class AddUserFormComponent {
   currentCertification: { cert_name?: string; date?: Date } = {};
   uploadForm!: FormGroup;
   
-  public resourceInfos = {
+  
+  public initialResourceInfos = {
     lastname: '',
     firstname: '',
     middlename: '',
     suffix: '',
     gender: '',
-    email: '',
-    career_step: '',
-    emp_id: '',
+    emailAddress: '',
+    careerStep: '',
+    empId: '',
     region: '',
     role: '',
     team: '',
-    emp_status: '',
-    skills:'',
-    certifications: []
+    status: '',
+    skills:''
   }
 
-  ngOnInit(): void {
-   
+  public resourceInfos: any = {
+    lastname: '',
+    firstname: '',
+    middlename: '',
+    suffix: '',
+    gender: '',
+    emailAddress: '',
+    careerStep: '',
+    empId: '',
+    region: '',
+    role: '',
+    team: '',
+    status: '',
+    skills:''
   }
 
-  constructor(private fb: FormBuilder) {
+  ngOnInit(): void { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['resource']) {
+      const defaultValues = {
+        lastname: '',
+        firstname: '',
+        middlename: '',
+        suffix: '',
+        gender: '',
+        emailAddress: '',
+        careerStep: '',
+        empId: '',
+        region: '',
+        role: '',
+        team: '',
+        status: '',
+        skills: ''
+      };
+
+      this.resourceInfos = {
+        ...defaultValues,
+        ...changes['resource'].currentValue?.data
+      };
+
+      this.genderOption = this.resourceInfos.gender;
+      this.statusOption = this.resourceInfos.status;
+      this.selectedTeamOption = this.resourceInfos.team ? this.resourceInfos.team.split(',') : []
+      this.selectedSkillOption = this.resourceInfos.skills ? this.resourceInfos.skills.split(',') : []
+    }
+
+    if(changes['resourceCertifications']) {
+        this.items.clear()
+        const certificationData = changes['resourceCertifications'].currentValue?.data;
+        if (certificationData && Array.isArray(certificationData)) {
+          // Populate the FormArray with new data
+          certificationData.forEach((certification) => {
+            const newDate = new Date(certification.certificationDate)
+
+            const itemGroup = this.fb.group({
+              name: [certification.certificationName || ''], // Default value handling
+              calendar: [newDate || null], // Default value handling
+              fileupload: [certification.fileName || null], // Adjust as needed
+            });
+  
+            this.items.push(itemGroup); // Add to FormArray
+
+            console.log(itemGroup, "<<<<<<itemGroup")
+          });
+        }
+
+    }
+    console.log(this.resourceCertifications, "<<<<<< resourceCertifications")
+  }
+
+  constructor(private fb: FormBuilder, private addResourceService: AddResourceService) {
+
       this.teamList = [
         {
             label: 'Ad Public',
@@ -107,7 +183,6 @@ export class AddUserFormComponent {
   ];
 
     this.empStatusInputs = empStatusInputs;
-    console.log('Added', this.resourceInfos);
   }
 
   form = this.fb.group({
@@ -147,62 +222,145 @@ export class AddUserFormComponent {
     this.isOpenChange.emit(this.isOpen)
   }
 
-  addCertification() {
-    this.certificationInfoInputs.push(this.cetificationInput);
-    this.certificationInfoInputs.push(this.dateCertifiedInput);
-    this.certificationInfoInputs.push(this.certificationDocInput);
-
-    this.currentCertification.cert_name = '';
-    this.currentCertification.date = new Date();
-  }
-
   getValidKey(key: string) {
     return key as ValidKeys;
   }
 
   onInputChange(key: string, newValue: string) {
     this.resourceInfos[this.getValidKey(key)] = newValue;
-    console.log('Added', this.resourceInfos);
   }
 
-  onMultiSelectChange(key: string, selected: any) {
-    this.resourceInfos[this.getValidKey(key)] = selected;
-    console.log('Added', this.resourceInfos);
+  onMultiSelectChange(key: string, selected: Array<String>) {
+    this.resourceInfos[this.getValidKey(key)] = selected.join(',')
+  }
+
+  onSingleSelectChange(key: string, name: string) {
+    this.resourceInfos[this.getValidKey(key)] = name;
   }
 
   onFileChange(event: Event, index: number, items:any) {
     const input = event.target as HTMLInputElement;
-    console.log(index, "<<<< event")
-    console.log(items, "<<<< items")
     if (input.files && input.files.length > 0) {
       const selectedFile = input.files[0];
-      const control = this.items.at(index); // Get the specific form control
-      control.patchValue({ fileupload: selectedFile }); // Update the form control
-      control.get('fileupload')?.updateValueAndValidity(); // Ensure validity
+      const control = this.items.at(index);
+      control.patchValue({ fileupload: selectedFile });
+      control.get('fileupload')?.updateValueAndValidity();
     }
   }
 
-  saveResource() {
-    const formValue: any = this.form.value; // Get the form's current value
-    this.resourceInfos.certifications = formValue.items;
+  validateRequiredProperties(
+    resourceInfo: ResourceInfoInterface,
+    requiredFields: string[]
+  ): string[] {
+    const errors: string[] = [];
+  
+    requiredFields.forEach((field) => {
+      if (!resourceInfo[field]) {
+        // errors.push(`${field} is required`);
+        errors.push(field);
+      }
+    });
+  
+    return errors;
+  }
+
+  validationErrors: string[] = [];
+
+  checkValidation() {
+    const requiredFields = ['lastname', 'firstname', 'emailAddress', 'careerStep', 'empId', 'role', 'team', 'status'];
     
+    this.validationErrors = this.validateRequiredProperties(
+      this.resourceInfos,
+      requiredFields
+    );
+
+    if (this.validationErrors.length === 0) {
+      console.log('Validation passed. All required fields are filled.');
+    } else {
+      console.log('Validation failed with errors:', this.validationErrors);
+    }
+  }
+
+  requiredFieldDialogMsg() {
+    return `Please fill out required ${this.validationErrors.length !== 0 ? this.validationErrors[0] : 'required'}`
+  }
+
+  resetFields () {
+    this.resourceInfos = this.initialResourceInfos;
+    while (this.items.length > 0) {
+      this.items.removeAt(0);
+    }
+
+    this.onClosed();
+  }
+
+  openDialog = false;
+  
+  hasErrors(){
+    if (this.validationErrors.length > 0) {
+      this.openDialog = true;
+    }
+  }
+
+  closeDialog() {
+    this.openDialog = false;
+  }
+
+  saveResource() {
+    const datePipe = new DatePipe('en-US');
+    const formValue: any = this.form.value; // Get the form's current value
     const formData = new FormData();
 
     this.items.controls.forEach((item, index) => {
       const itemGroup = item as FormGroup;
       const file = itemGroup.get('fileupload')?.value;
-
-      console.log(file, "file")
-
-      if (file) {
-        formData.append(`file_${index}`, file);
-      }
-
+      const date = itemGroup.get('calendar')?.value;
+      const formattedDate: any = datePipe.transform(date, 'yyyy-MM-dd');
+  
+      formData.append(`files`, file);
+      formData.append('owner', this.resourceInfos.empId && this.resourceInfos.empId );
       formData.append(`name_${index}`, itemGroup.get('name')?.value);
-      formData.append(`calendar_${index}`, itemGroup.get('calendar')?.value);
+      formData.append(`calendar_${index}`, formattedDate);
+      console.log(itemGroup.get('name')?.value, "<<<< item")
     })
 
-    console.log(this.form.value, "this.form.value <<<<<")
-  
+    // this.addResourceService.addResource(this.resourceInfos)
+    // .subscribe((res: any) => {
+    //   console.log(res, "<<<<<< RES")
+    // }, err => {
+    //   console.log(err, "<<<<< ERROR")
+    // });
+
+    // this.addResourceService.addResourceCertification(formData)
+    // .subscribe((res: any) => {
+    //   console.log(res, "<<<<<< RES")
+    // }, err => {
+    //   console.log(err, "<<<<< ERROR")
+    // });
+
+    // public resourceInfos = {
+    //   lastname: '',
+    //   firstname: '',
+    //   middlename: '',
+    //   suffix: '',
+    //   gender: '',
+    //   emailAddress: '',
+    //   careerStep: '',
+    //   empId: '',
+    //   region: '',
+    //   role: '',
+    //   team: '',
+    //   status: '',
+    //   skills:''
+    // }
+
+    // this.checkValidation();
+    // this.hasErrors();
+    console.log(this.resourceInfos, "first <<<<<<<<<")
+    console.log(this.form.value, "formvalue <<<<<<<<<")
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+  }
+    // this.resetFields();
   }
 }

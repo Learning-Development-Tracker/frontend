@@ -12,6 +12,7 @@ import { ViewPersonalInfoComponent } from './resource-details/view-personal-info
 import { ResourceDetailsComponent } from './resource-details/resource-details.component';
 import { CustomBottonComponent } from './../../../../shared/components/custom-button/custom-button.component';
 import { AddUserFormComponent } from '../../components/add-user-form/add-user-form.component';
+import { AddResourceService } from '../../../../service/add-resource.service';
 
 
 @Component({
@@ -40,6 +41,26 @@ export class ManageResourcesComponent implements OnInit{
   isResource: boolean = false;
   isOpen: boolean = false;
 
+  public resourceInfos = {
+    lastname: '',
+    firstname: '',
+    middlename: '',
+    suffix: '',
+    gender: '',
+    emailAddress: '',
+    careerStep: '',
+    empId: '',
+    region: '',
+    role: '',
+    team: '',
+    status: '',
+    skills:''
+  }
+
+  public resourceCertifications: [] = [];
+
+  constructor(private addResourceService: AddResourceService) { }
+
   ngOnInit(): void {
    
   }
@@ -50,13 +71,29 @@ export class ManageResourcesComponent implements OnInit{
 
   onOpenClick() {
     this.isOpen = true;
-    console.log(this.isOpen,"<<<<<<< IS OPEN")
+    this.addResourceService.viewResource(202)
+    .subscribe((res: any) => {
+      console.log(res, "<<<<<< RES")
+      delete res.data['password'];
+      delete res.data['certifications'];
+      this.resourceInfos = res
+    }, err => {
+      console.log(err, "<<<<< ERROR")
+    });
+
+    this.addResourceService.viewResourceCertification('82010603')
+    .subscribe((res: any) => {
+      console.log(res, "<<<<<< RES")
+      this.resourceCertifications = res
+    }, err => {
+      console.log(err, "<<<<< ERROR")
+    });
   }
 
   onCloseClick() {
     this.isOpen = false;
   }
-
+  
   isOpenChange(event: any){
     console.log(event, "<<<<<<< event")
     this.isOpen = false;

@@ -18,12 +18,12 @@
                                                     'twelve': i === 10,
                                                     'thirteen': i === 11
                                                 }">
-                    <label>{{ info.label }}</label>
+                    <label>{{ info.label }} {{ info.isRequired ? '*' : '' }}</label>
                     <input 
                         *ngIf="info.element === 'input'" 
                         [type]="info.type"  
                         [placeholder]="info.placeholder"
-                        [ngModel]="textInputs[i]"
+                        [ngModel]="resourceInfos[info.field]"
                         (ngModelChange)="onInputChange(info.field, $event)"
                     />
                     <p-multiSelect
@@ -35,7 +35,7 @@
                         display="chip"
                         styleClass="multiselect"
                         panelStyleClass="multiselect-panel"
-                        (ngModelChange)="onMultiSelectChange(info.field, $event)"
+                        (ngModelChange)="onMultiSelectChange(info.field, $event)"                 
                     >
                         <ng-template let-group pTemplate="group">
                             <div class="flex align-items-center">
@@ -45,11 +45,14 @@
                     </p-multiSelect>
                     <p-dropdown 
                         *ngIf="info.element === 'singleselect-dropdown'" 
-                        [options]="empStatusInputs" 
-                        optionLabel="name"
+                        [options]="info.data" 
                         styleClass="multiselect"
                         panelStyleClass="singleselect-panel"
-                        [placeholder]="info.placeholder"></p-dropdown>
+                        [placeholder]="info.placeholder"
+                        (ngModelChange)="onSingleSelectChange(info.field, $event)"
+                        [(ngModel)]="info.field === 'gender' ? genderOption : statusOption" 
+                    >
+                    </p-dropdown>
                 </div>
             </ng-container>
         </ng-container>
@@ -98,7 +101,7 @@
                             type="file"  
                             class="hidden upload"
                             [id]="'files' + i"
-                            formControlName="fileupload"
+         
                             (change)="onFileChange($event, i, items)"
                         />
                         <label [for]="'files' + i">File to be upload</label>
@@ -129,6 +132,15 @@
             (buttonClicked)="saveResource()"
         ></app-custom-button>
         </div>
+
+        <app-dialog-box
+            [isOpen]="openDialog"
+            [msgStatus]="'error'"
+            [msg]="requiredFieldDialogMsg()"
+            [imgStatus]="'../../../../../assets/warning.svg'"
+            (dialogClosed)="closeDialog()"
+        >
+        </app-dialog-box>
         
     </div>
 </div>

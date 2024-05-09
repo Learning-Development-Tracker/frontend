@@ -11,6 +11,7 @@ export class LoginService {
   httpClient = inject(HttpClient);
   constructor(private configService: ConfigService) {
   }
+
   login(username: string, password: string) {
     return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/login", { username, password });
   }
@@ -18,4 +19,9 @@ export class LoginService {
   addUserLogin(login :Register){
     return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/register", login);
   }
+  
+  changePassword(username: string, password: string) {
+    return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/reset", { username, password });
+  }
+  
 }

@@ -16,7 +16,7 @@
             <div *ngIf="showButtonManageTrainings" class="actions" > 
                 <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar"></app-custom-button>
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
-                <app-custom-button label="Add" margin="5px" icon="pi pi-plus"></app-custom-button>
+                <app-custom-button label="Add" margin="5px" icon="pi pi-plus" (buttonClicked)="addTraining()"></app-custom-button>
             </div>
             <div *ngIf="showButtonManageResources" class="actions" > 
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
@@ -40,7 +40,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr *ngIf="matchesGlobalFilter(rowData)">
-            <td class="table-multiple-checkbox">
+            <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>

@@ -8,12 +8,14 @@ import { trainingsModel } from '../../../../models/trainings.model';
 import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dialog-box.component';
 import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.component';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule],
+  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, AddEditTrainingComponent],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })
@@ -29,6 +31,7 @@ export class ManageTrainingsComponent implements OnInit {
   public errMessage: any;
   showViewManage: boolean = true;
   selectedId: string = "";
+  isPopupVisible: boolean = false;
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }
@@ -113,6 +116,15 @@ export class ManageTrainingsComponent implements OnInit {
 
   onCloseClick() {
     this.isOpen = false;
+  }
+
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  showPopup() {
+    this.isPopupVisible = true;
+    console.log("true");
   }
  
 }

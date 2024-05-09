@@ -44,6 +44,8 @@
 </div>
 
 <add-edit-training-popup 
-*ngIf="isPopupVisible" 
+*ngIf="isPopupVisible"
+[trainingDetails]="selectedTraining"
 (close)="closePopup()">
 </add-edit-training-popup>
+

@@ -21,4 +21,12 @@ export class ManageTrainingService {
         return this.httpClient.delete(this.configService.apiUrl + this.baseUrl + "/deleteTraining/" + id);
     }
 
+    addTraining(){
+        return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/addTraining", {  });
+    }
+
+    editTraining(){
+        return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/editTraining", {  });
+    }
+
 }

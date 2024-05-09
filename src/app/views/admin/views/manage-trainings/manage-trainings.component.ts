@@ -9,6 +9,7 @@ import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dia
 import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.component';
 import { CommonModule } from '@angular/common';
 import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
+import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class ManageTrainingsComponent implements OnInit {
   showViewManage: boolean = true;
   selectedId: number = 0;
   isPopupVisible: boolean = false;
+  showEdit: boolean = true;
+  selectedTraining: AddTrainingModel = new AddTrainingModel();
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }
@@ -73,8 +76,10 @@ export class ManageTrainingsComponent implements OnInit {
     this.toggleShowViewTraining();   
   }
 
-  onEdit(item: any){
-    console.log('Edit item: ', item)
+  onEdit(rowData: AddTrainingModel){
+    this.selectedTraining = rowData;
+    console.log('Selected Training:', this.selectedTraining); // Add this line to check selectedTraining
+    this.showPopup();
   }
 
   onDelete(rowData: any) {
@@ -123,7 +128,10 @@ export class ManageTrainingsComponent implements OnInit {
 
   showPopup() {
     this.isPopupVisible = true;
-    console.log("true");
+  }
+
+  showEditTraining() {
+    this.showEdit = !this.showEdit;
   }
  
 }

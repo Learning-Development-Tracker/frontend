@@ -1,9 +1,6 @@
 <div class="popup-overlay">
   
     <div class="popup-container bg-light p-4 rounded">     
-      <div class="popup-header d-flex justify-content-between align-items-center mb-3">   
-      <button type="btn-close" class="btn btn-secondary" (click)="onClickToggleB()">Back</button>       
-      </div>
       <div class="row" >
         <div class="col-4">
           <p class= "title-label">Product Name</p>
@@ -69,5 +66,10 @@
           <p class= "title-label">Certification Link</p>
           <span  class="black-label">{{data.certlink}}</span>
         </div>
-      </div>     
+      </div>        
+      <div class=" row backButton">   
+        <div class="col-md-10"></div>
+        <div class="col-md-2" style="text-align: right;">
+          <app-custom-button [label]="'Back'"  (click)="onClickToggleB()"></app-custom-button>
+      </div>   
   </div>

@@ -30,7 +30,7 @@ export class ManageTrainingsComponent implements OnInit {
   viewData: any[] = [];
   public errMessage: any;
   showViewManage: boolean = true;
-  selectedId: number = 0;
+  selectedId: string = "";
   isPopupVisible: boolean = false;
 
   constructor(private manageTrainingService: ManageTrainingService,
@@ -39,9 +39,9 @@ export class ManageTrainingsComponent implements OnInit {
   ngOnInit(): void {
     this.getTraining();
     this.tableColumn = [
-      { header: 'Name', field: 'trainingname' },
+      { header: 'Name', field: 'trainingName' },
       { header: 'Total Hours', field: 'duration' },
-      { header: 'Type', field: 'trainingtype' },
+      { header: 'Type', field: 'trainingType' },
       { header: 'Actions', field: 'actions' }
     ];
 
@@ -53,7 +53,7 @@ export class ManageTrainingsComponent implements OnInit {
     .subscribe((res: any) => {
       this.errMessage="";
       this.trainingList = res.data;
-      // console.log(this.trainingList, "<<<<<< RES")
+      console.log(this.trainingList, "<<<<<< RES")
     }, err => {
       this.errMessage = err.error;
       console.log(err, "<<<<< ERROR")
@@ -102,7 +102,7 @@ export class ManageTrainingsComponent implements OnInit {
   this.deleteTraining(this.selectedId);
   }
 
-  deleteTraining(selectedId: number){
+  deleteTraining(selectedId: string){
     this.manageTrainingService.deleteTraining(selectedId).subscribe(
       () => {
           this.getTraining();

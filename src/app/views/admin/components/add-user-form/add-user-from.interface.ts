@@ -1,3 +1,5 @@
+import { SelectItem } from "primeng/api";
+
 export interface AddUserInterface  {
     label: string;
     placeholder: string;

@@ -1,6 +1,6 @@
 <ng-container>
-    <div class="main-manage-resources row">
-        <!-- <div class="col-md-12">
+    <div class="main-manage-resources row main-screen">
+        <div class="col-md-12">
             <div class="row">
                 <label class="subHeader" *ngIf="!isResource">
                     Manage Resources
@@ -9,21 +9,28 @@
                     Resource Details
                 </label>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 ">
                 <div class="contentScreen">
-                    <p-card class="contentCard">
-                        <div class="row" *ngIf="!isResource">
-                            <app-custom-button [label]="'Resource Details'" (buttonClicked)="resourceDtl()"></app-custom-button>
+                    <p-card class="contentCard table">
+                        <div class="row" *ngIf="!isResource showButtonManageResources">
+                            <app-table 
+                                [data]="resourceList" 
+                                [columns]="tableColumn" 
+                                (view)="onView($event)"
+                                (delete)="onDelete($event)"
+                                [showButtonManageResources]="true"
+                                (addResourceButtonClick)="addResource()"
+                                (edit)="onEdit($event)" 
+                            ></app-table>
                         </div>
                         <div class="row" *ngIf="isResource">
-                            <app-resource-details></app-resource-details>
+                            <app-resource-details [memberDtl]="selectedMemberDtl"></app-resource-details>
                         </div>
                     </p-card>
                 </div>
             </div>
-        </div> -->
-        <app-custom-button [label]="'Ádd Resource'" (buttonClicked)="onOpenClick()"></app-custom-button>
-        <app-add-user-form [resourceCertifications]="resourceCertifications" [resource]="resourceInfos" [isOpen]="isOpen" (isOpenChange)="isOpenChange($event)"></app-add-user-form>
+        </div>
+        <!-- <app-custom-button [label]="'Ádd Resource'" (buttonClicked)="onOpenClick()"></app-custom-button> -->
+        <app-add-user-form [resourceCertifications]="resourceCertifications" [resource]="resourceInfos" [isOpen]="isOpen" [action]="action" (isOpenChange)="isOpenChange($event)"></app-add-user-form>
     </div>
-
 </ng-container>

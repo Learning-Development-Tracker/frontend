@@ -25,7 +25,9 @@ export class TableComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() addResourceButtonClick = new EventEmitter<void>();
   @Input() showButtonManageTrainings: boolean = false;
+  @Input() showButtonManageResources: boolean = false;
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
@@ -45,12 +47,16 @@ export class TableComponent implements OnInit {
     this.edit.emit(employee);
   }
 
-  onDelete(employee: any) {
-    this.delete.emit(employee);
+  onDelete(rowData: any) {
+    this.delete.emit(rowData);
   }
 
   hasTrainings(rowData: any): boolean {
     return rowData.trainings && rowData.trainings.length > 0;
+  }
+
+  hasCertifications(rowData: any): boolean {
+    return rowData.certifications && rowData.certifications.length > 0;
   }
 
   constructor() { }
@@ -80,6 +86,10 @@ export class TableComponent implements OnInit {
     }
 
     return false;
+  }
+
+  addResourceButton () {
+    this.addResourceButtonClick.emit();
   }
 
 }

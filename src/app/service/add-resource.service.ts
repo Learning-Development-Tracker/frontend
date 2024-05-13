@@ -28,4 +28,12 @@ export class AddResourceService {
   viewResourceCertification(ownerId: string) {
     return this.httpClient.get(this.configService.apiUrl + `/api/v1/authentication/viewResourceCertification/${ownerId}`);
   }
+
+  getAllResource() {
+    return this.httpClient.get(this.configService.apiUrl + '/api/v1/authentication/getAll');
+  }
+
+  editResource(id: number, resourceInfos: any) {
+    return this.httpClient.put(this.configService.apiUrl + `/api/v1/authentication/editResource/${id}`,  resourceInfos);
+  }
 }

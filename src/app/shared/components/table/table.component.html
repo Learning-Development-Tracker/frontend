@@ -3,7 +3,8 @@
     [columns]="columns"
     styleClass="p-datatable-striped"
     (sort)="onSort($event)" 
-    [tableStyle]="{ 'min-width': '50rem' }"> 
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
             <div class="search"> 
@@ -17,10 +18,20 @@
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
                 <app-custom-button label="Add" margin="5px" icon="pi pi-plus"></app-custom-button>
             </div>
+            <div *ngIf="showButtonManageResources" class="actions" > 
+                <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
+                <app-custom-button label="Export" margin="5px" icon="pi pi-file-export"></app-custom-button>
+                <app-custom-button (buttonClicked)="addResourceButton()" label="Add Resource" margin="5px"></app-custom-button>
+                <app-custom-button label="Set Training" margin="5px"></app-custom-button>
+            </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
+            <th *ngIf="showButtonManageResources" class="p-header">
+                <p-tableHeaderCheckbox>
+                </p-tableHeaderCheckbox>
+            </th>
             <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon></p-sortIcon>
@@ -29,8 +40,12 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr *ngIf="matchesGlobalFilter(rowData)">
+            <td class="table-multiple-checkbox">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
             <ng-container *ngFor="let col of columns">
-                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'actions'; else tags">
+                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'certifications' && col.field !== 'actions'; else tags">
                     {{ rowData[col.field] }}
                 </td>
                 <ng-template #tags>
@@ -45,6 +60,9 @@
                     <ng-template #button>
                         <app-custom-button label="Set Training"></app-custom-button>
                     </ng-template>
+                </td>
+                <td *ngIf="col.field == 'certifications'">
+                        <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
                 </td>
                 <td *ngIf="col.field == 'actions'">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>

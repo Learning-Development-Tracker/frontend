@@ -1,6 +1,6 @@
 import { gender } from './../../../../shared/constants/add-user-form.constants';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation, SimpleChange, SimpleChanges } from '@angular/core';
 import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ValidKeys } from './add-user-from.interface';
 import { certificationInputs, empStatusInputs, personalInfoInputs, techStacksInputs } from '../../../../shared/constants/add-user-form.constants';
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
@@ -36,6 +36,7 @@ export class AddUserFormComponent {
   @Input() isOpen: boolean = false;
   @Input() resource: any;
   @Input() resourceCertifications: any;
+  @Input() action: string = '';
   @Output() onCloseClick = new EventEmitter<void>();
   @Output() isOpenChange = new EventEmitter<boolean>();
 
@@ -57,7 +58,6 @@ export class AddUserFormComponent {
   public certificationInfos: Certification[] = []; 
   currentCertification: { cert_name?: string; date?: Date } = {};
   uploadForm!: FormGroup;
-  
   
   public initialResourceInfos = {
     lastname: '',
@@ -91,9 +91,12 @@ export class AddUserFormComponent {
     skills:''
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    console.log(this.isOpen, "<<<<< add user is open 1")
+  }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(this.isOpen, "<<<<< add user is open 2")
     if (changes['resource']) {
       const defaultValues = {
         lastname: '',
@@ -220,6 +223,7 @@ export class AddUserFormComponent {
   onClosed() {
     this.isOpen = false;
     this.isOpenChange.emit(this.isOpen)
+    this.resetFields()
   }
 
   getValidKey(key: string) {
@@ -285,13 +289,17 @@ export class AddUserFormComponent {
     return `Please fill out required ${this.validationErrors.length !== 0 ? this.validationErrors[0] : 'required'}`
   }
 
-  resetFields () {
+  resetFields() {
     this.resourceInfos = this.initialResourceInfos;
+    this.genderOption = '';
+    this.statusOption = '';
+    this.selectedTeamOption = []
+    this.selectedSkillOption = []
     while (this.items.length > 0) {
       this.items.removeAt(0);
     }
 
-    this.onClosed();
+    // this.onClosed();
   }
 
   openDialog = false;
@@ -307,6 +315,8 @@ export class AddUserFormComponent {
   }
 
   saveResource() {
+    this.checkValidation();
+    this.hasErrors();
     const datePipe = new DatePipe('en-US');
     const formValue: any = this.form.value; // Get the form's current value
     const formData = new FormData();
@@ -324,19 +334,71 @@ export class AddUserFormComponent {
       console.log(itemGroup.get('name')?.value, "<<<< item")
     })
 
-    // this.addResourceService.addResource(this.resourceInfos)
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
+    if(this.action !== '' && this.action === 'add') {
+      if (this.validationErrors.length === 0) {
+      this.addResourceService.addResource(this.resourceInfos)
+      .subscribe((res: any) => {
+        console.log(res, "<<<<<< RES")
+        this.resetFields();
+        this.onClosed()
+      }, err => {
+        console.log(err, "<<<<< ERROR")
+      });
+  
+      this.addResourceService.addResourceCertification(formData)
+      .subscribe((res: any) => {
+        console.log(res, "<<<<<< RES")
+      }, err => {
+        console.log(err, "<<<<< ERROR")
+      });
+    }
+    console.log("add")
+    } else if (this.action !== '' && this.action === 'edit') {
+      console.log("edit")
+      const _resourceInfos = {
+        lastname: this.resourceInfos.lastname,
+        firstname: this.resourceInfos.firstname,
+        middlename: this.resourceInfos.middlename,
+        suffix: this.resourceInfos.suffix,
+        gender: this.resourceInfos.gender,
+        emailAddress: this.resourceInfos.emailAddress,
+        careerStep: this.resourceInfos.careerStep,
+        empId: this.resourceInfos.empId,
+        region: this.resourceInfos.region,
+        role: this.resourceInfos.role,
+        team: this.resourceInfos.team,
+        status: this.resourceInfos.status,
+        skills: this.resourceInfos.skills
+      }
+      if (this.validationErrors.length === 0) {
+        this.addResourceService.editResource(this.resourceInfos.id, _resourceInfos)
+        .subscribe((res: any) => {
+          console.log(res, "<<<<<< RES")
+          this.resetFields();
+          this.onClosed()
+        }, err => {
+          console.log(err, "<<<<< ERROR")
+        });
 
-    // this.addResourceService.addResourceCertification(formData)
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
+      }
+    }
+  //   {
+  //     "lastname": "DOEEE",
+  //     "firstname": "johnnn",
+  //     "middlename": "doeee",
+  //     "suffix": "",
+  //     "gender": "male",
+  //     "emailAddress": "john@gmail.com",
+  //     "password": "test123",
+  //     "careerStep": "i04",
+  //     "empId": "82010603",
+  //     "region": "III",
+  //     "role": "USER",
+  //     "team": "ad_public",
+  //     "status": "active",
+  //     "skills": "fullstack"
+  // }
+    
 
     // public resourceInfos = {
     //   lastname: '',
@@ -354,13 +416,9 @@ export class AddUserFormComponent {
     //   skills:''
     // }
 
-    // this.checkValidation();
-    // this.hasErrors();
+  
     console.log(this.resourceInfos, "first <<<<<<<<<")
     console.log(this.form.value, "formvalue <<<<<<<<<")
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-  }
-    // this.resetFields();
+    this.resetFields();
   }
 }

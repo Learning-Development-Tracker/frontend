@@ -1,0 +1,12 @@
+<app-accordion [headerTexts]="inProgHeader">
+    <app-transaction-info-card [trainingInfo]="trnngInProgFilter"></app-transaction-info-card>
+</app-accordion>
+<app-accordion [headerTexts]="completedHeader">
+    <app-transaction-info-card [trainingInfo]="trnngCmpltdFilter"></app-transaction-info-card>
+</app-accordion>
+<app-accordion [headerTexts]="overdueHeader">
+    <app-transaction-info-card [trainingInfo]="trnngOverdueFilter"></app-transaction-info-card>
+</app-accordion>
+<app-accordion [headerTexts]="pendingHeader">
+    <app-transaction-info-card [trainingInfo]="trnngPendingFilter"></app-transaction-info-card>
+</app-accordion>

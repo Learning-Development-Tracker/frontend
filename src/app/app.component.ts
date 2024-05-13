@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AdminComponent } from './views/admin/admin.component';
+// import { AdminComponent } from './views/admin/admin.component';
 import { ApproverComponent } from './views/approver/approver.component';
 import { UserComponent } from './views/user/user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BodyComponent } from './views/admin/views/body/body.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { HeaderComponent } from './shared/components/header/header.component';
+// import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
 
@@ -15,13 +15,13 @@ import { FooterComponent } from './shared/components/footer/footer.component';
   standalone: true,
   imports: [
     RouterOutlet, 
-    AdminComponent, 
+    // AdminComponent, 
     ApproverComponent, 
     UserComponent, 
     HttpClientModule, 
     BodyComponent,
     SidebarComponent,
-    HeaderComponent,
+    // HeaderComponent,
     FooterComponent
   ],
   templateUrl: './app.component.html',

@@ -1,0 +1,22 @@
+.manage-trainings{
+    width: calc(100% - 5rem);
+    min-width: 100vw;
+    height: 100vh;
+    z-index:  0;
+    transition: all .5s ease;
+    /* background-color: blue; */
+    padding: 1.5rem;
+}
+
+.button-container {
+    margin-left: auto; /* Pushes the button container to the right */
+}
+
+.button-trainings {
+    margin-top: 10px; /* Optional: Add margin if needed */
+    right: 0;
+}
+.table{
+    min-width: 85%;
+    width: 50rem;
+}

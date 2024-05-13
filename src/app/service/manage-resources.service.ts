@@ -26,4 +26,8 @@ export class ManageResourcesService {
         );
     }
 
+    getTrainingList() {
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewTrainingDtl", {});
+    }
+
 }

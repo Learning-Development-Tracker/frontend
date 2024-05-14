@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { CustomBottonComponent } from '../../shared/components/custom-button/custom-button.component';
 
-import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { certificationInfo } from '../../shared/constants/info-card.constant';
 import { InfoCardComponent } from '../../shared/components/info-card/info-card.component';
@@ -18,7 +17,7 @@ import { BodyComponent } from './views/body/body.component';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [RouterOutlet, CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
+  imports: [CustomBottonComponent, HeaderComponent, FooterComponent, PanelModule, CardModule, ChartModule, ManageResourcesComponent,
     AdminDashboardComponent, SidebarComponent, BodyComponent, InfoCardComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
@@ -26,13 +25,10 @@ import { BodyComponent } from './views/body/body.component';
 export class AdminComponent {
   back: string = 'Back';
   data: any;
-  constructor(private router: Router) { }
+  constructor() { }
   
   ngOnInit(): void {
     this.data = certificationInfo;
   }
 
-  backHome() {
-    this.router.navigate(['/']);
-  }
 }

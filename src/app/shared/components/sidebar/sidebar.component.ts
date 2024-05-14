@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SublevelMenuComponent } from './sublevel-menu.component';
 import { INavbarData } from './helper';
+import { AccessLevel } from '../../constants/access-level'
 
 
 interface SidebarToggle {
@@ -22,9 +23,10 @@ export class SidebarComponent implements OnInit {
   @Output() onToggleSidebar: EventEmitter<SidebarToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
-  navData = navbarData;
+  //navData = navbarData;
+  navData: any;
   multiple: boolean = false;
-
+  
   @HostListener('window:resize', ['$event'])
   onResize(event: any){
     this.screenWidth = window.innerWidth;
@@ -36,6 +38,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
+      this.getAccessLevelScr(AccessLevel.USER);
   }
 
   toggleCollapse(): void {
@@ -57,5 +60,9 @@ export class SidebarComponent implements OnInit {
       }
     }
     item.expanded = !item.expanded
+  }
+
+  getAccessLevelScr(AccessLevelType: string){
+    this.navData = navbarData.filter(item => item.accesslevel.match(AccessLevelType));
   }
 }

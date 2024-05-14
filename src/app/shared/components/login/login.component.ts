@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PopupOptions } from './popup-options';
 import { matchpassword, minimuminput, lowCase, upCase, oneDIgit, oneSymbol, charLen, emailPattern } from './matchpassword.validator';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginService } from '../../../authentication/login.services';
+import { LoginService } from './login.services';
 import { Register } from '../../../models/register';
 import { Router } from '@angular/router';
 
@@ -24,12 +24,12 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   @ViewChild('vcrPass', { static: true, read: ViewContainerRef })
   vcrPassword!: ViewContainerRef;
-  @ViewChild('vcrLogin', { static: true, read: ViewContainerRef })
-  vcrLogin!: ViewContainerRef;
   @ViewChild('vcrReset', { static: true, read: ViewContainerRef })
   vcrReset!: ViewContainerRef;
-  @ViewChild('vcrCreate', { static: true, read: ViewContainerRef })
-  vcrCreate!: ViewContainerRef;
+  @ViewChild('vcrCreateUsername', { static: true, read: ViewContainerRef })
+  vcrCreateUsername!: ViewContainerRef;
+  @ViewChild('vcrCreatePassword', { static: true, read: ViewContainerRef })
+  vcrCreatePassword!: ViewContainerRef;
   @ViewChild('vcrUpdate', { static: true, read: ViewContainerRef })
   vcrUpdate!: ViewContainerRef;
   @Output() emailChanged = new EventEmitter<string>();
@@ -51,9 +51,11 @@ export class LoginComponent {
   isUsernameInput: boolean = false;
   isPasswordInput: boolean = false;
   disableBtn: boolean = true;
+  disableBtnChUN: boolean = true;
   secondForm: FormGroup;
   thirdForm: FormGroup;
   fourthForm: FormGroup;
+  checkUNForm: FormGroup;
   userReg: Register = {
     email: '',
     username: '',
@@ -67,20 +69,29 @@ export class LoginComponent {
   }; 
   popupTitle: string = '';
   popupContent: string = '';
+  nameNotFound: string = '';
   passUpdSuccess = 'Successfully updated password.';
   regUserSuccess = 'Successfully registered user.';
-  passUpdFail = 'Failed password update.';
+  passChgSuccess = 'Successfully created password.';
+  passUpdFail = 'Failed updating password.';
+  passChgFail = 'Failed creating password.';
   mustEndWith = 'E-mail must end with @lpstech.com';
   logInSuccess = 'Successfully logged in.';
-  duplicateExist = 'Email already exist.'
+  duplicateExist = 'Email already exist.';
+  imgHideTxt = './../../../../assets/eyeicon-slash.png';
+  imgShowTxt = './../../../../assets/eyeicon.png';
+  imgSuccess = './../../../../assets/check-mark.png';
+  imgFail = './../../../../assets/x-mark.png';
   constructor(
     private popupService: PopupService,
     private loginService: LoginService,
     private router: Router
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
-    };
+
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => {
+    //   return false;
+    // };
+    
     this.secondForm = new FormGroup({
       RegisterEmail: new FormControl(null, [Validators.required])
     }, {
@@ -114,6 +125,10 @@ export class LoginComponent {
         oneSymbol,
         charLen
       ]
+    });
+
+    this.checkUNForm = new FormGroup({
+      UserName: new FormControl(null, [Validators.required]),
     });
   }
 
@@ -152,35 +167,54 @@ export class LoginComponent {
     }
   }
 
-  openLoginTemplate(view: TemplateRef<Element>) {
+  onUsernameChPW(username: Event) {
+    const target = username.target as HTMLInputElement;
+    if (!target.value) {
+      this.isUsernameInput = false;
+    } 
+    if(target.value.length > 7) {
+      this.disableBtnChUN = false;
+      this.isUsernameInput = true;
+    } else {
+      this.disableBtnChUN = true;
+    }
+    this.usernameChanged.emit(target.value);
+  }
+
+  openLoginTemplate() {
     this.loginButtonClicked.emit();
     setTimeout(() => {
-      if(this.errMessage) {
-        this.popupTitle = 'Error'
-        this.popupContent = this.errMessage;
-        this.popupService.open(this.vcrLogin, view, this.options);
+      this.loginService.storeUsername(this.loginData.data.userName);
+      if (this.loginData.data.updatedDate == null) {
+        this.forgotPassword = this.updatePassword;
       } else {
-        this.popupTitle = 'Success'
-        this.popupContent = this.logInSuccess;
-        this.popupService.open(this.vcrLogin, view, this.options);
+        this.loginService.storeJwtToken(this.loginData.data.token);
+        this.loginService.deleteUsername();
+        this.redirectAfterSuccess();
       }
-    }, 1500);
+    }, 250)
   }
-  
-  onLoginSuccess() {
-    this.close();
-    localStorage.setItem('username', this.loginData.data.userName);
-    if (this.loginData.data.updatedDate == null) {
-      this.forgotPassword = this.updatePassword;
-    } else {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-        this.router.navigate(['admin']);
-      })  
-    }
+
+  afterSuccess() {
+    return this.popupTitle == 'Success';
   }
 
   redirectAfterSuccess() {
-    return this.popupTitle == 'Success';
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
+      this.router.navigate(['admin-dashboard'])
+      .then(() => {
+        window.location.reload();
+      });
+    });  
+  }
+
+  refreshLogin() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
+      this.router.navigate(['login'])
+      .then(() => {
+        window.location.reload();
+      });
+    });  
   }
 
   showPW() {
@@ -188,7 +222,7 @@ export class LoginComponent {
   }
 
   changeVisibility(): string {
-    return this.visible ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    return this.visible ? this.imgHideTxt : this.imgShowTxt;
   }
 
   changeType(): string {
@@ -200,7 +234,7 @@ export class LoginComponent {
   }
 
   changeVisibilityConfirm(): string {
-    return this.visibleConfirm ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    return this.visibleConfirm ? this.imgHideTxt : this.imgShowTxt;
   }
 
   changeTypeConfirm(): string {
@@ -300,19 +334,40 @@ export class LoginComponent {
     )
   }
 
-  openPopupTemplate3(view: TemplateRef<Element>) {
-    this.popupService.open(this.vcrCreate, view, this.options);
+  openPopupTemplate3_1(view: TemplateRef<Element>) {
+    this.close();
+    this.popupService.open(this.vcrCreateUsername, view, this.options);
+  }
+
+  openPopupTemplate3_2(view: TemplateRef<Element>) {
+    let confirmPass = this.thirdForm.get('ConfirmPassword')?.value;
+    let uName = this.loginService.getUsername();
+    this.loginService.changePassword(uName!, confirmPass).subscribe(
+      (res: any) => {
+        this.popupTitle = 'Success'
+        this.popupContent = this.passChgSuccess;
+        console.log('>>> RES', res);
+      },
+      (error: HttpErrorResponse) => {
+        this.popupTitle = 'Error'
+        this.popupContent = this.passChgFail;
+        if(error.error != null) {
+          this.popupContent = error.error.errors[0].message;
+        }
+        console.log('>>> ERR', error);
+      }
+    )
+    this.popupService.open(this.vcrCreatePassword, view, this.options);
   }
 
   openPopupTemplate4(view: TemplateRef<Element>) {
     let confirmPass = this.fourthForm.get('ConfirmPassword')?.value;
-    let uName = localStorage.getItem('username');
+    let uName = this.loginService.getUsername();
     this.loginService.changePassword(uName!, confirmPass).subscribe(
       (res: any) => {
         this.popupTitle = 'Success'
         this.popupContent = this.passUpdSuccess;
         console.log('>>> RES', res);
-        this.refreshPage();
       },
       (error: HttpErrorResponse) => {
         this.popupTitle = 'Error'
@@ -320,18 +375,11 @@ export class LoginComponent {
         console.log('>>> ERR', error);
       }
     )
-    localStorage.removeItem('username');
     this.popupService.open(this.vcrUpdate, view, this.options);
   }
 
   close() {
     this.popupService.close();
-  }
-
-  refreshPage() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-      this.router.navigate(['login']);
-    })
   }
 
   openResetPass() {
@@ -342,6 +390,21 @@ export class LoginComponent {
   openCreatePass() {
     this.forgotPassword = this.createPassword;
     this.close();
+  }
+
+  openUserNameInput() {
+  // openUserNameInput(view: TemplateRef<Element>) {
+    // this.close();
+    let uName = this.checkUNForm.get('UserName')?.value
+    this.loginService.deleteUsername();
+    this.loginService.isExistUsername(uName).subscribe((res:any) => {
+      let status = res.status;
+      this.nameNotFound = res.message;
+      if(status == 'success') {
+        this.openCreatePass();
+        this.loginService.storeUsername(uName);      
+      }
+    });
   }
 
   onInputEmailMismatchForm2 = () => {
@@ -390,7 +453,6 @@ export class LoginComponent {
     return thirdFormError || boolMatch
   }
 
-
   onInputNotMatchForm4 = () => {
     let fourthFormError = this.fourthForm.errors?.['passwordmatcherror'];
     let boolMatch = this.fourthForm.untouched
@@ -437,5 +499,9 @@ export class LoginComponent {
 
   updatePass() {
     console.log(this.fourthForm.value)
+  }
+
+  searchUsername() {
+    console.log(this.checkUNForm.value)
   }
 }

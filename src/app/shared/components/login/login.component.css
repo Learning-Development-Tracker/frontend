@@ -69,22 +69,13 @@
     font-size: 0.8em;
 }
 
-#check0, #check1, #check2,
-#check3, #check4, #check5 > span {
-    font-size: smaller;
+img,
+span > img, 
+div > span > img {
+    width: 10px;
 }
 
-.fa-check {
-    color: green;
-    margin: 0 5px;
-}
-
-.fa-xmark {
-    color: red;
-    margin: 0 5px;
-}
-
-.container-right h2,
+h2,
 label,
 p.info {
     color: var(--dark-blue);

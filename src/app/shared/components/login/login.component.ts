@@ -178,7 +178,6 @@ export class LoginComponent {
     } else {
       this.disableBtnChUN = true;
     }
-    this.usernameChanged.emit(target.value);
   }
 
   openLoginTemplate() {

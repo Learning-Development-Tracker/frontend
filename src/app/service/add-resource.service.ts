@@ -36,4 +36,8 @@ export class AddResourceService {
   editResource(id: number, resourceInfos: any) {
     return this.httpClient.put(this.configService.apiUrl + `/api/v1/authentication/editResource/${id}`,  resourceInfos);
   }
+
+  getSkills() {
+    return this.httpClient.get(this.configService.apiUrl + '/api/v1/authentication/getSkills');
+  }
 }

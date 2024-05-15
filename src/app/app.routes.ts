@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'admin', component: AdminComponent},
     { path: 'approver', component: ApproverComponent},
-    { path: 'login', component: UserComponent},
+    // { path: 'login', component: UserComponent},
     { path: 'admin-manage-trainings', component: ManageTrainingsComponent},
     { path: 'admin-dashboard', component: AdminDashboardComponent},
     { path: 'admin-manage-resources', component: ManageResourcesComponent},

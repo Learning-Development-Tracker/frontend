@@ -141,6 +141,24 @@
             (dialogClosed)="closeDialog()"
         >
         </app-dialog-box>
+
+        <app-dialog-box
+            [isOpen]="isValidEmail"
+            [msgStatus]="'error'"
+            [msg]="isValidLPSTechEmailMsg()"
+            [imgStatus]="'../../../../../assets/warning.svg'"
+            (dialogClosed)="closeDialog()"
+        >
+        </app-dialog-box>
+
+        <app-dialog-box
+            [isOpen]="isSaveSuccess"
+            [msgStatus]="'success'"
+            [msg]="'Resource successfully Added'"
+            [imgStatus]="'../../../../../assets/success.png'"
+            (dialogClosed)="closeDialog(true)"
+        >
+        </app-dialog-box>
         
     </div>
 </div>

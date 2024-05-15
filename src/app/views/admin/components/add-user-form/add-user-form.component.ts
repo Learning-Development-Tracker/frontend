@@ -71,7 +71,8 @@ export class AddUserFormComponent {
     region: '',
     role: '',
     team: '',
-    status: '',
+    isEnabled: false,
+    // status: '',
     skills:''
   }
 
@@ -87,16 +88,16 @@ export class AddUserFormComponent {
     region: '',
     role: '',
     team: '',
-    status: '',
+    isEnabled: false,
+    // status: '',
     skills:''
   }
 
   ngOnInit(): void { 
-    console.log(this.isOpen, "<<<<< add user is open 1")
+    this.getSkills();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.isOpen, "<<<<< add user is open 2")
     if (changes['resource']) {
       const defaultValues = {
         lastname: '',
@@ -110,7 +111,8 @@ export class AddUserFormComponent {
         region: '',
         role: '',
         team: '',
-        status: '',
+        isEnabled: false,
+        // status: '',
         skills: ''
       };
 
@@ -168,20 +170,8 @@ export class AddUserFormComponent {
 
     this.skillList = [
       {
-          label: 'Frontend Development',
-          value: 'frontend_development',
-      },
-      {
-          label: 'Backend Development',
-          value: 'back_development',
-      },
-      {
-          label: 'Devops',
-          value: 'devops'
-      },
-      {
-          label: 'Scrum Master',
-          value: 'scrum_master'
+          label: '',
+          value: '',
       }
   ];
 
@@ -286,7 +276,7 @@ export class AddUserFormComponent {
   }
 
   requiredFieldDialogMsg() {
-    return `Please fill out required ${this.validationErrors.length !== 0 ? this.validationErrors[0] : 'required'}`
+    return `Please fill out required ${this.validationErrors.length !== 0 ? this.validationErrors[0] : 'fields'}`
   }
 
   resetFields() {
@@ -303,6 +293,8 @@ export class AddUserFormComponent {
   }
 
   openDialog = false;
+  isValidEmail = false;
+  isSaveSuccess = false;
   
   hasErrors(){
     if (this.validationErrors.length > 0) {
@@ -310,15 +302,29 @@ export class AddUserFormComponent {
     }
   }
 
-  closeDialog() {
+  closeDialog(isSavedSuccess?: boolean) {
     this.openDialog = false;
+
+    if (isSavedSuccess) {
+      this.isSaveSuccess = false;
+      this.resetFields();
+      this.onClosed()
+    }
+  }
+
+  isValidLPSTechEmail(email: string): boolean {
+    return email.toLowerCase().endsWith('@lpstech.com');
+  }
+
+  isValidLPSTechEmailMsg() {
+    return 'Please enter a valid email address ending with "@lpstech.com".'
   }
 
   saveResource() {
     this.checkValidation();
     this.hasErrors();
     const datePipe = new DatePipe('en-US');
-    const formValue: any = this.form.value; // Get the form's current value
+    const formValue: any = this.form.value;
     const formData = new FormData();
 
     this.items.controls.forEach((item, index) => {
@@ -335,24 +341,33 @@ export class AddUserFormComponent {
     })
 
     if(this.action !== '' && this.action === 'add') {
-      if (this.validationErrors.length === 0) {
-      this.addResourceService.addResource(this.resourceInfos)
-      .subscribe((res: any) => {
-        console.log(res, "<<<<<< RES")
-        this.resetFields();
-        this.onClosed()
-      }, err => {
-        console.log(err, "<<<<< ERROR")
-      });
+      this.resourceInfos.isEnabled = this.statusOption === 'Active' ? true : false
+      if (!this.isValidLPSTechEmail(this.resourceInfos.emailAddress)) {
+        console.log(this.isValidLPSTechEmail(this.resourceInfos.emailAddress), "this.isValidEmail")
+        this.isValidEmail = true;
+      } else {
+        this.isValidEmail = false;
+      }
+
+      if (this.validationErrors.length === 0 && this.isValidLPSTechEmail(this.resourceInfos.emailAddress)) {
+        this.isSaveSuccess = true
+    
+        this.addResourceService.addResource(this.resourceInfos)
+        .subscribe((res: any) => {
+          console.log(res, "<<<<<< RES")
+
+        }, err => {
+          console.log(err, "<<<<< ERROR")
+        });
   
-      this.addResourceService.addResourceCertification(formData)
-      .subscribe((res: any) => {
-        console.log(res, "<<<<<< RES")
-      }, err => {
-        console.log(err, "<<<<< ERROR")
-      });
+        this.addResourceService.addResourceCertification(formData)
+        .subscribe((res: any) => {
+          console.log(res, "<<<<<< RES")
+        }, err => {
+          console.log(err, "<<<<< ERROR")
+        });
     }
-    console.log("add")
+    console.log("ADD", this.resourceInfos)
     } else if (this.action !== '' && this.action === 'edit') {
       console.log("edit")
       const _resourceInfos = {
@@ -367,10 +382,19 @@ export class AddUserFormComponent {
         region: this.resourceInfos.region,
         role: this.resourceInfos.role,
         team: this.resourceInfos.team,
-        status: this.resourceInfos.status,
+        isEnabled: this.resourceInfos.isEnabled,
+        // status: this.resourceInfos.status,
         skills: this.resourceInfos.skills
       }
-      if (this.validationErrors.length === 0) {
+
+      _resourceInfos.isEnabled = this.statusOption === 'Active' ? true : false
+      if (!this.isValidLPSTechEmail(_resourceInfos.emailAddress)) {
+        console.log(this.isValidLPSTechEmail(_resourceInfos.emailAddress), "this.isValidEmail")
+        this.isValidEmail = true;
+      } else {
+        this.isValidEmail = false;
+      }
+      if (this.validationErrors.length === 0 && this.isValidLPSTechEmail(_resourceInfos.emailAddress)) {
         this.addResourceService.editResource(this.resourceInfos.id, _resourceInfos)
         .subscribe((res: any) => {
           console.log(res, "<<<<<< RES")
@@ -382,43 +406,30 @@ export class AddUserFormComponent {
 
       }
     }
-  //   {
-  //     "lastname": "DOEEE",
-  //     "firstname": "johnnn",
-  //     "middlename": "doeee",
-  //     "suffix": "",
-  //     "gender": "male",
-  //     "emailAddress": "john@gmail.com",
-  //     "password": "test123",
-  //     "careerStep": "i04",
-  //     "empId": "82010603",
-  //     "region": "III",
-  //     "role": "USER",
-  //     "team": "ad_public",
-  //     "status": "active",
-  //     "skills": "fullstack"
-  // }
     
-
-    // public resourceInfos = {
-    //   lastname: '',
-    //   firstname: '',
-    //   middlename: '',
-    //   suffix: '',
-    //   gender: '',
-    //   emailAddress: '',
-    //   careerStep: '',
-    //   empId: '',
-    //   region: '',
-    //   role: '',
-    //   team: '',
-    //   status: '',
-    //   skills:''
-    // }
-
-  
     console.log(this.resourceInfos, "first <<<<<<<<<")
     console.log(this.form.value, "formvalue <<<<<<<<<")
-    this.resetFields();
+    // this.resetFields();
+  }
+
+  getSkills() {
+    this.addResourceService.getSkills()
+    .subscribe((res: any) => {
+      console.log(res, "<<<<<< SKILLS")
+      if(res) {
+        res.map(({skillId, skillName} :any ) => (
+          this.skillList.push({
+            value: skillId ? skillId : '',
+            label: skillName ? skillName : '',
+          })
+        ))
+      }
+    }, err => {
+      this.skillList=[{
+        value: '',
+        label: ''
+      }]
+      console.log(err, "<<<<< ERROR")
+    });
   }
 }

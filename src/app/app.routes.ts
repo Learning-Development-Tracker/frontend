@@ -11,7 +11,7 @@ import { UserComponent } from './views/user/user.component';
 
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: UserComponent },
     { path: 'admin', component: AdminComponent, canActivate: [loginGuard] },
     { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [loginGuard] },
@@ -23,5 +23,16 @@ export const routes: Routes = [
     { path: 'admin-report-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-certification-demands', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-budget-request', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'user-profile', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'user-calendar', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'user-certifications', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'user-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-profile', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-calendar', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-certifications', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-team', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-dashboard', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-cert-tracking', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
 
 ];

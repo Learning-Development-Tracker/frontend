@@ -183,13 +183,15 @@ export class LoginComponent {
   openLoginTemplate() {
     this.loginButtonClicked.emit();
     setTimeout(() => {
-      this.loginService.storeUsername(this.loginData.data.userName);
-      if (this.loginData.data.updatedDate == null) {
-        this.forgotPassword = this.updatePassword;
-      } else {
-        this.loginService.storeJwtToken(this.loginData.data.token);
-        this.loginService.deleteUsername();
-        this.redirectAfterSuccess();
+      if(this.loginData!= null) {
+        this.loginService.storeUsername(this.loginData.data.userName)
+        if (this.loginData.data.updatedDate == null) {
+          this.forgotPassword = this.updatePassword;
+        } else {
+          this.loginService.storeJwtToken(this.loginData.data.token);
+          this.loginService.deleteUsername();
+          this.redirectAfterSuccess();
+        }
       }
     }, 250)
   }
@@ -199,17 +201,19 @@ export class LoginComponent {
   }
 
   redirectAfterSuccess() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-      this.router.navigate(['admin-dashboard'])
-      .then(() => {
-        window.location.reload();
-      });
-    });  
+    if(this.loginData!= null) {
+      if(this.loginData.data.accessName == 'Admin') {
+        this.refreshPage('admin-dashboard')
+      }
+      if(this.loginData.data.accessName == 'User') {
+        this.refreshPage('user-profile')
+      }
+    }
   }
 
-  refreshLogin() {
+  refreshPage(route: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-      this.router.navigate(['login'])
+      this.router.navigate([route])
       .then(() => {
         window.location.reload();
       });

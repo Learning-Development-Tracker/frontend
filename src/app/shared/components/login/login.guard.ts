@@ -14,6 +14,17 @@ export const loginGuard: CanActivateFn = (route, state) => {
     '/admin-report-trainings',
     '/admin-notif-certification-demands',
     '/admin-notif-budget-request',
+    '/user-profile', 
+    '/user-calendar', 
+    '/user-certifications', 
+    '/user-trainings', 
+    '/approver-profile', 
+    '/approver-calendar', 
+    '/approver-certifications', 
+    '/approver-team', 
+    '/approver-dashboard', 
+    '/approver-cert-tracking', 
+    '/approver-trainings'
   ]
   let loginService = inject(LoginService);
   let routerService = inject(Router);

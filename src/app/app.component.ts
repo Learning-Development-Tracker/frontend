@@ -39,11 +39,6 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.isLoggedIn = this.loginService.isLoggedIn();
-    if (this.isLoggedIn) {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-        this.router.navigate(['admin-dashboard']);
-      });  
-    }
   }
 
 }

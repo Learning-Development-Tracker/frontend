@@ -62,67 +62,67 @@ export const navbarData: INavbarData[] = [
     },
     {
         accesslevel: 'User',
-        routeLink: '',
+        routeLink: 'user-profile',
         icon: 'pi pi-user',
         label: 'MY PROFILE'
     },
     {
         accesslevel: 'User',
-        routeLink: '',
+        routeLink: 'user-calendar',
         icon: 'pi pi-calendar',
         label: 'CALENDAR'
     },
     {
         accesslevel: 'User',
-        routeLink: '',
+        routeLink: 'user-certifications',
         icon: 'pi pi-circle',
         label: 'CERTIFICATIONS'
     },
     {
         accesslevel: 'User',
-        routeLink: '',
+        routeLink: 'user-trainings',
         icon: 'pi pi-book',
         label: 'TRAININGS'
     },
     {
         accesslevel: 'Approver',
-        routeLink: '',
+        routeLink: 'approver-profile',
         icon: 'pi pi-user',
         label: 'MY PROFILE'
     },
     {
         accesslevel: 'Approver',
-        routeLink: '',
+        routeLink: 'approver-calendar',
         icon: 'pi pi-calendar',
         label: 'CALENDAR'
     },
     {
         accesslevel: 'Approver',
-        routeLink: '',
+        routeLink: 'approver-certificatons',
         icon: 'pi pi-circle',
         label: 'CERTIFICATIONS'
     },
     {
         accesslevel: 'Approver',
-        routeLink: '',
+        routeLink: 'approver-team',
         icon: 'pi pi-users',
         label: 'MY TEAM',
         items: [
             {
                 accesslevel: 'Approver',
-                routeLink: '',
+                routeLink: 'approver-dashboard',
                 label: 'DASHBOARD'
             },
             {
                 accesslevel: 'Approver',
-                routeLink: '',
+                routeLink: 'approver-cert-tracking',
                 label: 'CERTIFICATION TRACKING'
             }
         ]
     },
     {
         accesslevel: 'Approver',
-        routeLink: '',
+        routeLink: 'approver-trainings',
         icon: 'pi pi-book',
         label: 'TRAININGS'
     },

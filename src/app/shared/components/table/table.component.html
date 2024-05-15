@@ -7,16 +7,17 @@
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
-            <div class="search"> 
-            <i class="pi pi-search"></i>
-            <span class="p-input-icon-left ml-auto">
-                <input pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
-            </span>
+            <div class="search-container">
+                <span class="p-input-icon-left ml-auto">
+                    <input  class="search-input" pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
+                </span>
+                <button pButton type="button" label="Search" class="search-button" (click)="onSearch(data)"> <i class="pi pi-search"></i></button>
             </div>
+            
             <div *ngIf="showButtonManageTrainings" class="actions" > 
                 <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar"></app-custom-button>
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
-                <app-custom-button label="Add" margin="5px" icon="pi pi-plus"></app-custom-button>
+                <app-custom-button label="Add" margin="5px" icon="pi pi-plus" (buttonClicked)="addTraining()"></app-custom-button>
             </div>
             <div *ngIf="showButtonManageResources" class="actions" > 
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
@@ -39,8 +40,8 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr *ngIf="matchesGlobalFilter(rowData)">
-            <td class="table-multiple-checkbox">
+        <tr>
+            <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>

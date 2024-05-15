@@ -16,6 +16,10 @@
     flex-direction: column;
     padding: 1em;
     gap: 1.5em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .message-dialog-box {
@@ -31,3 +35,4 @@
     align-items: center;
     gap: 1em;
 }
+

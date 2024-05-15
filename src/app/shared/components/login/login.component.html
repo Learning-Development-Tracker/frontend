@@ -18,23 +18,23 @@
                 <div class="password-block">
                     <input [type]="changeType()" id="password" (input)="onPasswordChange($event)"
                         placeholder="Enter your password" autocomplete="off">
-                    <span class="eyeicon-1" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                    <span class="eyeicon-1" (click)="showPW()"><img [src]="changeVisibility()"/></span>
                 </div>
                 <a (click)="openPopupTemplate1(vcrPass)">Forgot Password?</a>
                 <app-custom-button [label]="'Sign In'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                    (buttonClicked)="openLoginTemplate(vcrLogin)" [disabled]="disableBtn"></app-custom-button>
+                    (buttonClicked)="openLoginTemplate()" [disabled]="disableBtn"></app-custom-button>
             </form>
         </div>
         <div *ngSwitchCase="resetPassword">
-            <form id="secondForm" novalidate>
+            <form id="secondForm" (ngSubmit)="resetPass()" [formGroup]="secondForm" novalidate>
                 <h2>Reset Password Request</h2>
                 <p class="info">Please enter your username or email. <br>
                     A link will be sent to your email in order for you to reset your password.</p>
                 <div class="name-block">
                     <input type="email" id="email" name="email" (input)="onEmailChange($event)" placeholder="Input Email"
-                        autocomplete="off" [(ngModel)]="userEmail">
+                        autocomplete="off" formControlName="RegisterEmail">
                 </div>
-                <p class="error-message" *ngIf="errMessage">{{ errMessage }}</p>
+                <p class="error-message" *ngIf="onInputEmailMismatchForm2() || errMessage">{{ errMessage }}</p>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
                     (buttonClicked)="openPopupTemplate2(vcrReset)"></app-custom-button>
             </form>
@@ -46,69 +46,68 @@
                 <div class="first-input">
                     <input [type]="changeType()" id="enter-password" (input)="onPasswordChange($event)"
                         placeholder="Input password" autocomplete="off" formControlName="NewPassword">
-                    <span class="eyeicon-2" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                    <span class="eyeicon-2" (click)="showPW()"><img [src]="changeVisibility()"/></span>
                 </div>
                 <label for="confirm-password">Confirm New Password</label>
                 <div class="second-input">
                     <input [type]="changeTypeConfirm()" id="confirm-password" (input)="onPasswordChange($event)"
                         placeholder="Input password" autocomplete="off" formControlName="ConfirmPassword">
-                    <span class="eyeicon-3" (click)="showPWConfirm()"><i
-                            [ngClass]="changeVisibilityConfirm()"></i></span>
+                    <span class="eyeicon-3" (click)="showPWConfirm()"><img [src]="changeVisibilityConfirm()"/></span>
                 </div>
                 <div id="check0">
                     <div *ngIf="onInputMinCharsForm3(); else notMinChars;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must be at least 8 characters long</span>
+                        <span><img [src]="imgFail"/>Password must be at least 8 characters long</span>
                     </div>
                     <ng-template #notMinChars>
-                        <span><i class="fa-solid fa-check"></i>Password must be at least 8 characters long</span>
+                        <span><img [src]="imgSuccess"/>Password must be at least 8 characters long</span>
                     </ng-template>
                 </div>
                 <div id="check1">
                     <div *ngIf="onInputNoUpcaseForm3(); else isUpcase;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain an uppercase letter</span>
+                        <span><img [src]="imgFail"/>Password must contain an uppercase letter</span>
                     </div>
                     <ng-template #isUpcase>
-                        <span><i class="fa-solid fa-check"></i>Password must contain an uppercase letter</span>
+                        <span><img [src]="imgSuccess"/>Password must contain an uppercase letter</span>
                     </ng-template>
                 </div>
                 <div id="check2">
                     <div *ngIf="onInputNoLowCaseForm3(); else isLowCase;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain a lowercase letter</span>
+                        <span><img [src]="imgFail"/>Password must contain a lowercase letter</span>
                     </div>
                     <ng-template #isLowCase>
-                        <span><i class="fa-solid fa-check"></i>Password must contain a lowercase letter</span>
+                        <span><img [src]="imgSuccess"/>Password must contain a lowercase letter</span>
                     </ng-template>
                 </div>
                 <div id="check3">
                     <div *ngIf="onInputNoNumForm3(); else hasNum;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain a number</span>
+                        <span><img [src]="imgFail"/>Password must contain a number</span>
                     </div>
                     <ng-template #hasNum>
-                        <span><i class="fa-solid fa-check"></i>Password must contain a number</span>
+                        <span><img [src]="imgSuccess"/>Password must contain a number</span>
                     </ng-template>
                 </div>
                 <div id="check4">
                     <div *ngIf="onInputNoSymbolForm3(); else hasSymbol;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain any of the following symbols
+                        <span><img [src]="imgFail"/>Password must contain any of the following symbols
                             &#40;#$-_!]</span>
                     </div>
                     <ng-template #hasSymbol>
-                        <span><i class="fa-solid fa-check"></i>Password must contain any of the following symbols
+                        <span><img [src]="imgSuccess"/>Password must contain any of the following symbols
                             &#40;#$-_!]</span>
                     </ng-template>
                 </div>
                 <div id="check5">
                     <div *ngIf="onInputNotMatchForm3(); else matchSuccess;">
-                        <span><i class="fa-solid fa-xmark"></i>New password and confirm new password must
+                        <span><img [src]="imgFail"/>New password and confirm new password must
                             match</span>
                     </div>
                     <ng-template #matchSuccess>
-                        <span><i class="fa-solid fa-check"></i>New password and confirm new password must
+                        <span><img [src]="imgSuccess"/>New password and confirm new password must
                             match</span>
                     </ng-template>
                 </div>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                    (buttonClicked)="openPopupTemplate3(vcrCreate)" [disabled]="thirdForm.invalid"></app-custom-button>
+                    (buttonClicked)="openPopupTemplate3_2(vcrCreatePassword)" [disabled]="thirdForm.invalid"></app-custom-button>
             </form>
         </div>
         <div *ngSwitchCase="updatePassword">
@@ -121,64 +120,63 @@
                 <div class="first-input">
                     <input [type]="changeType()" id="enter-password" (input)="onPasswordChange($event)"
                         placeholder="Input password" autocomplete="off" formControlName="NewPassword">
-                    <span class="eyeicon-2" (click)="showPW()"><i [ngClass]="changeVisibility()"></i></span>
+                    <span class="eyeicon-2" (click)="showPW()"><img [src]="changeVisibility()"/></span>
                 </div>
                 <label for="confirm-password">Confirm New Password</label>
                 <div class="second-input">
                     <input [type]="changeTypeConfirm()" id="confirm-password" (input)="onPasswordChange($event)"
                         placeholder="Input password" autocomplete="off" formControlName="ConfirmPassword">
-                    <span class="eyeicon-3" (click)="showPWConfirm()"><i
-                            [ngClass]="changeVisibilityConfirm()"></i></span>
+                    <span class="eyeicon-3" (click)="showPWConfirm()"><img [src]="changeVisibilityConfirm()"/></span>
                 </div>
                 <div id="check0">
                     <div *ngIf="onInputMinCharsForm4(); else notMinChars;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must be at least 8 characters long</span>
+                        <span><img [src]="imgFail"/>Password must be at least 8 characters long</span>
                     </div>
                     <ng-template #notMinChars>
-                        <span><i class="fa-solid fa-check"></i>Password must be at least 8 characters long</span>
+                        <span><img [src]="imgSuccess"/>Password must be at least 8 characters long</span>
                     </ng-template>
                 </div>
                 <div id="check1">
                     <div *ngIf="onInputNoUpcaseForm4(); else isUpcase;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain an uppercase letter</span>
+                        <span><img [src]="imgFail"/>Password must contain an uppercase letter</span>
                     </div>
                     <ng-template #isUpcase>
-                        <span><i class="fa-solid fa-check"></i>Password must contain an uppercase letter</span>
+                        <span><img [src]="imgSuccess"/>Password must contain an uppercase letter</span>
                     </ng-template>
                 </div>
                 <div id="check2">
                     <div *ngIf="onInputNoLowCaseForm4(); else isLowCase;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain a lowercase letter</span>
+                        <span><img [src]="imgFail"/>Password must contain a lowercase letter</span>
                     </div>
                     <ng-template #isLowCase>
-                        <span><i class="fa-solid fa-check"></i>Password must contain a lowercase letter</span>
+                        <span><img [src]="imgSuccess"/>Password must contain a lowercase letter</span>
                     </ng-template>
                 </div>
                 <div id="check3">
                     <div *ngIf="onInputNoNumForm4(); else hasNum;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain a number</span>
+                        <span><img [src]="imgFail"/>Password must contain a number</span>
                     </div>
                     <ng-template #hasNum>
-                        <span><i class="fa-solid fa-check"></i>Password must contain a number</span>
+                        <span><img [src]="imgSuccess"/>Password must contain a number</span>
                     </ng-template>
                 </div>
                 <div id="check4">
                     <div *ngIf="onInputNoSymbolForm4(); else hasSymbol;">
-                        <span><i class="fa-solid fa-xmark"></i>Password must contain any of the following symbols
+                        <span><img [src]="imgFail"/>Password must contain any of the following symbols
                             &#40;#$-_!]</span>
                     </div>
                     <ng-template #hasSymbol>
-                        <span><i class="fa-solid fa-check"></i>Password must contain any of the following symbols
+                        <span><img [src]="imgSuccess"/>Password must contain any of the following symbols
                             &#40;#$-_!]</span>
                     </ng-template>
                 </div>
                 <div id="check5">
                     <div *ngIf="onInputNotMatchForm4(); else matchSuccess;">
-                        <span><i class="fa-solid fa-xmark"></i>New password and confirm new password must
+                        <span><img [src]="imgFail"/>New password and confirm new password must
                             match</span>
                     </div>
                     <ng-template #matchSuccess>
-                        <span><i class="fa-solid fa-check"></i>New password and confirm new password must
+                        <span><img [src]="imgSuccess"/>New password and confirm new password must
                             match</span>
                     </ng-template>
                 </div>
@@ -192,21 +190,7 @@
             <app-custom-button [label]="'Reset Password'" [margin]="buttonMargin" [width]="buttonWidth"
                 [backgroundColor]="buttonColor" (buttonClicked)="openResetPass()"></app-custom-button>
             <app-custom-button [label]="'Create New Password'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="openCreatePass()"></app-custom-button>
-            <app-custom-button [label]="'Update Password'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="openUpdatePass()"></app-custom-button>
-        </div>
-    </ng-template>
-    <ng-template #vcrLogin>
-        <div class="popup-container">
-            <div class="title">
-                <h2>{{popupTitle}}</h2>
-            </div>
-            <div class="content">
-                <p class="current">{{popupContent}}</p>
-            </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+                [backgroundColor]="buttonColor" (buttonClicked)="openPopupTemplate3_1(vcrCreateUsername)"></app-custom-button>
         </div>
     </ng-template>
     <ng-template #vcrReset>
@@ -216,41 +200,75 @@
             </div>
             <div class="content">
                 <p class="current">{{popupContent}}</p>
-                <p>Username: {{userReg.username}}</p>
-                <p *ngIf="userReg.password !== ''">
-                    Password: {{userReg.password}}
-                </p>
+                <div *ngIf="userReg.password !== ''">
+                    <p>Username: {{userReg.username}}</p>
+                    <p>Password: {{userReg.password}}</p>
+                </div>
             </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            <div *ngIf="afterSuccess(); else fail;">
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+            </div>
+            <ng-template #fail>
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            </ng-template>
         </div>
     </ng-template>
-    <ng-template #vcrCreate>
+    <ng-template #vcrCreateUsername>
+        <form id="checkUNForm" (ngSubmit)="searchUsername()" [formGroup]="checkUNForm" novalidate>
+            <div class="popup-container">
+                <div class="title">
+                    <h2>Enter Username</h2>
+                </div>
+                <div class="content">
+                    <div class="name-block">
+                        <input type="text" id="username" (input)="onUsernameChPW($event)" formControlName="UserName"
+                            placeholder="Enter your username" autocomplete="off">
+                    </div>
+                </div>
+                <p class="error-message" *ngIf="nameNotFound">{{ nameNotFound }}</p>
+                <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
+                (buttonClicked)="openUserNameInput()" [disabled]="disableBtnChUN"></app-custom-button>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #vcrCreatePassword>
         <div class="popup-container">
             <div class="title">
-                <h2>Success</h2>
+                <h2>{{popupTitle}}</h2>
             </div>
             <div class="content">
                 <p class="current">
-                    Successfully created password
+                    {{popupContent}}
                 </p>
             </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            <div *ngIf="afterSuccess(); else fail;">
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+            </div>
+            <ng-template #fail>
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+            </ng-template>
         </div>
     </ng-template>
     <ng-template #vcrUpdate>
         <div class="popup-container">
             <div class="title">
-                <h2>Success</h2>
+                <h2>{{popupTitle}}</h2>
             </div>
             <div class="content">
-                <p class="current">
-                    Successfully updated password
-                </p>
+                <p class="current">{{popupContent}}</p>
             </div>
-            <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            <div *ngIf="afterSuccess(); else fail;">
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+            </div>
+            <ng-template #fail>
+                <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
+                    [backgroundColor]="buttonColor" (buttonClicked)="close()"></app-custom-button>
+            </ng-template>
         </div>
     </ng-template>
 </div>

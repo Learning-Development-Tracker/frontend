@@ -11,8 +11,8 @@
             </div>
             <div class="col-md-12 ">
                 <div class="contentScreen">
-                    <p-card class="contentCard table">
-                        <div class="row" *ngIf="!isResource showButtonManageResources">
+                    <p-card class="contentCard ">
+                        <div class="row table" *ngIf="!isResource showButtonManageResources">
                             <app-table 
                                 [data]="resourceList" 
                                 [columns]="tableColumn" 
@@ -25,6 +25,12 @@
                         </div>
                         <div class="row" *ngIf="isResource">
                             <app-resource-details [memberDtl]="selectedMemberDtl"></app-resource-details>
+                        </div>
+                        <div class=" row backButton" *ngIf="isResource">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2" style="text-align: right;">
+                                <app-custom-button [label]="'back'" (buttonClicked)="backManageResource()"></app-custom-button>
+                            </div>
                         </div>
                     </p-card>
                 </div>

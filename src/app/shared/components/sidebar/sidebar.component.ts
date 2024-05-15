@@ -1,10 +1,11 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core';
 import { navbarData } from './nav-data';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SublevelMenuComponent } from './sublevel-menu.component';
 import { INavbarData } from './helper';
 import { AccessLevel } from '../../constants/access-level'
+import { LoginService } from '../login/login.services';
 
 
 interface SidebarToggle {
@@ -19,7 +20,7 @@ interface SidebarToggle {
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit {
-
+  loginService = inject(LoginService);
   @Output() onToggleSidebar: EventEmitter<SidebarToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
@@ -37,8 +38,16 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      let accessLevel =
+        AccessLevel.USER == 
+          this.loginService.getAccessLevel() ?
+          AccessLevel.USER : 
+          (AccessLevel.ADMIN == 
+            this.loginService.getAccessLevel() ? 
+            AccessLevel.ADMIN : 
+            AccessLevel.APPROVER);
       this.screenWidth = window.innerWidth;
-      this.getAccessLevelScr(AccessLevel.USER);
+      this.getAccessLevelScr(accessLevel);
   }
 
   toggleCollapse(): void {

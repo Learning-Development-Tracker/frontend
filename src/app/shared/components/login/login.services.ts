@@ -12,6 +12,7 @@ export class LoginService {
   httpClient = inject(HttpClient);
   readonly JWT_TOKEN = 'JWT_TOKEN';
   readonly USER_NAME = 'USER_NAME';
+  readonly ACCESS_LEVEL = 'ACCESS_LEVEL';
   constructor(
     private configService: ConfigService,
     private router: Router) {
@@ -41,6 +42,10 @@ export class LoginService {
     return localStorage.getItem(this.USER_NAME);
   }
 
+  public getAccessLevel() {
+    return localStorage.getItem(this.ACCESS_LEVEL);
+  }
+
   public storeJwtToken(jwt: any) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
   }
@@ -49,12 +54,20 @@ export class LoginService {
     localStorage.setItem(this.USER_NAME, username);
   }
   
+  public storeAccLevel(acessName: any) {
+    localStorage.setItem(this.ACCESS_LEVEL, acessName);
+  }
+
   public deleteUsername() {
     localStorage.removeItem(this.USER_NAME);
   }
 
   public deleteJwtToken() {
     localStorage.removeItem(this.JWT_TOKEN);
+  }
+
+  public deleteAccLevel() {
+    localStorage.removeItem(this.ACCESS_LEVEL);
   }
 
   public isTokenExpired() {

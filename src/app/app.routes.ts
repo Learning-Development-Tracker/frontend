@@ -11,7 +11,7 @@ import { UserComponent } from './views/user/user.component';
 
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
     { path: 'login', component: UserComponent },
     { path: 'admin', component: AdminComponent, canActivate: [loginGuard] },
     { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [loginGuard] },
@@ -23,4 +23,5 @@ export const routes: Routes = [
     { path: 'admin-report-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-certification-demands', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-budget-request', component: PageNotFoundComponent, canActivate: [loginGuard] },
+
 ];

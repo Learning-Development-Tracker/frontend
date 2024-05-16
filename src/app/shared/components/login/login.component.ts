@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { CustomBottonComponent } from '../custom-button/custom-button.component';
-import { PopupService } from './popupl.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PopupOptions } from './popup-options';
-import { matchpassword, minimuminput, lowCase, upCase, oneDIgit, oneSymbol, charLen, emailPattern } from './matchpassword.validator';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginService } from './login.services';
-import { Register } from '../../../models/register';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Register } from '../../../models/register';
+import { CustomBottonComponent } from '../custom-button/custom-button.component';
+import { LoginService } from './login.services';
+import { charLen, emailPattern, lowCase, matchpassword, minimuminput, oneDIgit, oneSymbol, upCase } from './matchpassword.validator';
+import { PopupOptions } from './popup-options';
+import { PopupService } from './popupl.service';
 
 @Component({
   selector: 'app-login',
@@ -145,6 +145,7 @@ export class LoginComponent {
       this.isPasswordInput = true;
     }
     this.onInputValidate();
+    // target.value='Password@1234'
     this.passwordChanged.emit(target.value);
   }
 
@@ -156,6 +157,7 @@ export class LoginComponent {
       this.isUsernameInput = true;
     }
     this.onInputValidate();
+    // target.value = 'LpsDataLpstech'
     this.usernameChanged.emit(target.value);
   }
 
@@ -180,7 +182,7 @@ export class LoginComponent {
     }
   }
 
-  openLoginTemplate() {
+  openLogin() {
     this.loginButtonClicked.emit();
     setTimeout(() => {
       if(this.loginData!= null) {
@@ -194,7 +196,8 @@ export class LoginComponent {
           this.redirectAfterSuccess();
         }
       }
-    }, 250)
+    }, 1000)
+
   }
 
   afterSuccess() {
@@ -203,22 +206,12 @@ export class LoginComponent {
 
   redirectAfterSuccess() {
     if(this.loginData!= null) {
-      if(this.loginData.data.accessName == 'Admin') {
-        this.refreshPage('admin-dashboard')
-      }
-      if(this.loginData.data.accessName == 'User') {
-        this.refreshPage('user-profile')
-      }
+      this.loginService.refreshHome(this.loginData.data.accessName);
     }
   }
 
-  refreshPage(route: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
-      this.router.navigate([route])
-      .then(() => {
-        window.location.reload();
-      });
-    });  
+  loginPage() {
+    this.loginService.refreshPage('/login');
   }
 
   showPW() {

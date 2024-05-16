@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ConfigService } from '../../../authentication/config.services';
 import { Register } from '../../../models/register';
+import { AccessLevel } from '../../constants/access-level';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +84,35 @@ export class LoginService {
 
   public logout() {
     this.deleteJwtToken();
-    this.router.navigate(['/login']);
+    this.refreshPage('/login');
   }
   
+  public refreshPage(route: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>{
+      this.router.navigate([route])
+      .then(() => {
+        window.location.reload();
+      });
+    });  
+  }
+
+  public findHomePagebyRole(accessRole: string) {
+    if (accessRole == AccessLevel.ADMIN) {
+      this.router.navigate(['/admin-dashboard']);  
+    } else if (accessRole == AccessLevel.USER) {
+      this.router.navigate(['/user-profile'])
+    } else {
+      this.router.navigate(['/approver-profile'])
+    }
+  }
+
+  public refreshHome(accessRole: string) {
+    if (accessRole == AccessLevel.ADMIN) {
+      this.refreshPage('/admin-dashboard');  
+    } else if (accessRole == AccessLevel.USER) {
+      this.refreshPage('/user-profile')
+    } else {
+      this.refreshPage('/approver-profile')
+    }
+  }
 }

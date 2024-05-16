@@ -3,14 +3,20 @@ import { provideRouter } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { LoginInterceptor } from './shared/components/login/login.interceptor';
+import { HeaderInterceptor } from './shared/components/login/header.interceptor';
+import { TokenInterceptor } from './shared/components/login/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), 
     provideHttpClient(), 
     { provide: HTTP_INTERCEPTORS,
-      useClass: LoginInterceptor,
+      useClass: HeaderInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
     importProvidersFrom([BrowserAnimationsModule])
   ]

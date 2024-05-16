@@ -22,7 +22,7 @@
                 </div>
                 <a (click)="openPopupTemplate1(vcrPass)">Forgot Password?</a>
                 <app-custom-button [label]="'Sign In'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                    (buttonClicked)="openLoginTemplate()" [disabled]="disableBtn"></app-custom-button>
+                    (buttonClicked)="openLogin()" [disabled]="disableBtn"></app-custom-button>
             </form>
         </div>
         <div *ngSwitchCase="resetPassword">
@@ -207,7 +207,7 @@
             </div>
             <div *ngIf="afterSuccess(); else fail;">
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+                    [backgroundColor]="buttonColor" (buttonClicked)="loginPage()"></app-custom-button>
             </div>
             <ng-template #fail>
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
@@ -245,11 +245,11 @@
             </div>
             <div *ngIf="afterSuccess(); else fail;">
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+                    [backgroundColor]="buttonColor" (buttonClicked)="loginPage()"></app-custom-button>
             </div>
             <ng-template #fail>
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+                    [backgroundColor]="buttonColor" (buttonClicked)="loginPage()"></app-custom-button>
             </ng-template>
         </div>
     </ng-template>
@@ -263,7 +263,7 @@
             </div>
             <div *ngIf="afterSuccess(); else fail;">
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"
-                    [backgroundColor]="buttonColor" (buttonClicked)="refreshPage('login')"></app-custom-button>
+                    [backgroundColor]="buttonColor" (buttonClicked)="loginPage()"></app-custom-button>
             </div>
             <ng-template #fail>
                 <app-custom-button [label]="'OK'" [margin]="buttonMargin" [width]="buttonWidth"

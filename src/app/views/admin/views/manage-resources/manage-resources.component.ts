@@ -90,6 +90,7 @@ export class ManageResourcesComponent implements OnInit{
     ];
 
     this.filteredData = this.resourceList;
+
   }
 
   onSort(event: SortEvent){
@@ -272,10 +273,6 @@ export class ManageResourcesComponent implements OnInit{
     // }, err => {
     //   console.log(err, "<<<<< ERROR")
     // });
-  }
-
-  backManageResource(){
-    this.isResource=false
   }
   
 }

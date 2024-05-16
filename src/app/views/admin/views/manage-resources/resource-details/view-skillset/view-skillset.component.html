@@ -15,10 +15,10 @@
             <br>
             <div style="padding-left: 6em;">
                 <div class="row" *ngIf="fiterOption=='Front End' || fiterOption=='All'">
-                    <div class="col-md-3" >
+                    <div class="col-md-2" >
                         <span class="badge">Front End Development</span>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="badges-container">
                             <span class="badge" *ngFor="let feSkill of frontEnd"> {{feSkill.skillName}}</span>
                             <!-- <span class="badge">React JS</span>
@@ -28,10 +28,10 @@
                     </div>
                 </div>
                 <div class="row" style="padding-top: 20px;" *ngIf="fiterOption=='Back End' || fiterOption=='All'">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <span class="badge">Back End Development</span>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="badges-container">
                             <span class="badge" *ngFor="let beSkill of backEnd"> {{beSkill.skillName}}</span>
                             <!-- <span class="badge">Java</span>
@@ -40,10 +40,10 @@
                     </div>
                 </div>
                 <div class="row" style="padding-top: 20px;" *ngIf="fiterOption=='Testing Tools' || fiterOption=='All'">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <span class="badge">Testing Tools</span>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="badges-container">
                             <span class="badge" *ngFor="let ttSkill of testingTools"> {{ttSkill.skillName}}</span>
                             <!-- <span class="badge">Selenium</span> -->

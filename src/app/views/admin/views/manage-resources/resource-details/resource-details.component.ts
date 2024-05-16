@@ -10,14 +10,11 @@ import { TabViewComponent } from '../../../../../shared/components/tab-view/tab-
 import { ViewSkillsetComponent } from './../resource-details/view-skillset/view-skillset.component';
 import { ViewPersonalInfoComponent } from './../resource-details/view-personal-info/view-personal-info.component';
 import { ViewCertificationComponent } from './view-certification/view-certification.component';
-import { CustomBottonComponent } from '../../../../../shared/components/custom-button/custom-button.component';
 
 @Component({
   selector: 'app-resource-details',
   standalone: true,
-  imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent, ViewCertificationComponent,CommonModule,
-    CustomBottonComponent
-  ],
+  imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent, ViewCertificationComponent,CommonModule],
   templateUrl: './resource-details.component.html',
   styleUrl: './resource-details.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

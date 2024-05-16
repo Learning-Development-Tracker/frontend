@@ -88,31 +88,3 @@
     border:1px solid #8C55D9;
     color: #414145;
   }
-
-.search-container {
-    display: flex;
-    align-items: center;
-}
-
-.search-input {
-    flex: 1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 8px;
-    margin-right: 8px; /* Adjust the spacing between input and button as needed */
-}
-
-.search-button {
-    background-color: var(--purple); /* Change the background color as needed */
-    color: #fff; /* Change the text color as needed */
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-    opacity: 0.5;
-    /* background-color: #0056b3; Change the hover background color as needed */
-}

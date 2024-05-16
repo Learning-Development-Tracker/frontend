@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from '../../shared/components/login/login.component';
 import { CustomBottonComponent } from '../../shared/components/custom-button/custom-button.component';
-import { LoginService } from '../../shared/components/login/login.services';
+import { LoginService } from '../../authentication/login.services';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
@@ -18,8 +18,7 @@ import { LoginModel } from '../../models/login.model';
 export class UserComponent implements OnInit{
 
   public errMessage: any;
-  public response: any;
-  unknownError: string = 'Unknown error. Please contact administrator.';
+
   loginObj: LoginModel = new LoginModel();
 
   constructor(private loginService: LoginService) { }
@@ -40,14 +39,9 @@ export class UserComponent implements OnInit{
     this.loginService.login(this.loginObj.username, this.loginObj.password)
       .subscribe((res: any) => {
         this.errMessage="";
-        this.response = res;
         console.log(res, "<<<<<< RES")
       }, err => {
-        if(err.error) {
-          this.errMessage = String(err.error.message);
-        } else {
-          this.errMessage = this.unknownError;
-        }
+        this.errMessage = String(err.error);
         console.log(err, "<<<<< ERROR")
       });
   }

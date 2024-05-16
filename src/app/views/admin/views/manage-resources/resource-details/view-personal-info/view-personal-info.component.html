@@ -1,58 +1,60 @@
-<div class="container" >
+<div>
     <div class="row">
         <div class="col">
             <div class="container">
                 <label>Last Name:</label>
-                <p>{{ employeeInfo[0]?.lastName }}</p>
+                <p>{{ employee.lastName }}</p>
             </div>
             <div class="container">
                 <label>First Name:</label>
-                <p>{{ employeeInfo[0]?.firstName }}</p>
+                <p>{{ employee.firstName }}</p>
             </div>
             <div class="container">
                 <label>Middle Name:</label>
-                <p>{{ employeeInfo[0]?.middleName }}</p>
+                <p>{{ employee.middleName }}</p>
             </div>
             <div class="container">
                 <label>Suffix:</label>
-                <p>{{ employeeInfo[0]?.suffix }}</p>
+                <p>{{ employee.suffix }}</p>
             </div>
         </div>
         <div class="col">
             <div class="container">
                 <label>Gender:</label>
-                <p>{{ employeeInfo[0]?.gender }}</p>
+                <p>{{ employee.gender }}</p>
             </div>
             <div class="container">
                 <label>Email Address:</label>
-                <p>{{ employeeInfo[0]?.emailAddress }}</p>
+                <p>{{ employee.emailAddress }}</p>
             </div>
             <div class="container">
                 <label>Career Step:</label>
-                <p>{{ employeeInfo[0]?.careerStep }}</p>
+                <p>{{ employee.careerStep }}</p>
             </div>
             <div class="container">
                 <label>Employee ID:</label>
-                <p>{{ employeeInfo[0]?.employeeID }}</p>
+                <p>{{ employee.idetifier }}</p>
             </div>
         </div>
+    </div>   
+    <div class="row">
         <div class="col">
             <div class="container">
                 <label>Region:</label>
-                <p>{{ employeeInfo[0]?.region }}</p>
+                <p>{{ employee.region }}</p>
             </div>
             <div class="container">
                 <label>Role/s:</label>
-                <p>{{ employeeInfo[0]?.roles }}</p>
+                <p>{{ employee.roles }}</p>
             </div>
             <div class="container">
                 <label>Team/s:</label>
-                <p>{{ employeeInfo[0]?.teams }}</p>
+                <p>{{ employee.teams }}</p>
             </div>
             <div class="container">
                 <label>Employment Status:</label>
-                <p [ngStyle]="{ color: employeeInfo[0]?.employmentStatus === 'Active' ? 'green' : 'red' }">{{ employeeInfo[0]?.employmentStatus }}</p>
+                <p [ngStyle]="{ color: employee.employmentStatus === 'Active' ? 'green' : 'red' }">{{ employee.employmentStatus }}</p>
             </div>
         </div>
+        <div class="col"></div>
     </div>
-</div>

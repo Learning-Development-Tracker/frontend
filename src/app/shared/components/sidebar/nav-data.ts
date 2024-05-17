@@ -98,7 +98,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         accesslevel: 'Approver',
-        routeLink: 'approver-certificatons',
+        routeLink: 'approver-certifications',
         icon: 'pi pi-circle',
         label: 'CERTIFICATIONS'
     },

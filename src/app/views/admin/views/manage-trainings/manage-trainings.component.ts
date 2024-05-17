@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SortEvent } from 'primeng/api';
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
@@ -17,7 +17,8 @@ import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-trainin
   standalone: true,
   imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, AddEditTrainingComponent],
   templateUrl: './manage-trainings.component.html',
-  styleUrl: './manage-trainings.component.css'
+  styleUrl: './manage-trainings.component.css',
+  providers: [ManageTrainingService]
 })
 
 export class ManageTrainingsComponent implements OnInit {

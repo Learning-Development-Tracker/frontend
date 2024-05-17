@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './shared/components/login/login.component';
@@ -36,9 +36,11 @@ export class AppComponent {
   title = 'ad-initiative';
   isLoggedIn: boolean = false;
   loginService = inject(LoginService);
-
-  constructor(private router: Router) {
+  constructor() {
     this.isLoggedIn = this.loginService.isLoggedIn();
+    if (this.isLoggedIn) {
+      let accessName = this.loginService.getAccessLevel();
+      this.loginService.findHomePagebyRole(accessName!);
+    } 
   }
-
 }

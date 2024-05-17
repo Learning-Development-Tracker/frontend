@@ -43,6 +43,32 @@
     cursor: pointer;
 }
 
+.dropdown ul.logout-hidden {
+    border: 1px solid;
+    width: 100px;
+    background: var(--dark-blue);
+    position: absolute;
+    z-index: 999;
+    list-style-type: none;
+    text-align: center;
+    padding: 5px;
+    margin: -1px;
+    right: 0;
+}
+
+.dropdown ul.logout-visible {
+    display: none;
+}
+
+input[type="checkbox"][id^="cb"] {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--white)
+}
+
 .pi {
     cursor: pointer;
     font-weight: bold;

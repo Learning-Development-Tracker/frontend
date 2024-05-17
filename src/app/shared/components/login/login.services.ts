@@ -85,7 +85,6 @@ export class LoginService {
 
   public logout() {
     this.deleteJwtToken();
-    this.refreshPage('/login');
   }
   
   public refreshPage(route: string) {

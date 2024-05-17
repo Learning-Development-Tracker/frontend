@@ -157,7 +157,7 @@ export class LoginComponent {
       this.isUsernameInput = true;
     }
     this.onInputValidate();
-    // target.value = 'LpsDataLpstech'
+    // target.value = 'DummyDataLogin'
     this.usernameChanged.emit(target.value);
   }
 
@@ -306,7 +306,7 @@ export class LoginComponent {
     }
     this.loginService.addUserLogin(this.userReg).subscribe(
       (res: any) => {
-        this.popupTitle = res.status.charAt(0).toUpperCase() + res.status.slice(1);
+        this.popupTitle = res.status.charAt(0).toUpperCase() + res.status.slice(1).toLowerCase;
         if (res.status=='error') {
           this.userReg.password = '';
           this.popupContent = res.message;

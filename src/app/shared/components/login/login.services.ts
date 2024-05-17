@@ -55,8 +55,9 @@ export class LoginService {
     localStorage.setItem(this.USER_NAME, username);
   }
   
-  public storeAccLevel(acessName: any) {
-    localStorage.setItem(this.ACCESS_LEVEL, acessName);
+  public storeAccLevel(accessName: any) {
+    let accessLevel = accessName.charAt(0).toUpperCase() + accessName.slice(1).toLowerCase();
+    localStorage.setItem(this.ACCESS_LEVEL, accessLevel);
   }
 
   public deleteUsername() {

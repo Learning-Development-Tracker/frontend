@@ -258,5 +258,9 @@ export class ManageResourcesComponent implements OnInit{
     //   console.log(err, "<<<<< ERROR")
     // });
   }
+
+  backManageResource(){
+    this.isResource=false
+  }
   
 }

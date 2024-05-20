@@ -1,0 +1,58 @@
+<div class="popup-container">
+    <h6> Training Link/s </h6>
+    <div class="row">
+    <div class = "col-md-4">
+      <input class="text-name" placeholder="Name">
+    </div>
+    <div class = "col-md-7">
+      <input class="text-link" placeholder="Training Link">
+    </div>
+    <div class = "col-md-1">
+        <span class = "pi pi-trash"></span>
+    </div>
+    </div>
+    <div class = "row">
+    <div class = "col-md-4">
+        <input class="text-name" placeholder="Name">
+    </div>
+    <div class = "col-md-7">
+        <input class="text-link" placeholder="Training Link">
+    </div>
+    <div class = "col-md-1">
+        <span class = "pi pi-trash"></span>
+    </div>
+    </div>
+    <div class = "row">
+    <div class = "col-md-4">
+        <input class="text-name" placeholder="Name">
+    </div>
+    <div class = "col-md-7">
+        <input class="text-link" placeholder="Training Link">
+    </div>
+    <div class = "col-md-1">
+        <span class = "pi pi-trash"></span>
+    </div>
+    </div>
+    <div *ngFor="let textBox of textBoxes">
+        <div class="row">
+            <div class = "col-md-4">
+              <input class="text-name" placeholder="Name">
+            </div>
+            <div class = "col-md-7">
+              <input class="text-link" placeholder="Training Link">
+            </div>
+            <div class = "col-md-1">
+                <span class = "pi pi-trash"></span>
+            </div>
+            </div>
+    </div>
+    <span class = "pi pi-plus" (click)="addTextBox()"> </span> Add More
+      <!-- Save and close buttons -->
+    <div class ="row">
+    <div class = "col-md-10">
+    </div>
+    <div class = "col-md-2">
+      <button class = "btn-button-save"(click)="closeAddMorePopup()">Close</button>
+    </div>
+    </div>
+</div>

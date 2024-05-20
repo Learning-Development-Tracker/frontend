@@ -33,7 +33,7 @@ export class ViewPersonalInfoComponent  {
       this.errMessage="";
       this.employeeInfo = res.data;
       console.log('Personal Information:',this.employeeInfo)
-    }, err => {
+    }, (err: any) => {
       this.errMessage = err.error;
       console.log(err, "<<<<< ERROR")
     });

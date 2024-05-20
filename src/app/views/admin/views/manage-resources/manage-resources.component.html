@@ -19,6 +19,8 @@
                                 (view)="onView($event)"
                                 (delete)="onDelete($event)"
                                 [showButtonManageResources]="true"
+                                (addResourceButtonClick)="addResource()"
+                                (edit)="onEdit($event)" 
                             ></app-table>
                         </div>
                         <div class="row" *ngIf="isResource">
@@ -34,5 +36,6 @@
                 </div>
             </div>
         </div>
+        <app-add-user-form [resourceCertifications]="resourceCertifications" [resource]="resourceInfos" [isOpen]="isOpen" [action]="action" (isOpenChange)="isOpenChange($event)"></app-add-user-form>
     </div>
 </ng-container>

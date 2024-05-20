@@ -9,6 +9,7 @@ import { LoginService } from './login.services';
 import { charLen, emailPattern, lowCase, matchpassword, minimuminput, oneDIgit, oneSymbol, upCase } from './matchpassword.validator';
 import { PopupOptions } from './popup-options';
 import { PopupService } from './popupl.service';
+import { loginMessages } from '../../constants/login.constants';
 
 @Component({
   selector: 'app-login',
@@ -22,32 +23,28 @@ import { PopupService } from './popupl.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  @ViewChild('vcrPass', { static: true, read: ViewContainerRef })
+  @ViewChild(loginMessages.vcrPass, { static: true, read: ViewContainerRef })
   vcrPassword!: ViewContainerRef;
-  @ViewChild('vcrReset', { static: true, read: ViewContainerRef })
-  vcrReset!: ViewContainerRef;
-  @ViewChild('vcrCreateUsername', { static: true, read: ViewContainerRef })
-  vcrCreateUsername!: ViewContainerRef;
-  @ViewChild('vcrCreatePassword', { static: true, read: ViewContainerRef })
+  @ViewChild(loginMessages.vcrCreatePassword, { static: true, read: ViewContainerRef })
   vcrCreatePassword!: ViewContainerRef;
-  @ViewChild('vcrUpdate', { static: true, read: ViewContainerRef })
-  vcrUpdate!: ViewContainerRef;
+  @ViewChild(loginMessages.vcrStatus, { static: true, read: ViewContainerRef })
+  vcrStatus!: ViewContainerRef;
   @Output() emailChanged = new EventEmitter<string>();
   @Output() passwordChanged = new EventEmitter<string>();
   @Output() usernameChanged = new EventEmitter<string>();
   @Output() loginButtonClicked = new EventEmitter<void>();
   @Input() errMessage: string | undefined;
   @Input() loginData: any | undefined;
-  buttonColor: string = "var(--dark-blue)";
-  buttonWidth: string = "85%";
-  buttonMargin: string = "5px 4.5%";
-  buttonSize: string = "40px";
+  buttonColor: string = loginMessages.buttonColor;
+  buttonWidth: string = loginMessages.buttonWidth;
+  buttonMargin: string = loginMessages.buttonMargin;
+  buttonSize: string = loginMessages.buttonSize;
   visible: boolean = true;
   visibleConfirm: boolean = true;
-  forgotPassword: string = '';
-  resetPassword: string = 'resetPW';
-  createPassword: string = 'newPW';
-  updatePassword: string = 'updPW';
+  forgotPassword: string = loginMessages.emptyString;
+  resetPassword: string = loginMessages.resetPW;
+  createPassword: string = loginMessages.newPW;
+  updatePassword: string = loginMessages.updPW;
   isUsernameInput: boolean = false;
   isPasswordInput: boolean = false;
   disableBtn: boolean = true;
@@ -57,41 +54,20 @@ export class LoginComponent {
   fourthForm: FormGroup;
   checkUNForm: FormGroup;
   userReg: Register = {
-    email: '',
-    username: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    phoneNo: '',
-    position: '',
-    positionCode: ''
+    email: loginMessages.emptyString,
+    username: loginMessages.emptyString,
+    password: loginMessages.emptyString,
   }; 
-  popupTitle: string = '';
-  popupContent: string = '';
-  nameNotFound: string = '';
-  passUpdSuccess = 'Successfully updated password.';
-  regUserSuccess = 'Successfully registered user.';
-  passChgSuccess = 'Successfully created password.';
-  passUpdFail = 'Failed updating password.';
-  passChgFail = 'Failed creating password.';
-  mustEndWith = 'E-mail must end with @lpstech.com';
-  logInSuccess = 'Successfully logged in.';
-  duplicateExist = 'Email already exist.';
-  imgHideTxt = './../../../../assets/eyeicon-slash.png';
-  imgShowTxt = './../../../../assets/eyeicon.png';
-  imgSuccess = './../../../../assets/check-mark.png';
-  imgFail = './../../../../assets/x-mark.png';
+  popupTitle: string = loginMessages.emptyString;
+  popupContent: string = loginMessages.emptyString;
+  nameNotFound: string = loginMessages.emptyString;
+  imgSuccess = loginMessages.imgSuccess;
+  imgFail = loginMessages.imgFail;
   constructor(
     private popupService: PopupService,
     private loginService: LoginService,
     private router: Router
   ) {
-
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => {
-    //   return false;
-    // };
-    
     this.secondForm = new FormGroup({
       RegisterEmail: new FormControl(null, [Validators.required])
     }, {
@@ -111,7 +87,6 @@ export class LoginComponent {
         charLen
       ]
     });
-
     this.fourthForm = new FormGroup({
       NewPassword: new FormControl(null, [Validators.required]),
       ConfirmPassword: new FormControl(null, [Validators.required])
@@ -126,7 +101,6 @@ export class LoginComponent {
         charLen
       ]
     });
-
     this.checkUNForm = new FormGroup({
       UserName: new FormControl(null, [Validators.required]),
     });
@@ -157,7 +131,7 @@ export class LoginComponent {
       this.isUsernameInput = true;
     }
     this.onInputValidate();
-    // target.value = 'DummyDataLogin'
+    // target.value = 'Username'
     this.usernameChanged.emit(target.value);
   }
 
@@ -174,7 +148,7 @@ export class LoginComponent {
     if (!target.value) {
       this.isUsernameInput = false;
     } 
-    if(target.value.length > 7) {
+    if(target.value.length > 5) {
       this.disableBtnChUN = false;
       this.isUsernameInput = true;
     } else {
@@ -184,10 +158,16 @@ export class LoginComponent {
 
   openLogin() {
     this.loginButtonClicked.emit();
+    // First, checks if it isn't implemented yet.
     setTimeout(() => {
       if(this.loginData!= null) {
-        this.loginService.storeUsername(this.loginData.data.userName)
-        if (this.loginData.data.updatedDate == null) {
+        let userName = this.loginData.data.userName;
+        this.loginService.storeUsername(userName);
+        if (!this.loginData.data.isActive) {
+          this.popupTitle = loginMessages.verifyHeader;
+          this.popupContent = loginMessages.verifyContent1.concat(userName, loginMessages.verifyContent2);
+        }        
+        else if (this.loginData.data.updatedDate == null) {
           this.forgotPassword = this.updatePassword;
         } else {
           this.loginService.storeJwtToken(this.loginData.data.token);
@@ -201,7 +181,7 @@ export class LoginComponent {
   }
 
   afterSuccess() {
-    return this.popupTitle == 'Success';
+    return this.popupTitle == loginMessages.successUp;
   }
 
   redirectAfterSuccess() {
@@ -211,7 +191,7 @@ export class LoginComponent {
   }
 
   loginPage() {
-    this.loginService.refreshPage('/login');
+    this.loginService.refreshPage(loginMessages.loginRoute);
   }
 
   showPW() {
@@ -219,11 +199,11 @@ export class LoginComponent {
   }
 
   changeVisibility(): string {
-    return this.visible ? this.imgHideTxt : this.imgShowTxt;
+    return this.visible ? loginMessages.imgHideTxt : loginMessages.imgShowTxt;
   }
 
   changeType(): string {
-    return this.visible ? 'password' : 'text';
+    return this.visible ? loginMessages.password : loginMessages.text;
   }
 
   showPWConfirm() {
@@ -231,26 +211,26 @@ export class LoginComponent {
   }
 
   changeVisibilityConfirm(): string {
-    return this.visibleConfirm ? this.imgHideTxt : this.imgShowTxt;
+    return this.visibleConfirm ? loginMessages.imgHideTxt : loginMessages.imgShowTxt;
   }
 
   changeTypeConfirm(): string {
-    return this.visibleConfirm ? 'password' : 'text';
+    return this.visibleConfirm ? loginMessages.password : loginMessages.text;
   }
 
   openPopupTemplate1(view: TemplateRef<Element>) {
     this.popupService.open(this.vcrPassword, view, {
       animations: {
         popup: {
-          enter: 'enter-slide-down 0.8s',
+          enter: loginMessages.enterSlide,
         },
         overlay: {
-          enter: 'fade-in 0.8s',
-          leave: 'fade-out 0.3s forwards',
+          enter: loginMessages.enterFade,
+          leave: loginMessages.leaveFade,
         },
       },
       size: {
-        width: '14rem',
+        width: loginMessages.popupWidthSmall,
       },
     });
   }
@@ -258,21 +238,21 @@ export class LoginComponent {
   options: PopupOptions = {
     animations: {
       popup: {
-        enter: 'enter-slide-down 0.8s',
+        enter: loginMessages.enterSlide,
       },
       overlay: {
-        enter: 'fade-in 0.8s',
-        leave: 'fade-out 0.3s forwards',
+        enter: loginMessages.enterFade,
+        leave: loginMessages.leaveFade,
       },
     },
     size: {
-      width: '24rem',
+      width: loginMessages.popupWidthLarge,
     }
   }
 
   openPopupTemplate2(view: TemplateRef<Element>) {
-    // email format: FirstName.MiddleName.LastName@lpstech.com
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    // email format: username@lenovo.com
+    const characters = loginMessages.characters;
     function generateString(length: number) {
       let result = ' ';
       const charactersLength = characters.length;
@@ -281,39 +261,25 @@ export class LoginComponent {
       }
       return result.trim();
     }
-    let userEmail = this.secondForm.get('RegisterEmail')?.value;
-    let fullName = userEmail.match("^.*(?=@)");
-    let rmvNameDots = fullName![0].split(".");
-    let uName = fullName![0];
-    let firstName = rmvNameDots![0];
-    let lastName = rmvNameDots![2];
-    if (rmvNameDots.length == 3) {
-      uName = rmvNameDots[0].concat(rmvNameDots[2]);
-    } else {
-      uName = rmvNameDots[0].concat(rmvNameDots[1]);
-      lastName = rmvNameDots![1];
-    }
+    let userEmail = this.secondForm.get(loginMessages.registerEmail)?.value;
+    let userName = userEmail.match(loginMessages.userEmailPattern)[0];
     this.userReg = {
       email: userEmail,
-      username: uName,
+      username: userName,
       password: generateString(10),
-      firstName: firstName,
-      lastName: lastName,
-      address: 'address',
-      phoneNo: '09991234567',
-      position: 'position',
-      positionCode: 'positioncode'
     }
     this.loginService.addUserLogin(this.userReg).subscribe(
       (res: any) => {
-        this.popupTitle = res.status.charAt(0).toUpperCase() + res.status.slice(1).toLowerCase;
-        if (res.status=='error') {
-          this.userReg.password = '';
+        console.log(res)
+        this.popupTitle = res.status.charAt(0).toUpperCase() + res.status.slice(1).toLowerCase();
+        if (res.status==loginMessages.errorDown) {
           this.popupContent = res.message;
         } else {
-          this.popupContent = this.regUserSuccess;
+          this.popupContent = loginMessages.regUserSuccess;
         }
-        this.popupService.open(this.vcrReset, view, this.options);
+        setTimeout(() => {
+          this.popupService.open(this.vcrStatus, view, this.options);
+        }, 1000);
       },
       (error: HttpErrorResponse) => {
         if(error.error != null) {
@@ -321,58 +287,60 @@ export class LoginComponent {
           this.popupContent = String(errors.message);
           this.errMessage = this.popupContent;
         } else {
-          this.popupContent = this.duplicateExist;
+          this.popupContent = loginMessages.duplicateExist;
           this.errMessage = this.popupContent;
         }
-        this.popupTitle = 'Error';
-        this.userReg.password = '';
-        this.popupService.open(this.vcrReset, view, this.options);
+        this.popupTitle = loginMessages.errorUp;
+        this.userReg.password = loginMessages.emptyString;
+        setTimeout(() => {
+          this.popupService.open(this.vcrStatus, view, this.options);
+        }, 1000);
       }
     )
   }
 
   openPopupTemplate3_1(view: TemplateRef<Element>) {
     this.close();
-    this.popupService.open(this.vcrCreateUsername, view, this.options);
+    this.popupService.open(this.vcrCreatePassword, view, this.options);
   }
 
   openPopupTemplate3_2(view: TemplateRef<Element>) {
-    let confirmPass = this.thirdForm.get('ConfirmPassword')?.value;
+    let confirmPass = this.thirdForm.get(loginMessages.confirmPassword)?.value;
     let uName = this.loginService.getUsername();
     this.loginService.changePassword(uName!, confirmPass).subscribe(
       (res: any) => {
-        this.popupTitle = 'Success'
-        this.popupContent = this.passChgSuccess;
-        console.log('>>> RES', res);
+        this.popupTitle = loginMessages.successUp;
+        this.popupContent = loginMessages.passChgSuccess;
+        console.log(loginMessages.consoleRes, res);
       },
       (error: HttpErrorResponse) => {
-        this.popupTitle = 'Error'
-        this.popupContent = this.passChgFail;
+        this.popupTitle = loginMessages.errorUp;
+        this.popupContent = loginMessages.passChgFail;
         if(error.error != null) {
           this.popupContent = error.error.errors[0].message;
         }
-        console.log('>>> ERR', error);
+        console.log(loginMessages.consoleErr, error);
       }
     )
     this.popupService.open(this.vcrCreatePassword, view, this.options);
   }
 
   openPopupTemplate4(view: TemplateRef<Element>) {
-    let confirmPass = this.fourthForm.get('ConfirmPassword')?.value;
+    let confirmPass = this.fourthForm.get(loginMessages.confirmPassword)?.value;
     let uName = this.loginService.getUsername();
     this.loginService.changePassword(uName!, confirmPass).subscribe(
       (res: any) => {
-        this.popupTitle = 'Success'
-        this.popupContent = this.passUpdSuccess;
+        this.popupTitle = loginMessages.successUp;
+        this.popupContent = loginMessages.passUpdSuccess;
         console.log('>>> RES', res);
       },
       (error: HttpErrorResponse) => {
-        this.popupTitle = 'Error'
-        this.popupContent = this.passUpdFail;
+        this.popupTitle = loginMessages.errorUp;
+        this.popupContent = loginMessages.passUpdFail;
         console.log('>>> ERR', error);
       }
     )
-    this.popupService.open(this.vcrUpdate, view, this.options);
+    this.popupService.open(this.vcrStatus, view, this.options);
   }
 
   close() {
@@ -392,12 +360,13 @@ export class LoginComponent {
   openUserNameInput() {
   // openUserNameInput(view: TemplateRef<Element>) {
     // this.close();
-    let uName = this.checkUNForm.get('UserName')?.value
+    let uName = this.checkUNForm.get(loginMessages.userName)?.value
     this.loginService.deleteUsername();
     this.loginService.isExistUsername(uName).subscribe((res:any) => {
+      console.log(res)
       let status = res.status;
       this.nameNotFound = res.message;
-      if(status == 'success') {
+      if(status == loginMessages.successDown) {
         this.openCreatePass();
         this.loginService.storeUsername(uName);      
       }
@@ -405,83 +374,83 @@ export class LoginComponent {
   }
 
   onInputEmailMismatchForm2 = () => {
-    let secondFormError = this.secondForm.errors?.['emailerror'];
+    let secondFormError = this.secondForm.errors?.[loginMessages.emailerror];
     if(secondFormError) {
-      this.errMessage = this.mustEndWith;
+      this.errMessage = loginMessages.mustEndWith;
     } else {
-      this.errMessage = '';
+      this.errMessage = loginMessages.emptyString;
     }
     return secondFormError
   }
 
   onInputNotMatchForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['passwordmatcherror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.passwordmatcherror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputMinCharsForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['charlengtherror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.charlengtherror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputNoUpcaseForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['caseuperror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.caseuperror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputNoLowCaseForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['caselowerror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.caselowerror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputNoNumForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['digiterror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.digiterror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputNoSymbolForm3 = () => {
-    let thirdFormError = this.thirdForm.errors?.['symbolerror'];
+    let thirdFormError = this.thirdForm.errors?.[loginMessages.symbolerror];
     let boolMatch = this.thirdForm.untouched
     return thirdFormError || boolMatch
   }
 
   onInputNotMatchForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['passwordmatcherror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.passwordmatcherror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
 
   onInputMinCharsForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['charlengtherror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.charlengtherror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
 
   onInputNoUpcaseForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['caseuperror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.caseuperror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
 
   onInputNoLowCaseForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['caselowerror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.caselowerror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
 
   onInputNoNumForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['digiterror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.digiterror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }
 
   onInputNoSymbolForm4 = () => {
-    let fourthFormError = this.fourthForm.errors?.['symbolerror'];
+    let fourthFormError = this.fourthForm.errors?.[loginMessages.symbolerror];
     let boolMatch = this.fourthForm.untouched
     return fourthFormError || boolMatch
   }

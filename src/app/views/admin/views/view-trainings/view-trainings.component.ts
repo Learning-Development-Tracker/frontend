@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-// import { CustomBottonComponent } from '../../shared/components/custom-button/custom-button.component';
+import { CustomBottonComponent } from './../../../../shared/components/custom-button/custom-button.component';
 import {  ManageTrainingsComponent } from '../manage-trainings/manage-trainings.component';
 
 @Component({
   selector: 'view-trainings',
   standalone: true,
-  imports: [ CommonModule],
+  imports: [ CommonModule,CustomBottonComponent],
   templateUrl: './view-trainings.component.html',
   styleUrl: './view-trainings.component.css' 
  

@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 export class TableComponent implements OnInit {
 
   @Input() data: any[] = [];
+  @Input() originalData: any[] = [];
   @Input() columns: any[] = [];
   globalFilter: string = '';
   filters: { [key: string]: any } = {};
@@ -25,15 +26,19 @@ export class TableComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
-  @Output() addResourceButtonClick = new EventEmitter<void>();
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
+  @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addResourceButtonClick = new EventEmitter<void>();
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
     this.searchChange.emit(value);
   }
 
+  ngOnChanges() {
+    this.originalData = [...this.data];
+  }
 
   onSort(event: any) {
     this.sortChange.emit(event);
@@ -72,24 +77,51 @@ export class TableComponent implements OnInit {
       return false
      }
   }
-  matchesGlobalFilter(row: any): boolean {
+  // matchesGlobalFilter(row: any): boolean {
+  //   if (!this.globalFilter) {
+  //       return true; 
+  //   }
+
+  //   const filterValue = this.globalFilter.toLowerCase();
+
+  //   for (let col of this.columns) {
+  //       if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
+  //           return true; 
+  //       }
+  //   }
+
+  //   return false;
+  // }
+
+  onSearch(data: any): void {
     if (!this.globalFilter) {
-        return true; 
+      this.data = [...this.originalData];
+    } else {
+      this.data = this.filterData(this.globalFilter);
     }
+  }
 
-    const filterValue = this.globalFilter.toLowerCase();
+  filterData(searchText: string): any[] {
+    return this.data.filter(item =>
+      this.checkItemMatchesSearchText(item, searchText)
+    );
+  }
 
-    for (let col of this.columns) {
-        if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
-            return true; 
-        }
+  checkItemMatchesSearchText(item: any, searchText: string): boolean {
+    searchText = searchText.toLowerCase();
+    for (let key in item) {
+      if (item.hasOwnProperty(key) && typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText)) {
+        return true;
+      }
     }
-
     return false;
+  }
+  
+  addTraining() {
+    this.addTrainingClick.emit()
   }
 
   addResourceButton () {
     this.addResourceButtonClick.emit();
   }
-
 }

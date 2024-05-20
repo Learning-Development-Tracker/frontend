@@ -157,12 +157,10 @@ export class LoginComponent {
   }
 
   openLogin() {
-    console.log("HAPPENDED 1", this.loginData)
     this.loginButtonClicked.emit();
     // First, checks if it isn't implemented yet.
     setTimeout(() => {
       if(this.loginData!= null) {
-        console.log("HAPPENDED 2", this.loginData)
         let userName = this.loginData.data.userName;
         this.loginService.storeUsername(userName);
         if (!this.loginData.data.isActive) {
@@ -172,7 +170,6 @@ export class LoginComponent {
         else if (this.loginData.data.updatedDate == null) {
           this.forgotPassword = this.updatePassword;
         } else {
-          console.log("HAPPENDED")
           this.loginService.storeJwtToken(this.loginData.data.token);
           this.loginService.storeAccLevel(this.loginData.data.accessName);
           this.loginService.deleteUsername();

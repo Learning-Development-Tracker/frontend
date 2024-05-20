@@ -1,4 +1,4 @@
-<div class="main-add-user-form" (click)="onClosed()" *ngIf="isOpen">
+<div class="main-add-user-form" *ngIf="isOpen" (click)="preventBackdropClick($event)">
     <div class="add-user-form-details" (click)="preventBackdropClick($event)">
         <p>Personal Information</p>
         <ng-container *ngFor="let info of personalInfoInputs; let i = index">
@@ -152,11 +152,20 @@
         </app-dialog-box>
 
         <app-dialog-box
-            [isOpen]="isSaveSuccess"
+            [isOpen]="isAddSuccess"
             [msgStatus]="'success'"
             [msg]="'Resource successfully Added'"
             [imgStatus]="'../../../../../assets/success.png'"
-            (dialogClosed)="closeDialog(true)"
+            (dialogClosed)="closeDialog('add')"
+        >
+        </app-dialog-box>
+
+        <app-dialog-box
+            [isOpen]="isEditSuccess"
+            [msgStatus]="'success'"
+            [msg]="'Resource successfully Updated'"
+            [imgStatus]="'../../../../../assets/success.png'"
+            (dialogClosed)="closeDialog('edit')"
         >
         </app-dialog-box>
         

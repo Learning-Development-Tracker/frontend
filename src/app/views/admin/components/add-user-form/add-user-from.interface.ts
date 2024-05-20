@@ -46,6 +46,7 @@ export interface ResourceInfosInterface {
     region?: string,
     role?: string,
     team?: string,
+    isEnabled?: boolean,
     status?: string,
     skills?: string
 }

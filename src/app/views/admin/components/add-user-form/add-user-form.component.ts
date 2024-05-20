@@ -1,7 +1,7 @@
 import { gender } from './../../../../shared/constants/add-user-form.constants';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation, SimpleChange, SimpleChanges } from '@angular/core';
-import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ValidKeys } from './add-user-from.interface';
+import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ResourceInfosInterface, ValidKeys } from './add-user-from.interface';
 import { certificationInputs, empStatusInputs, personalInfoInputs, techStacksInputs } from '../../../../shared/constants/add-user-form.constants';
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -71,8 +71,8 @@ export class AddUserFormComponent {
     region: '',
     role: '',
     team: '',
-    isEnabled: false,
-    // status: '',
+    isEnabled: null,
+    status: '',
     skills:''
   }
 
@@ -88,8 +88,8 @@ export class AddUserFormComponent {
     region: '',
     role: '',
     team: '',
-    isEnabled: false,
-    // status: '',
+    isEnabled: null,
+    status: '',
     skills:''
   }
 
@@ -111,8 +111,8 @@ export class AddUserFormComponent {
         region: '',
         role: '',
         team: '',
-        isEnabled: false,
-        // status: '',
+        isEnabled: null,
+        status: '',
         skills: ''
       };
 
@@ -122,9 +122,11 @@ export class AddUserFormComponent {
       };
 
       this.genderOption = this.resourceInfos.gender;
-      this.statusOption = this.resourceInfos.status;
+      this.statusOption = this.resourceInfos.isEnabled === true ? 'Active' : this.resourceInfos.isEnabled === null ? '' :  'Inactive'
+      this.resourceInfos.status = this.resourceInfos.isEnabled === true ? 'Active' : this.resourceInfos.isEnabled === null ? '' :  'Inactive'
       this.selectedTeamOption = this.resourceInfos.team ? this.resourceInfos.team.split(',') : []
       this.selectedSkillOption = this.resourceInfos.skills ? this.resourceInfos.skills.split(',') : []
+      console.log(this.resourceInfos, "<<<< initial value")
     }
 
     if(changes['resourceCertifications']) {
@@ -135,13 +137,17 @@ export class AddUserFormComponent {
           certificationData.forEach((certification) => {
             const newDate = new Date(certification.certificationDate)
 
+            const fileBlob = new Blob([certification.fileContent]);
+            const file = new File([fileBlob], certification.fileName);
+
             const itemGroup = this.fb.group({
-              name: [certification.certificationName || ''], // Default value handling
-              calendar: [newDate || null], // Default value handling
-              fileupload: [certification.fileName || null], // Adjust as needed
+              name: [certification.certificationName || ''],
+              calendar: [newDate || null], 
+              fileupload: [fileBlob || null],
+              id:certification.id,
             });
   
-            this.items.push(itemGroup); // Add to FormArray
+            this.items.push(itemGroup);
 
             console.log(itemGroup, "<<<<<<itemGroup")
           });
@@ -212,8 +218,11 @@ export class AddUserFormComponent {
 
   onClosed() {
     this.isOpen = false;
-    this.isOpenChange.emit(this.isOpen)
+    this.openDialog = false;
+    this.isValidEmail = false;
     this.resetFields()
+    this.isOpenChange.emit(this.isOpen)
+    
   }
 
   getValidKey(key: string) {
@@ -294,7 +303,8 @@ export class AddUserFormComponent {
 
   openDialog = false;
   isValidEmail = false;
-  isSaveSuccess = false;
+  isAddSuccess = false;
+  isEditSuccess = false;
   
   hasErrors(){
     if (this.validationErrors.length > 0) {
@@ -302,17 +312,21 @@ export class AddUserFormComponent {
     }
   }
 
-  closeDialog(isSavedSuccess?: boolean) {
+  closeDialog(type?: string) {
     this.openDialog = false;
 
-    if (isSavedSuccess) {
-      this.isSaveSuccess = false;
+    if (type === 'add') {
+      this.isAddSuccess = false;
+      this.resetFields();
+      this.onClosed();
+    } else if (type === 'edit'){
+      this.isEditSuccess = false;
       this.resetFields();
       this.onClosed()
     }
   }
 
-  isValidLPSTechEmail(email: string): boolean {
+  isValidLPSTechEmail(email: any): boolean {
     return email.toLowerCase().endsWith('@lpstech.com');
   }
 
@@ -321,22 +335,31 @@ export class AddUserFormComponent {
   }
 
   saveResource() {
+    console.log(this.resourceInfos, "resourceInfos")
     this.checkValidation();
     this.hasErrors();
     const datePipe = new DatePipe('en-US');
     const formValue: any = this.form.value;
     const formData = new FormData();
+    let isMissingFiles:boolean = true;
 
     this.items.controls.forEach((item, index) => {
       const itemGroup = item as FormGroup;
       const file = itemGroup.get('fileupload')?.value;
       const date = itemGroup.get('calendar')?.value;
       const formattedDate: any = datePipe.transform(date, 'yyyy-MM-dd');
+
+      if (file === null) {
+        isMissingFiles = true;
+      } else {
+        isMissingFiles = false;
+      }
   
       formData.append(`files`, file);
       formData.append('owner', this.resourceInfos.empId && this.resourceInfos.empId );
       formData.append(`name_${index}`, itemGroup.get('name')?.value);
       formData.append(`calendar_${index}`, formattedDate);
+      formData.append(`id_${index}`, itemGroup.get('id')?.value)
       console.log(itemGroup.get('name')?.value, "<<<< item")
     })
 
@@ -350,8 +373,8 @@ export class AddUserFormComponent {
       }
 
       if (this.validationErrors.length === 0 && this.isValidLPSTechEmail(this.resourceInfos.emailAddress)) {
-        this.isSaveSuccess = true
-    
+        this.isAddSuccess = true
+        delete this.resourceInfos['status']
         this.addResourceService.addResource(this.resourceInfos)
         .subscribe((res: any) => {
           console.log(res, "<<<<<< RES")
@@ -359,34 +382,37 @@ export class AddUserFormComponent {
         }, err => {
           console.log(err, "<<<<< ERROR")
         });
-  
-        this.addResourceService.addResourceCertification(formData)
-        .subscribe((res: any) => {
-          console.log(res, "<<<<<< RES")
-        }, err => {
-          console.log(err, "<<<<< ERROR")
-        });
+        console.log(isMissingFiles, "isMissingFiles")
+
+        if (!isMissingFiles) {
+          this.addResourceService.addResourceCertification(formData)
+          .subscribe((res: any) => {
+            console.log(res, "<<<<<< RES")
+          }, err => {
+            console.log(err, "<<<<< ERROR")
+          });
+        }
     }
     console.log("ADD", this.resourceInfos)
     } else if (this.action !== '' && this.action === 'edit') {
-      console.log("edit")
-      const _resourceInfos = {
-        lastname: this.resourceInfos.lastname,
-        firstname: this.resourceInfos.firstname,
-        middlename: this.resourceInfos.middlename,
-        suffix: this.resourceInfos.suffix,
-        gender: this.resourceInfos.gender,
-        emailAddress: this.resourceInfos.emailAddress,
-        careerStep: this.resourceInfos.careerStep,
-        empId: this.resourceInfos.empId,
-        region: this.resourceInfos.region,
-        role: this.resourceInfos.role,
-        team: this.resourceInfos.team,
-        isEnabled: this.resourceInfos.isEnabled,
-        // status: this.resourceInfos.status,
-        skills: this.resourceInfos.skills
+      console.log("edit", this.resourceInfos)
+      const _resourceInfos: ResourceInfosInterface = {
+        lastname: this.resourceInfos.lastname ||  '',
+        firstname: this.resourceInfos.firstname ||  '',
+        middlename: this.resourceInfos.middlename ||  '',
+        suffix: this.resourceInfos.suffix ||  '',
+        gender: this.resourceInfos.gender ||  '',
+        emailAddress: this.resourceInfos.emailAddress ||  '',
+        careerStep: this.resourceInfos.careerStep ||  '',
+        empId: this.resourceInfos.empId ||  '',
+        region: this.resourceInfos.region ||  '',
+        role: this.resourceInfos.role ||  '',
+        team: this.resourceInfos.team ||  '',
+        isEnabled: this.resourceInfos.isEnabled ||  '',
+        status: this.resourceInfos.isEnabled === true ? 'Active' : 'Inactive',
+        skills: this.resourceInfos.skills ||  ''
       }
-
+      
       _resourceInfos.isEnabled = this.statusOption === 'Active' ? true : false
       if (!this.isValidLPSTechEmail(_resourceInfos.emailAddress)) {
         console.log(this.isValidLPSTechEmail(_resourceInfos.emailAddress), "this.isValidEmail")
@@ -395,21 +421,33 @@ export class AddUserFormComponent {
         this.isValidEmail = false;
       }
       if (this.validationErrors.length === 0 && this.isValidLPSTechEmail(_resourceInfos.emailAddress)) {
-        this.addResourceService.editResource(this.resourceInfos.id, _resourceInfos)
+        this.isEditSuccess = true
+        console.log(this.isEditSuccess, "success edited")
+        delete _resourceInfos['status']
+        this.addResourceService.editResource(this.resourceInfos.memberId, _resourceInfos)
         .subscribe((res: any) => {
           console.log(res, "<<<<<< RES")
-          this.resetFields();
-          this.onClosed()
         }, err => {
           console.log(err, "<<<<< ERROR")
         });
 
+
+        for (var pair of formData.entries()) {
+          console.log('FORM DATA EDIT',pair[0]+ ', ' + pair[1]); 
+      }
+
+        if (!isMissingFiles) {
+          console.log('EDITING CERT')
+          this.addResourceService.editResourceCertification(formData)
+          .subscribe((res: any) => {
+            console.log(res, "<<<<<< RES")
+          }, err => {
+            console.log(err, "<<<<< ERROR")
+          });
+        }
+
       }
     }
-    
-    console.log(this.resourceInfos, "first <<<<<<<<<")
-    console.log(this.form.value, "formvalue <<<<<<<<<")
-    // this.resetFields();
   }
 
   getSkills() {

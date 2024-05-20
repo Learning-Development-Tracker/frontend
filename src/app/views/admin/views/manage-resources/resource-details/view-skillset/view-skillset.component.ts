@@ -63,7 +63,7 @@ export class ViewSkillsetComponent {
         this.testingTools = resp.data.filter((item: { type: string; }) => item.type == 'Testing Tools');
       }
     }, (error: any) => {
-      
+
     });
   }
 

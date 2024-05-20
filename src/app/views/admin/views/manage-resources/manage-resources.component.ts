@@ -152,13 +152,14 @@ export class ManageResourcesComponent implements OnInit{
         this.addResourceService.viewResourceCertification(item.empId)
         .subscribe((res: any) => {
           console.log(res, "<<<<<< res certs")
-          res.data.map((cert:any) => _certifications.push(cert.certificationName))
-          
+          if(res && res.data) {
+            res.data.map((cert:any) => _certifications.push(cert.certificationName))
+          }
         }, err => {
           console.log(err, "<<<<< ERROR")
         });
               let resList = 
-                { memberId: item.id,
+                { memberId: item.memberId,
                   membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
                   employeeNum: item.empId,
                   roleName: item.role,
@@ -197,23 +198,6 @@ export class ManageResourcesComponent implements OnInit{
 
   onOpenClick() {
     this.isOpen = true;
-    // this.addResourceService.viewResource(202)
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   delete res.data['password'];
-    //   delete res.data['certifications'];
-    //   this.resourceInfos = res
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
-
-    // this.addResourceService.viewResourceCertification('82010603')
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   this.resourceCertifications = res
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
   }
 
   onCloseClick() {

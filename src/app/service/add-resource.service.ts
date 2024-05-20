@@ -21,7 +21,7 @@ export class AddResourceService {
     return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/resourceCertificationUpload",  formData);
   }
 
-  viewResource(id: number) {
+  viewResource(id: string) {
     return this.httpClient.get(this.configService.apiUrl + `/api/v1/authentication/viewResource/${id}`);
   }
 
@@ -30,7 +30,7 @@ export class AddResourceService {
   }
 
   getAllResource() {
-    return this.httpClient.get(this.configService.apiUrl + '/api/v1/authentication/getAll');
+    return this.httpClient.get(this.configService.apiUrl + '/api/v1/authentication/getResources');
   }
 
   editResource(id: number, resourceInfos: any) {
@@ -39,5 +39,9 @@ export class AddResourceService {
 
   getSkills() {
     return this.httpClient.get(this.configService.apiUrl + '/api/v1/authentication/getSkills');
+  }
+
+  editResourceCertification(formData: FormData) {
+    return this.httpClient.put(this.configService.apiUrl + "/api/v1/authentication/resourceCertificationUpdate",  formData);
   }
 }

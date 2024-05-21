@@ -12,6 +12,7 @@ import { AccessLevel } from '../../constants/access-level';
 export class LoginService {
   httpClient = inject(HttpClient);
   readonly JWT_TOKEN = 'JWT_TOKEN';
+  readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   readonly USER_NAME = 'USER_NAME';
   readonly ACCESS_LEVEL = 'ACCESS_LEVEL';
   constructor(
@@ -35,20 +36,34 @@ export class LoginService {
     return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/exist-username", { username })
   }
 
+  addRefreshToken(username: string) {
+    return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/refresh-token", username, {responseType: 'text'} );
+  }
+
   public isLoggedIn() {
     return !!localStorage.getItem(this.JWT_TOKEN);
   }
-
+  
   public getUsername() {
     return localStorage.getItem(this.USER_NAME);
   }
-
+  
   public getAccessLevel() {
     return localStorage.getItem(this.ACCESS_LEVEL);
   }
 
+  public getRefreshToken() {
+    return localStorage.getItem(this.REFRESH_TOKEN);
+  }
+
   public storeJwtToken(jwt: any) {
     localStorage.setItem(this.JWT_TOKEN, jwt);
+  }
+  
+  public storeRefreshToken() {
+    this.addRefreshToken(this.getUsername()!).subscribe(res => {
+      localStorage.setItem(this.REFRESH_TOKEN, res);
+    });
   }
 
   public storeUsername(username: any) {
@@ -75,8 +90,7 @@ export class LoginService {
   public isTokenExpired() {
     const token = localStorage.getItem(this.JWT_TOKEN);
     if(!token) return true;
-    const access_token = JSON.parse(token);
-    const decoded = jwtDecode(access_token);
+    const decoded = jwtDecode(token);
     if (!decoded.exp) return true;
     const expirationDate = decoded.exp * 1000;
     const now = new Date().getTime();

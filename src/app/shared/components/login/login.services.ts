@@ -18,9 +18,12 @@ export class LoginService {
     private configService: ConfigService,
     private router: Router) {
   }
-
+  apiUrl:string = ""
   login(username: string, password: string) {
-    return this.httpClient.post(this.configService.apiUrl + "/api/v1/authentication/login", { username, password });
+  
+    this.apiUrl = this.configService.apiUrl;
+    console.log("CONFIG URL: " + this.apiUrl );
+    return this.httpClient.post(this.apiUrl + "/api/v1/authentication/login", { username, password });
   }
   
   addUserLogin(login :Register){

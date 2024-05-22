@@ -171,8 +171,8 @@ export class LoginComponent {
           this.forgotPassword = this.updatePassword;
         } else {
           this.loginService.storeJwtToken(this.loginData.data.token);
+          this.loginService.storeRefreshToken();
           this.loginService.storeAccLevel(this.loginData.data.accessName);
-          this.loginService.deleteUsername();
           this.redirectAfterSuccess();
         }
       }

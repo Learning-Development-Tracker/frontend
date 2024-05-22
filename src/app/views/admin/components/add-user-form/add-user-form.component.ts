@@ -1,7 +1,7 @@
 import { gender } from './../../../../shared/constants/add-user-form.constants';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation, SimpleChange, SimpleChanges } from '@angular/core';
-import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ResourceInfosInterface, ValidKeys } from './add-user-from.interface';
+import { AddUserInterface, Certification, DropdownInterface, ResourceInfoInterface, ResourceInfosInterface, SelectItemGroupInterface, ValidKeys } from './add-user-from.interface';
 import { certificationInputs, empStatusInputs, personalInfoInputs, techStacksInputs } from '../../../../shared/constants/add-user-form.constants';
 import { CustomBottonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -46,8 +46,8 @@ export class AddUserFormComponent {
   public cetificationInput =  {label: 'Name', field: "cert_name", placeholder: 'Certification Name', type: 'text', element: 'input'};
   public dateCertifiedInput = {label: 'Date Certified', field: "date_certified", placeholder: 'Date Certified', type: 'text', element: 'calendar'};
   public certificationDocInput = {label: 'Certificate Document', field: "certificate_doc", placeholder: 'File to be upload', type: 'file', element: 'input'};
-  teamList!: SelectItemGroup[];
-  skillList!: SelectItemGroup[];
+  teamList!: SelectItemGroupInterface[];
+  skillList!: SelectItemGroupInterface[];
   selectedSkillOption!: DropdownInterface[];
   selectedTeamOption!: DropdownInterface[];
   genderOption!: any;

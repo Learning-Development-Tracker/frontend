@@ -7,7 +7,7 @@
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
-            <div class="search-container">
+            <div class="search-container" *ngIf="showSearchField">
                 <span class="p-input-icon-left ml-auto">
                     <input  class="search-input" pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
                 </span>

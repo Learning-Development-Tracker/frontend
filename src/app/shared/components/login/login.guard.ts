@@ -22,7 +22,7 @@ export const loginGuard: CanActivateFn = (route, state) => {
     '/approver-calendar', 
     '/approver-certifications', 
     '/approver-team', 
-    '/approver-dashboard', 
+    '/approver-team-dashboard', 
     '/approver-cert-tracking', 
     '/approver-trainings'
   ]

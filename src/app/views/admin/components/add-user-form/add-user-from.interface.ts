@@ -67,3 +67,10 @@ export interface ResourceInfoInterface {
     skills: string;
     [key: string]: string;
   };
+
+
+export interface SelectItemGroupInterface {
+    label: string;
+    value?: any;
+    items?: SelectItem[];
+}

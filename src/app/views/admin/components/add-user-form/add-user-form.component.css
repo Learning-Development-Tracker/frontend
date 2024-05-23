@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 12000;
 }
 
@@ -98,10 +98,6 @@
     flex-wrap: wrap;
 }
 
-.certification-details input {
-    /* width: 5em; */
-}
-
 .add-cert-button {
     grid-column: auto / span 2;
     margin-top: 1em ;
@@ -112,10 +108,6 @@
     display: flex;
     gap: 0.5em;
     justify-content: flex-end;
-}
-
-.main-multiselect {
-
 }
 
 .multiselect {
@@ -162,11 +154,6 @@
     font-size: 12px;
     height: 70%;
     margin-top: 5px;
-}
-
-.singleselect-panel input{
-    /* height: 1.7em;
-    width: 100%; */
 }
 
 .singleselect-panel {

@@ -18,10 +18,12 @@ import { FormsModule } from '@angular/forms';
 import { BadgeModule } from 'primeng/badge';
 // import { ContentCardComponent } from './manage-resources.component';
 import { ManageResourcesService } from '../../../../service/manage-resources.service';
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { map, catchError, switchMap, takeUntil } from "rxjs/operators";
+import { Subject, forkJoin, of } from "rxjs";
 import { AddResourceService } from '../../../../service/add-resource.service';
 import { AddUserFormComponent } from '../../components/add-user-form/add-user-form.component';
+import { SetTrainingFormComponent } from '../../components/set-training-form/set-training-form.component';
+import { SetTrainingService } from '../../../../service/set-training.services';
 
 
 @Component({
@@ -29,7 +31,7 @@ import { AddUserFormComponent } from '../../components/add-user-form/add-user-fo
   standalone: true,
   imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, 
     ViewPersonalInfoComponent,ResourceDetailsComponent,CustomBottonComponent, CommonModule, TableComponent, 
-    FormsModule, BadgeModule, AddUserFormComponent ],
+    FormsModule, BadgeModule, AddUserFormComponent, SetTrainingFormComponent ],
   templateUrl: './manage-resources.component.html',
   styleUrl: './manage-resources.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -46,12 +48,15 @@ export class ManageResourcesComponent implements OnInit{
   isResource: boolean = false;
   selectedMemberDtl: any = {};
   isOpen: boolean = false;
+  isSetTrainingOpen: boolean = false;
   action: string = '';
+  actionTypeForSetTraining: string = '';
   
   constructor(
     private router: Router,
     private manageResourcesService: ManageResourcesService,
-    private addResourceService: AddResourceService
+    private addResourceService: AddResourceService,
+    private setTrainingService: SetTrainingService
   ) { }
   private ngUnsubscribe: Subject<any> = new Subject();
   
@@ -143,35 +148,50 @@ export class ManageResourcesComponent implements OnInit{
 
   getResources(){
     var cert = [];
-    this.addResourceService.getAllResource()
-    .subscribe((res: any) => {
-      this.resourceList=[]
-      console.log(res, "<<<<<< RES")
-      res.forEach((item: any) => {
-        let _certifications:any=[]
-        this.addResourceService.viewResourceCertification(item.empId)
-        .subscribe((res: any) => {
-          console.log(res, "<<<<<< res certs")
-          if(res && res.data) {
-            res.data.map((cert:any) => _certifications.push(cert.certificationName))
-          }
-        }, err => {
-          console.log(err, "<<<<< ERROR")
-        });
-              let resList = 
-                { memberId: item.memberId,
-                  membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
-                  employeeNum: item.empId,
-                  roleName: item.role,
-                  teamName: item.team,
-                  memberTrainings: '5 of 5',
-                  certifications: _certifications
-                };
-                this.resourceList.push(resList);
-              });
+    this.addResourceService.getAllResource().subscribe((res: any) => {
+      this.resourceList = [];
+    
+      const observables = res.map((item: any) => {
+        let _certifications: any[] = [];
+    
+        return this.addResourceService.viewResourceCertification(item.empId).pipe(
+          map((certRes: any) => {
+            if (certRes && certRes.data) {
+              _certifications = certRes.data.map((cert: any) => cert.certificationName);
+            }
+            return _certifications;
+          }),
+          catchError(err => {
+            console.log(err, "<<<<< ERROR in fetching certifications");
+            return of([]);
+          }),
+          switchMap(() => this.setTrainingService.countUserTrainings(item.memberId).pipe(
+            map((count: any) => {
+              return {
+                memberId: item.memberId,
+                membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
+                employeeNum: item.empId,
+                roleName: item.role,
+                teamName: item.team,
+                memberTrainings: count,
+                certifications: _certifications
+              };
+            }),
+            catchError(err => {
+              console.log(err, "<<<<< ERROR in counting trainings");
+              return of({});
+            })
+          ))
+        );
+      });
+    
+      forkJoin(observables).subscribe((results: any) => {
+        this.resourceList = results.filter((result:any) => Object.keys(result).length !== 0); // Filter out empty results
+      });
     }, err => {
-      console.log(err, "<<<<< ERROR")
+      console.log(err, "<<<<< ERROR in fetching resources");
     });
+
     // this.manageResourcesService.getResources().pipe(
     //   takeUntil(this.ngUnsubscribe)
     // ).subscribe((resp) => {
@@ -208,59 +228,27 @@ export class ManageResourcesComponent implements OnInit{
     console.log(event, "<<<<<<< event")
     this.isOpen = false;
     this.getResources();
-    // this.addResourceService.getAllResource()
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   this.resourceList=[]
-    //   res.forEach((item: any) => {
-    //           let resList = 
-    //             { memberId: item.id,
-    //               membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
-    //               employeeNum: item.empId,
-    //               roleName: item.role,
-    //               teamName: item.team,
-    //               memberTrainings: '5 of 5',
-    //               certifications: ''
-    //             };
-    //             this.resourceList.push(resList);
-    //           });
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
+  }
+
+  isSetTrainingOpenChange(event: any) {
+    console.log(event, "<<<<<<< event")
+    this.isSetTrainingOpen = false;
+    this.getResources();
   }
 
   addResource() {
     this.action = 'add'
     this.isOpen = true;
-    // this.addResourceService.viewResourceCertification('5324424')
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   this.resourceCertifications = res
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
-
-    // this.addResourceService.viewResource(202)
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   delete res.data['password'];
-    //   delete res.data['certifications'];
-    //   this.resourceInfos = res
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
-
-    // this.addResourceService.viewResourceCertification('82010603')
-    // .subscribe((res: any) => {
-    //   console.log(res, "<<<<<< RES")
-    //   this.resourceCertifications = res
-    // }, err => {
-    //   console.log(err, "<<<<< ERROR")
-    // });
   }
 
-  backManageResource(){
+  backManageResource() {
     this.isResource=false
+  }
+
+  showSetTrainingMultipleUserForm() {
+    console.log("HAPPENED")
+    this.actionTypeForSetTraining = 'multiple';
+    this.isSetTrainingOpen = true;
   }
   
 }

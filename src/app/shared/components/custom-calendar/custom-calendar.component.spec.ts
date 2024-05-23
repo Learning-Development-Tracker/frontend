@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SetTrainingFormComponent } from './set-training-form.component';
+import { CustomCalendarComponent } from './custom-calendar.component';
 
-describe('SetTrainingFormComponent', () => {
-  let component: SetTrainingFormComponent;
-  let fixture: ComponentFixture<SetTrainingFormComponent>;
+describe('CustomCalendarComponent', () => {
+  let component: CustomCalendarComponent;
+  let fixture: ComponentFixture<CustomCalendarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SetTrainingFormComponent]
+      imports: [CustomCalendarComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SetTrainingFormComponent);
+    fixture = TestBed.createComponent(CustomCalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,6 +4,8 @@
 
 .p-header {
     background-color: #D1C2F2;
+    align-items: center; /* Vertically center items within the header */
+    padding: 10px; /* Optional: Add padding for better appearance */
 }
 
 .pi-search{
@@ -116,3 +118,9 @@
     opacity: 0.5;
     /* background-color: #0056b3; Change the hover background color as needed */
 }
+
+.icon-title i {
+    margin-left: 800px; /* Adjust spacing between icon and label as needed */
+ }
+
+

@@ -28,6 +28,8 @@ export class TableComponent implements OnInit {
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
+  @Input() showButtonResourceData: boolean = false;
+  @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() addResourceButtonClick = new EventEmitter<void>();
   @Input() showSearchField: boolean = true;
@@ -69,6 +71,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.showButtonManageTrainings = this.checkIfButtonShouldBeVisible();
+    
   }
 
   checkIfButtonShouldBeVisible(): boolean {
@@ -78,6 +81,8 @@ export class TableComponent implements OnInit {
       return false
      }
   }
+
+  
   // matchesGlobalFilter(row: any): boolean {
   //   if (!this.globalFilter) {
   //       return true; 
@@ -119,8 +124,8 @@ export class TableComponent implements OnInit {
   }
   
   addTraining() {
-    this.addTrainingClick.emit()
-  }
+    this.addTrainingClick.emit()  
+  }   
 
   addResourceButton () {
     this.addResourceButtonClick.emit();

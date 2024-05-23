@@ -110,7 +110,7 @@ export const navbarData: INavbarData[] = [
         items: [
             {
                 accesslevel: 'Approver',
-                routeLink: 'approver-dashboard',
+                routeLink: 'approver-team-dashboard',
                 label: 'DASHBOARD'
             },
             {

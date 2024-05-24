@@ -27,14 +27,14 @@ export class MyTeamDashboardComponent implements OnInit {
   private ngUnsubscribe: Subject<any> = new Subject();
 
   ngOnInit(): void {
-    this.getTeamMemberList("04-2024000000009");
+    this.getTeamMemberList(localStorage.getItem('USER_NAME'));
   }
 
   onInputKeyChange(event: any) {
     this.filteredUserData = this.userData.filter(item => item.fullName.toUpperCase().match(event.target.value.toUpperCase()));
   }
 
-  getTeamMemberList(v_userId: string){
+  getTeamMemberList(v_userId: any){
     this.approverSvc.getTeamMemberList(v_userId).pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe((resp) => {

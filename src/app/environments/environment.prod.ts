@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    firebase: JSON.parse(process.env['FIREBASE_API_DEV'] as string)
+    apiUrl: JSON.parse(process.env['API_URL'] as string)
   };

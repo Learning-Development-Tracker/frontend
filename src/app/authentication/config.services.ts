@@ -8,7 +8,7 @@ export class ConfigService {
   public apiUrl: string;
 
   constructor() {
-    this.apiUrl = environment.firebase['apiUrl'];
+    this.apiUrl = environment.apiUrl['apiUrl'];
     // You can add more environment variables here as needed
   }
 }

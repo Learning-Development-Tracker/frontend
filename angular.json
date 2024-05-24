@@ -17,6 +17,25 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "rxjs-compat",
+              "web.dom-collections.iterator",
+              "es.string.trim",
+              "es.string.starts-with",
+              "es.string.split",
+              "es.string.replace",
+              "es.string.match",
+              "es.string.ends-with",
+              "es.regexp.to-string",
+              "es.regexp.to-string",
+              "es.promise.j",
+              "es.array.reverse",
+              "es.array.reduce",
+              "es.array.iterato",
+              "es.array.index-of"
+
+
+           ],
             "outputPath": "dist/ad-initiative",
             "index": "src/index.html",
             "main": "src/main.ts",

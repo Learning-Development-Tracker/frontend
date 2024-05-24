@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from '../../shared/components/login/login.component';
 import { CustomBottonComponent } from '../../shared/components/custom-button/custom-button.component';
-import { LoginService } from '../../authentication/login.services';
+import { LoginService } from '../../shared/components/login/login.services';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../shared/components/footer/footer.component';

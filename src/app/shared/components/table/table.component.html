@@ -7,7 +7,7 @@
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
-            <div class="search-container">
+            <div class="search-container" *ngIf="showSearchField">
                 <span class="p-input-icon-left ml-auto">
                     <input  class="search-input" pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
                 </span>
@@ -22,8 +22,11 @@
             <div *ngIf="showButtonManageResources" class="actions" > 
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
                 <app-custom-button label="Export" margin="5px" icon="pi pi-file-export"></app-custom-button>
-                <app-custom-button label="Add Resource" margin="5px"></app-custom-button>
-                <app-custom-button label="Set Training" margin="5px"></app-custom-button>
+                <app-custom-button (buttonClicked)="addResourceButton()" label="Add Resource" margin="5px"></app-custom-button>
+                <app-custom-button (buttonClicked)="setTrainigButton()" label="Set Training" margin="5px"></app-custom-button>
+            </div>
+            <div *ngIf="showButtonResourceData" class="actions" > 
+                <app-custom-button label="Download" margin="5px" icon="pi pi-file-export"></app-custom-button>
             </div>
         </div>
     </ng-template>
@@ -33,15 +36,33 @@
                 <p-tableHeaderCheckbox>
                 </p-tableHeaderCheckbox>
             </th>
-            <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">
+            <th *ngIf="showButtonResourceData" class="p-header">
+                <p-tableHeaderCheckbox>
+                </p-tableHeaderCheckbox>
+            </th>
+            <!-- <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon></p-sortIcon>
+            </th> -->
+            <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field" 
+                [style.width]="col.width ? col.width : null">
+                 {{ col.header }}
+                    <p-sortIcon></p-sortIcon>
+            </th>
+            <th *ngFor="let col of columns && showButtonResourceDataTable" class="p-header" [pSortableColumn]="col.field" 
+                [style.width]="col.width ? col.width : null">
+                 {{ col.header }}
+                    <p-sortIcon></p-sortIcon>
             </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
             <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
+            <td *ngIf="showButtonResourceData" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>
@@ -53,7 +74,7 @@
                     <td *ngIf="col.field == 'tags'">
                         <p-tag *ngFor="let tag of rowData[col.field]" class="p-mr-1">{{tag}}</p-tag>
                     </td>
-                </ng-template>
+                </ng-template>               
                 <td *ngIf="col.field == 'trainings'">
                     <ng-container *ngIf="hasTrainings(rowData); else button">
                         <span *ngFor="let training of rowData.trainings" class="p-mr-1">{{training}}</span>
@@ -64,12 +85,16 @@
                 </td>
                 <td *ngIf="col.field == 'certifications'">
                         <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
-                </td>
-                <td *ngIf="col.field == 'actions'">
+                </td>                             
+                <td *ngIf="col.field == 'actions' && !showButtonResourceData">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>
                     <span class="action-button edit-img" (click)="onEdit(rowData)"></span>
                     <span class="action-button del-img" (click)="onDelete(rowData)"></span>
                 </td>
+                <td *ngIf="col.field == 'actions' && showButtonResourceData">
+                    <span class="action-button eye-img" (click)="onView(rowData)"></span>                
+                </td>
+              
             </ng-container>
         </tr>
     </ng-template>

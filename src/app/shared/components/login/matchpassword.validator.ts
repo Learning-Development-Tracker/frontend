@@ -101,7 +101,7 @@ export const charLen: ValidatorFn = (control: AbstractControl): ValidationErrors
 export const emailPattern: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   
   let userEmail = control.get('RegisterEmail');
-  let match = userEmail?.value?.match('[A-Za-z.]+@lpstech\.com');
+  let match = userEmail?.value?.match('[A-za-z]+@[Ll]enovo\.com');
   if(!match) {
     return {
       emailerror : true

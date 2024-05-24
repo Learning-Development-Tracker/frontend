@@ -27,6 +27,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "jspdf": "^2.5.1",
+    "jwt-decode": "^4.0.0",
     "pdfobject": "^2.3.0",
     "primeicons": "^6.0.1",
     "primeng": "^17.12.0",

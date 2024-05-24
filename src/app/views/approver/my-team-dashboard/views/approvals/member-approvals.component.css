@@ -1,0 +1,8 @@
+.hide-header .p-datatable-header {
+    display: none;
+}
+
+.border-radius .p-datatable-thead > tr > th {
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+}

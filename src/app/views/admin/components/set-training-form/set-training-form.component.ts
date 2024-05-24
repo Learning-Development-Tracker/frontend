@@ -324,7 +324,7 @@ export class SetTrainingFormComponent {
           console.log(err, "<<<<< ERROR")
         });
     } else if ((this.categoryOptions === 'region_location' || this.categoryOptions === 'odc') && !this.validate()) {
-        const _resourceList = this.resourceList.filter(user => user.region.trim().toUpperCase() === this.subCategoryOptions.toUpperCase());
+        const _resourceList = this.resourceList.filter(user => user.region?.trim().toUpperCase() === this.subCategoryOptions.toUpperCase());
         const _memberIds = _resourceList.map(user => user.memberId);
         requestData.memberIds = _memberIds;
 
@@ -337,7 +337,7 @@ export class SetTrainingFormComponent {
         });
     } else if (this.categoryOptions === 'team_projects' && !this.validate()) {
         const _resourceList = this.resourceList.filter(user => {
-            const teams = user.team.split(',');
+            const teams = user.team?.split(',');
             return teams.some((team: string) => team.trim().toUpperCase() === this.subCategoryOptions.toUpperCase());
           });
 

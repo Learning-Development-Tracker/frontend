@@ -21,4 +21,8 @@ export class ManageTrainingService {
         return this.httpClient.delete(this.configService.apiUrl + this.baseUrl + "/deleteTraining/" + id);
     }
 
+    getCalendarSchedule(){
+        return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewCalendarSchedule", {  });
+    }
+
 }

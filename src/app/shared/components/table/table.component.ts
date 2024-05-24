@@ -29,6 +29,7 @@ export class TableComponent implements OnInit {
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addCalendarClick: EventEmitter<any> = new EventEmitter<any>();
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
@@ -118,6 +119,9 @@ export class TableComponent implements OnInit {
   
   addTraining() {
     this.addTrainingClick.emit()
+  }
+  addCalendar(){
+    this.addCalendarClick.emit()
   }
 
 }

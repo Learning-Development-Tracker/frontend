@@ -10,12 +10,15 @@ import {  ViewTrainingsComponent } from '../view-trainings/view-trainings.compon
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
+import { ViewCalendarComponent } from '../manage-trainings/view-calendar/view-calendar.component';
+import { DialogModule } from 'primeng/dialog';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, AddEditTrainingComponent],
+  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, 
+    AddEditTrainingComponent, ViewCalendarComponent, DialogModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css'
 })
@@ -32,6 +35,7 @@ export class ManageTrainingsComponent implements OnInit {
   showViewManage: boolean = true;
   selectedId: string = "";
   isPopupVisible: boolean = false;
+  viewCalendarPopup: boolean = false;
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }
@@ -125,6 +129,10 @@ export class ManageTrainingsComponent implements OnInit {
   showPopup() {
     this.isPopupVisible = true;
     console.log("true");
+  }
+
+  viewCalendar(){
+    this.viewCalendarPopup=true;
   }
  
 }

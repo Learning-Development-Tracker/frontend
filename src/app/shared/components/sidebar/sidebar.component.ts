@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
-      this.getAccessLevelScr(AccessLevel.USER);
+      this.getAccessLevelScr(AccessLevel.ADMIN);
   }
 
   toggleCollapse(): void {

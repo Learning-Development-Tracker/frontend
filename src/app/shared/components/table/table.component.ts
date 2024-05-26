@@ -31,13 +31,10 @@ export class TableComponent implements OnInit {
   @Input() showButtonResourceData: boolean = false;
   @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
-<<<<<<< HEAD
   @Output() addCalendarClick: EventEmitter<any> = new EventEmitter<any>();
-=======
   @Output() addResourceButtonClick = new EventEmitter<void>();
   @Output() setTrainingButtonClick = new EventEmitter<void>();
   @Input() showSearchField: boolean = true;
->>>>>>> 69121f0126ebd5e4c39a2b8f0186eee2998fe676
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();

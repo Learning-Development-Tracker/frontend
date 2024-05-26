@@ -63,4 +63,28 @@ export class ApproverService {
         );
     }
 
+    public getCertTrackingDtl() {
+      return this.httpClient
+        .get(this.configService.apiUrl + this.baseUrl + "/getCertTrackingDtl", {})
+        .pipe(
+          concatMap((resp: any) => {
+            return resp.status === "SUCCESS"
+              ? of(resp)
+              : throwError(resp);
+          })
+        );
+    }
+
+    public getCertTrackList() {
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getCertTrackingDtl", {});
+    }
+
+    public getSkills() {
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getSkillName", {});
+    }
+
+    public getStatus() {
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getStatus", {});
+    }
+
 }

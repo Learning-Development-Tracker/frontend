@@ -30,7 +30,8 @@ export class MemberApprovalsComponent implements OnInit {
   ngOnInit(): void {
     this.getTrainingsForApproval(this.selectedData.memberId);
     this.tableColumn = [
-      { header: 'CERTIFICATION', field: 'certName' }
+      { header: 'CERTIFICATION', field: 'certName' },
+      { header: '', field: 'actions', width: '300px' }
     ];
   }
 

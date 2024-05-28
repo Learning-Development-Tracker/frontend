@@ -1,4 +1,10 @@
+
+
 .main-dialog-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--white);
     border-radius: 16px;
     height: 12.1em;
@@ -10,10 +16,6 @@
     flex-direction: column;
     padding: 1em;
     gap: 1.5em;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .message-dialog-box {
@@ -29,4 +31,3 @@
     align-items: center;
     gap: 1em;
 }
-

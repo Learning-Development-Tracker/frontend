@@ -11,13 +11,16 @@
             </div>
             <div class="col-md-12 ">
                 <div class="contentScreen">
-                    <p-card class="contentCard ">
-                        <div class="row table" *ngIf="!isResource showButtonManageResources">
+                    <p-card class="contentCard table">
+                        <div class="row " *ngIf="!isResource showButtonManageResources">
                             <app-table 
                                 [data]="resourceList" 
-                                [columns]="tableColumn" 
+                                [columns]="tableColumn"
                                 (view)="onView($event)"
+                                (edit)="onEdit($event)"
                                 (delete)="onDelete($event)"
+                                (sort)="onSort2($event)"
+                                (sortChange)="onSort($event)"
                                 [showButtonManageResources]="true"
                             ></app-table>
                         </div>

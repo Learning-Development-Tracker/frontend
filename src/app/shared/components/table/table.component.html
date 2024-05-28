@@ -7,13 +7,17 @@
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
+            <!-- <div *ngIf="showButtonManageResources">
+                <search-filter>
+                    <button class="filter-button" (click)="toggleBoxContainer()"></button>
+                </search-filter> 
+            </div> -->
             <div class="search-container">
                 <span class="p-input-icon-left ml-auto">
                     <input  class="search-input" pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
                 </span>
                 <button pButton type="button" label="Search" class="search-button" (click)="onSearch(data)"> <i class="pi pi-search"></i></button>
             </div>
-            
             <div *ngIf="showButtonManageTrainings" class="actions" > 
                 <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar"></app-custom-button>
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
@@ -24,6 +28,9 @@
                 <app-custom-button label="Export" margin="5px" icon="pi pi-file-export"></app-custom-button>
                 <app-custom-button label="Add Resource" margin="5px"></app-custom-button>
                 <app-custom-button label="Set Training" margin="5px"></app-custom-button>
+            </div>
+            <div *ngIf="showButtonReportTrainings" class="actions" > 
+                <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
             </div>
         </div>
     </ng-template>

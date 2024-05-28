@@ -121,3 +121,7 @@ h5 {
    padding: 1rem;
    background-color: #EBDDFF;
 }
+
+.p-paginator{
+   justify-content: end;
+}

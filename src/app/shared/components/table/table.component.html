@@ -44,11 +44,21 @@
                 {{col.header}}
                 <p-sortIcon></p-sortIcon>
             </th> -->
-            <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field" 
-                [style.width]="col.width ? col.width : null">
+            <ng-container *ngIf="!showCertApprovalBtn">
+                <th *ngFor="let col of columns" class="p-header" [pSortableColumn]="col.field" [style.width]="col.width ? col.width : null">
                  {{ col.header }}
+                <p-sortIcon></p-sortIcon>
+                </th>
+            </ng-container>
+
+            <ng-container *ngIf="showCertApprovalBtn">
+                <th class="p-header-left"pSortableColumn="certName" (sort)="onSort($event)" >
+                    CERTIFICATION           
                     <p-sortIcon></p-sortIcon>
-            </th>
+                </th>
+                <th class="p-header-right" style="width: 300px;"></th>
+            </ng-container>
+            
             <th *ngFor="let col of columns && showButtonResourceDataTable" class="p-header" [pSortableColumn]="col.field" 
                 [style.width]="col.width ? col.width : null">
                  {{ col.header }}
@@ -86,13 +96,18 @@
                 <td *ngIf="col.field == 'certifications'">
                         <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
                 </td>                             
-                <td *ngIf="col.field == 'actions' && !showButtonResourceData">
+                <td *ngIf="col.field == 'actions' && !showButtonResourceData && !showCertApprovalBtn">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>
                     <span class="action-button edit-img" (click)="onEdit(rowData)"></span>
                     <span class="action-button del-img" (click)="onDelete(rowData)"></span>
                 </td>
                 <td *ngIf="col.field == 'actions' && showButtonResourceData">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>                
+                </td>
+                <td *ngIf="col.field == 'actions' && showCertApprovalBtn" style="text-align: center !important;">
+                    <span class="action-button view-img"></span>
+                    <span class="action-button approve-img"></span>
+                    <span class="action-button denied-img"></span>
                 </td>
               
             </ng-container>

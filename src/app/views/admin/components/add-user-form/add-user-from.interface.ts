@@ -6,9 +6,11 @@ export interface AddUserInterface  {
     type: string;
     element: string;
     field: string;
+    data?: any;
+    isRequired: boolean;
 }
 
-export interface City {
+export interface DropdownInterface {
     name: string,
     code: string
 }
@@ -18,24 +20,56 @@ export type ValidKeys = 'lastname' |
                         'middlename' | 
                         'suffix' | 
                         'gender' | 
-                        'email' | 
-                        'career_step' | 
-                        'emp_id' | 
+                        'emailAddress' | 
+                        'careerStep' | 
+                        'empId' | 
                         'region' | 
                         'role' | 
                         'team' | 
-                        'emp_status' | 
+                        'status' | 
                         'skills';
-                        // 'cert_name' | 
-                        // 'date_certified';
-                        // 'certificate_doc';
-
 export interface Certification {
     cert_name?: string;
     date_certified?: Date;
 }
 export type ValidKeysCertification = keyof Certification;
-export interface MultiSelectItemGroup {
+
+export interface ResourceInfosInterface {
+    lastname?: string,
+    firstname?: string,
+    middlename?: string,
+    suffix?: string,
+    gender?: string,
+    emailAddress?: string,
+    careerStep?: string,
+    empId?: string,
+    region?: string,
+    role?: string,
+    team?: string,
+    isEnabled?: boolean,
+    status?: string,
+    skills?: string
+}
+
+export interface ResourceInfoInterface {
+    lastname: string;
+    firstname: string;
+    middlename: string;
+    suffix: string;
+    gender: string;
+    emailAddress: string;
+    careerStep: string;
+    empId: string;
+    region: string;
+    role: string;
+    team: string;
+    status: string;
+    skills: string;
+    [key: string]: string;
+  };
+
+
+export interface SelectItemGroupInterface {
     label: string;
     value?: any;
     items?: SelectItem[];

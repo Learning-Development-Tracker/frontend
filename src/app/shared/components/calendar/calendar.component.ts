@@ -21,9 +21,9 @@ export class CalendarComponent {
   @Output() dateSelected = new EventEmitter<Date>();
   @Input() selectedDate!: Date;
 
-  private internalDate: Date | null = null; // Internal state
+  private internalDate: Date | null = null; // Internal state, dont remove
   private onChange: (date: Date) => void = () => {}; // Change callback
-  private onTouched: () => void = () => {}; // Touched callback
+  private onTouched: () => void = () => {}; // Touched callback, dont remove
 
   // When the value is changed in the form
   writeValue(value: Date): void {

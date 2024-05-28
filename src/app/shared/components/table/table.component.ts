@@ -32,7 +32,14 @@ export class TableComponent implements OnInit {
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
   @Input() showButtonReportTrainings: boolean = false;
+  @Input() showButtonResourceData: boolean = false;
+  @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addCalendarClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() addResourceButtonClick = new EventEmitter<void>();
+  @Output() setTrainingButtonClick = new EventEmitter<void>();
+  @Input() showSearchField: boolean = true;
+  @Input() showCertApprovalBtn: boolean = false;
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
@@ -71,7 +78,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.showButtonManageTrainings = this.checkIfButtonShouldBeVisible();
-    // console.log(this.certifications);
+    
   }
 
   checkIfButtonShouldBeVisible(): boolean {
@@ -81,6 +88,8 @@ export class TableComponent implements OnInit {
       return false
      }
   }
+
+  
   // matchesGlobalFilter(row: any): boolean {
   //   if (!this.globalFilter) {
   //       return true; 
@@ -122,8 +131,8 @@ export class TableComponent implements OnInit {
   }
   
   addTraining() {
-    this.addTrainingClick.emit()
-  }
+    this.addTrainingClick.emit()  
+  }   
 
   filter_col() {
     this.filter.emit()
@@ -133,4 +142,14 @@ export class TableComponent implements OnInit {
     this.click.emit()
   }
 
+  addResourceButton () {
+    this.addResourceButtonClick.emit();
+  }
+  addCalendar(){
+    this.addCalendarClick.emit()
+  }
+
+  setTrainigButton () {
+    this.setTrainingButtonClick.emit();
+  }
 }

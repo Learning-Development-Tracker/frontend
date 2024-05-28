@@ -4,6 +4,8 @@
 
 .p-header {
     background-color: #D1C2F2;
+    align-items: center; /* Vertically center items within the header */
+    padding: 10px; /* Optional: Add padding for better appearance */
 }
 
 .pi-search{
@@ -229,3 +231,48 @@
   right: 10px;
   align-items: left !important;
   }
+
+.icon-title i {
+    margin-left: 800px; /* Adjust spacing between icon and label as needed */
+ }
+
+ /* START DB024 */
+.approve-img {
+    background-image: url("/assets/img/approve.png");
+    color: #8C55D9;
+    height: 20px;
+    width: 20px;
+    padding-left: 10%;
+}
+
+.denied-img {
+    background-image: url("/assets/img/denied.png");
+    color: #D54147;
+    height: 20px;
+    width: 20px;
+    padding-left: 10%;
+}
+
+.view-img {
+    background-image: url("/assets/img/eye.png");
+    color: #D54147;
+    height: 20px;
+    width: 20px;
+    padding-left: 10%;
+}
+
+.p-header-left {
+    background-color: #D1C2F2;
+    align-items: center; /* Vertically center items within the header */
+    padding: 10px; /* Optional: Add padding for better appearance */
+    border-top-left-radius: 25px;
+}
+
+.p-header-right {
+    background-color: #D1C2F2;
+    align-items: center; /* Vertically center items within the header */
+    padding: 10px; /* Optional: Add padding for better appearance */
+    border-top-right-radius: 25px;
+}
+
+/* END DB024 */

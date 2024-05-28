@@ -13,6 +13,7 @@
                             <app-table *ngIf="showViewManage" [data]="trainingList" [columns]="tableColumn"
                                 (sortChange)="onSort($event)" (view)="onView($event)" (edit)="onEdit($event)"
                                 (delete)="onDelete($event)" [showButtonManageTrainings]="true"
+                                (addCalendarClick) = "viewCalendar()"
                                 (sort)="onSort2($event)"></app-table>
                             <view-trainings *ngIf="!showViewManage" [showViewManage]="showViewManage"
                                 (showViewManageChange)="showViewManage = $event" [data]="viewData">
@@ -32,5 +33,10 @@
         </div>
         <add-edit-training-popup *ngIf="isPopupVisible" (close)="closePopup()">
         </add-edit-training-popup>
+        <p-dialog [(visible)]="viewCalendarPopup" [focusOnShow]="false" [responsive]="true" showEffect="fade"
+            [modal]="true" [style]="{height:'80%',width:'85%',overflow:'auto'}">
+            <p-header class="">Training Calendar</p-header>
+            <app-view-calendar></app-view-calendar>
+        </p-dialog>
     </div>
 </ng-container>

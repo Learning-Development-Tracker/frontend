@@ -71,6 +71,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class SublevelMenuComponent implements OnInit{
   
   @Input() data: INavbarData = {
+    accesslevel:'',
     routeLink: '',
     icon: '',
     label: '',

@@ -5,11 +5,12 @@ import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { FormsModule } from '@angular/forms'; 
+import { FilterComponent } from '../search-filter/filter.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, FilterComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -26,8 +27,11 @@ export class TableComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() click: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
+  @Input() showButtonReportTrainings: boolean = false;
   @Input() showButtonResourceData: boolean = false;
   @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
@@ -129,6 +133,14 @@ export class TableComponent implements OnInit {
   addTraining() {
     this.addTrainingClick.emit()  
   }   
+
+  filter_col() {
+    this.filter.emit()
+  }
+
+  toggleBoxContainer() {
+    this.click.emit()
+  }
 
   addResourceButton () {
     this.addResourceButtonClick.emit();

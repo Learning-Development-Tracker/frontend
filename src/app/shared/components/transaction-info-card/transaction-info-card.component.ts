@@ -45,9 +45,9 @@ export class TransactionInfoCardComponent implements OnInit{
     switch (status) {
       case 'success':
         return {bgColor: 'var(--light-green)', borderColor: '1px solid var(--green)'};
-      case 'in-progress':
+      case 'In Progress':
         return {bgColor: 'var(--light-purple)', borderColor: '1px solid var(--purple)'};
-      case 'overdue':
+      case 'Overdue':
         return {bgColor: 'var(--light-red)', borderColor: '1px solid var(--red)'};
       default:
         return {bgColor: 'var(--light-green)', borderColor: '1px solid var(--green)'};

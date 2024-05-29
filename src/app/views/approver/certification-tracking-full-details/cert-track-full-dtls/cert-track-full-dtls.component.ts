@@ -2,56 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common';
 
-interface CertTrackFullDtls {
+interface CertTracking {
   certification_name: string;
-  skill: number;
+  skill: string;
   requester: string;
+  status: string;
+  certification_details: string;
+  training_completion_date : string;
 }
 
 
 @Component({
   selector: 'app-cert-track-full-dtls',
   standalone: true,
-  imports: [TableComponent, TableModule],
+  imports: [TableComponent, TableModule, CommonModule],
   templateUrl: './cert-track-full-dtls.component.html',
   styleUrl: './cert-track-full-dtls.component.css'
 })
 export class CertTrackFullDtlsComponent {
-  certTrackFDtls: CertTrackFullDtls[] = [];
-  certTrackingList: any[] = [];
+  // certTrackFDtls: CertTracking[] = [];
+  // certTrackingList: any[] = [];
 
-  constructor(private router: Router) { }
+  certTrackFDtls: CertTracking | undefined;
 
-  ngOnInit() {
+  constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { data: any };
-
-
-
-    if (state && state.data) {
-      this.certTrackingList = [state.data];
-      console.log('qq', this.certTrackingList);
-    }
-    console.log('qq', state);
-    console.log('qq', state.data);
+    const state = navigation?.extras.state as { data: CertTracking };
+    this.certTrackFDtls = state?.data;
   }
 
-  // sampleData = [
-  //   { certName: 'Microsoft Azure Fundamentals', skill: 'Azure', requester: 'Mendoza, Hannah'},
-  //   { certName: 'Oracle Certified Professional: Java SE 11 Developer', skill: 'Java', requester: 'Carlos, Juan' },
-  //   { certName: 'Angular', skill: 'Angular', requester: 'Test, Requester' },
-  //   { certName: 'Phyton', skill: 'Phyton', requester: 'Admin' },
-  // ];
-  // sampleColumns = [
-  //   { header: 'Certification Name', field: 'certName' },
-  //   { header: 'Skill', field: 'skill' },
-  //   { header: 'Requester', field: 'requester' },
-  //   { header: 'Date Requested', field: 'requester' },
-  //   { header: 'Last Updated By', field: 'requester' },
-  //   { header: 'Last Updated Date', field: 'requester' },
-  //   { header: 'Status', field: 'requester' },
-
-  // ];
+  ngOnInit() {
+  }
 
 }

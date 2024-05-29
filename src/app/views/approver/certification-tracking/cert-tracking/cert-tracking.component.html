@@ -60,36 +60,15 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3">
-                    <!-- <app-custom-button [label]="'Search'" (buttonClicked)="backManageResource()"></app-custom-button> -->
                     <app-custom-button class="searchBtn" [label]="'Search'"
                         (buttonClicked)="applyAllFilters()"></app-custom-button>
                     <app-custom-button class="clearBtn" [label]="'Clear'"
                         (buttonClicked)="clearFilters()"></app-custom-button>
 
                 </div>
-                <!-- <app-table 
-                    [data]="certTrackingList" 
-                    [columns]="sampleColumns"
-                    [showButtonManageResources]="false"
-                    [showSearchInput]="false"
-                 /> -->
-                <!-- <p-table [value]="certTrackingList" (onRowSelect)="onRowSelect($event)" selectionMode="single" [(selection)]="selectedCertTrack">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>CERTIFICATION NAME</th>
-                            <th>SKILL</th>
-                            <th>REQUESTER</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-certTrackingList>
-                        <tr [pSelectableRow]="certTrackingList">
-                            <td>{{certTrackingList.certification_name}}</td>
-                            <td>{{certTrackingList.skill}}</td>
-                            <td>{{certTrackingList.requester}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table> -->
-                <p-table [value]="filteredCertTrackingList" (onRowSelect)="onRowSelect($event)" selectionMode="single">
+
+                <p-table [value]="filteredCertTrackingList" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+                        [scrollable]="true" scrollHeight="400px" scrollWidth="100%">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>CERTIFICATION NAME</th>

@@ -24,6 +24,7 @@ import { AddResourceService } from '../../../../service/add-resource.service';
 import { AddUserFormComponent } from '../../components/add-user-form/add-user-form.component';
 import { SetTrainingFormComponent } from '../../components/set-training-form/set-training-form.component';
 import { SetTrainingService } from '../../../../service/set-training.services';
+import { ApproverService } from '../../../../service/approver.service';
 
 
 @Component({
@@ -36,12 +37,13 @@ import { SetTrainingService } from '../../../../service/set-training.services';
   styleUrl: './manage-resources.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   encapsulation: ViewEncapsulation.None,
-  providers: [ManageResourcesService]
+  providers: [ManageResourcesService, ApproverService]
 })
 export class ManageResourcesComponent implements OnInit{
   @ViewChild(ResourceDetailsComponent)
   filteredData: any[] = [];
   resourceList: any[] = [];
+  certList: any[] = [];
   tableColumn: any[] = [];
   items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
@@ -56,7 +58,8 @@ export class ManageResourcesComponent implements OnInit{
     private router: Router,
     private manageResourcesService: ManageResourcesService,
     private addResourceService: AddResourceService,
-    private setTrainingService: SetTrainingService
+    private setTrainingService: SetTrainingService,
+    private approverService: ApproverService
   ) { }
   private ngUnsubscribe: Subject<any> = new Subject();
   
@@ -150,51 +153,53 @@ export class ManageResourcesComponent implements OnInit{
     this.isResource=true;
   }
 
-  getResources(){
-    var cert = [];
-    this.addResourceService.getAllResource().subscribe((res: any) => {
-      this.resourceList = [];
+  // getResources(){
+  //   var cert = [];
+  //   this.manageResourcesService.getResources().subscribe((res: any) => {
+  //     this.resourceList = [];
     
-      const observables = res.map((item: any) => {
-        let _certifications: any[] = [];
+  //     const observables = res.map((item: any) => {
+  //       console.log("getAllResource>>>>>>>>>>>>>>>>>>>>>", item);
+  //       let _certifications: any[] = [];
     
-        return this.addResourceService.viewResourceCertification(item.empId).pipe(
-          map((certRes: any) => {
-            if (certRes && certRes.data) {
-              _certifications = certRes.data.map((cert: any) => cert.certificationName);
-            }
-            return _certifications;
-          }),
-          catchError(err => {
-            console.log(err, "<<<<< ERROR in fetching certifications");
-            return of([]);
-          }),
-          switchMap(() => this.setTrainingService.countUserTrainings(item.memberId).pipe(
-            map((count: any) => {
-              return {
-                memberId: item.memberId,
-                membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
-                employeeNum: item.empId,
-                roleName: item.role,
-                teamName: item.team,
-                memberTrainings: count,
-                certifications: _certifications
-              };
-            }),
-            catchError(err => {
-              console.log(err, "<<<<< ERROR in counting trainings");
-              return of({});
-            })
-          ))
-        );
-      });
+  //       return this.manageResourcesService.viewResourceCertification(item.empId).pipe(
+  //         map((certRes: any) => {
+  //           if (certRes && certRes.data) {
+  //             _certifications = certRes.data.map((cert: any) => cert.certificationName);
+  //           }
+  //           return _certifications;
+  //         }),
+  //         catchError(err => {
+  //           console.log(err, "<<<<< ERROR in fetching certifications");
+  //           return of([]);
+  //         }),
+  //         switchMap(() => this.setTrainingService.countUserTrainings(item.memberId).pipe(
+  //           map((count: any) => {
+  //             console.log("item>>>>>>>>>>>>>>>>>>>>>", item);
+  //             return {
+  //               memberId: item.memberId,
+  //               membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
+  //               employeeNum: item.empId,
+  //               roleName: item.role,
+  //               teamName: item.team,
+  //               memberTrainings: count,
+  //               certifications: _certifications
+  //             };
+  //           }),
+  //           catchError(err => {
+  //             console.log(err, "<<<<< ERROR in counting trainings");
+  //             return of({});
+  //           })
+  //         ))
+  //       );
+  //     });
     
-      forkJoin(observables).subscribe((results: any) => {
-        this.resourceList = results.filter((result:any) => Object.keys(result).length !== 0); // Filter out empty results
-      });
-    }, err => {
-      console.log(err, "<<<<< ERROR in fetching resources");
-    });
+  //     forkJoin(observables).subscribe((results: any) => {
+  //       this.resourceList = results.filter((result:any) => Object.keys(result).length !== 0); // Filter out empty results
+  //     });
+  //   }, err => {
+  //     console.log(err, "<<<<< ERROR in fetching resources");
+  //   });
 
     // this.manageResourcesService.getResources().pipe(
     //   takeUntil(this.ngUnsubscribe)
@@ -218,7 +223,7 @@ export class ManageResourcesComponent implements OnInit{
     // }, (error: any) => {
       
   //   // });
-  }
+  // }
 
   onOpenClick() {
     this.isOpen = true;
@@ -243,14 +248,27 @@ export class ManageResourcesComponent implements OnInit{
   addResource() {
     this.action = 'add'
     this.isOpen = true;
-  // }
+  }
 
   getResources() {
     this.manageResourcesService.getResources()
     .subscribe((res: any) => {
       // this.errMessage="";
       this.resourceList = res.data;
+      this.getMemberCertList
       console.log(this.resourceList, "<<<<<< RES")
+    }, err => {
+      // this.errMessage = err.error;
+      console.log(err, "<<<<< ERROR")
+    });
+  }
+
+  getMemberCertList(v_memberId: string){
+    this.approverService.getMemberCertification(v_memberId)
+    .subscribe((cert_res: any) => {
+      // this.errMessage="";
+      this.certList = cert_res.data;
+      console.log(this.certList, "<<<<<< RES")
     }, err => {
       // this.errMessage = err.error;
       console.log(err, "<<<<< ERROR")

@@ -13,7 +13,6 @@
                 <input pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search Keyword" />
             </span>
             </div>
-            
             <div *ngIf="showButtonManageTrainings" class="actions" > 
                 <app-custom-button label="Calendar" margin="5px" icon="pi pi-calendar" (buttonClicked)="addCalendar()"></app-custom-button>
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
@@ -22,11 +21,11 @@
             <div *ngIf="showButtonManageResources" class="actions" > 
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
                 <app-custom-button label="Export" margin="5px" icon="pi pi-file-export"></app-custom-button>
-                <app-custom-button (buttonClicked)="addResourceButton()" label="Add Resource" margin="5px"></app-custom-button>
-                <app-custom-button (buttonClicked)="setTrainigButton()" label="Set Training" margin="5px"></app-custom-button>
+                <app-custom-button label="Add Resource" margin="5px"></app-custom-button>
+                <app-custom-button label="Set Training" margin="5px"></app-custom-button>
             </div>
-            <div *ngIf="showButtonResourceData" class="actions" > 
-                <app-custom-button label="Download" margin="5px" icon="pi pi-file-export"></app-custom-button>
+            <div *ngIf="showButtonReportTrainings" class="actions" > 
+                <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
             </div>
         </div>
     </ng-template>

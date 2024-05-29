@@ -89,7 +89,7 @@ export class ManageResourcesComponent implements OnInit{
       { header: 'Employee #', field: 'employeeNum' },
       { header: 'Role', field: 'roleName' },
       { header: 'Team', field: 'teamName' },
-      { header: 'Trainings', field: 'memberTrainings' },
+      { header: 'Trainings', field: 'membertrainings' },
       { header: 'Certifications', field: 'certifications' },
       { header: 'Actions', field: 'actions' }
     ];
@@ -100,6 +100,10 @@ export class ManageResourcesComponent implements OnInit{
 
   onSort(event: SortEvent){
     console.log('Sorting event: ', event);
+  }
+  
+  onSort2(event: any){
+    console.log('Sorting event2: ', event);
   }
 
   onView(rowData: any){
@@ -213,7 +217,7 @@ export class ManageResourcesComponent implements OnInit{
     //   }
     // }, (error: any) => {
       
-    // });
+  //   // });
   }
 
   onOpenClick() {
@@ -239,7 +243,20 @@ export class ManageResourcesComponent implements OnInit{
   addResource() {
     this.action = 'add'
     this.isOpen = true;
+  // }
+
+  getResources() {
+    this.manageResourcesService.getResources()
+    .subscribe((res: any) => {
+      // this.errMessage="";
+      this.resourceList = res.data;
+      console.log(this.resourceList, "<<<<<< RES")
+    }, err => {
+      // this.errMessage = err.error;
+      console.log(err, "<<<<< ERROR")
+    });
   }
+
 
   backManageResource() {
     this.isResource=false

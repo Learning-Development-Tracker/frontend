@@ -88,7 +88,7 @@
                         <app-custom-button label="Set Training"></app-custom-button>
                     </ng-template>
                 </td>
-                <td *ngIf="col.field == 'certifications'">
+                <td *ngIf="col.field == 'certifications'" class="certifications">
                         <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
                 </td>                             
                 <td *ngIf="col.field == 'actions' && !showButtonResourceData && !showCertApprovalBtn">

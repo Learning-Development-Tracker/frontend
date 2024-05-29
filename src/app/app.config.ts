@@ -1,4 +1,6 @@
-﻿import { provideRouter } from '@angular/router';
+﻿import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { HeaderInterceptor } from './shared/components/login/header.interceptor';

@@ -7,11 +7,11 @@
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
         <div class="flex">
-            <div class="search-container" *ngIf="showSearchField">
-                <span class="p-input-icon-left ml-auto">
-                    <input  class="search-input" pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search keyword" />
-                </span>
-                <button pButton type="button" label="Search" class="search-button" (click)="onSearch(data)"> <i class="pi pi-search"></i></button>
+            <div class="search"> 
+            <i class="pi pi-search"></i>
+            <span class="p-input-icon-left ml-auto">
+                <input pInputText type="text" [(ngModel)]="globalFilter" placeholder="Search Keyword" />
+            </span>
             </div>
             
             <div *ngIf="showButtonManageTrainings" class="actions" > 
@@ -67,12 +67,8 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
+        <tr *ngIf="matchesGlobalFilter(rowData)">
             <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
-                <p-tableCheckbox [value]="rowData">
-                </p-tableCheckbox>
-            </td>
-            <td *ngIf="showButtonResourceData" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>

@@ -5,11 +5,12 @@ import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { FormsModule } from '@angular/forms'; 
+import { FilterComponent } from '../search-filter/filter.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, FilterComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -41,7 +42,7 @@ export class TableComponent implements OnInit {
     const value = event.target.value.toLowerCase();
     this.searchChange.emit(value);
   }
-
+  
   ngOnChanges() {
     this.originalData = [...this.data];
   }
@@ -86,21 +87,21 @@ export class TableComponent implements OnInit {
   }
 
   
-  // matchesGlobalFilter(row: any): boolean {
-  //   if (!this.globalFilter) {
-  //       return true; 
-  //   }
+  matchesGlobalFilter(row: any): boolean {
+    if (!this.globalFilter) {
+        return true; 
+    }
 
-  //   const filterValue = this.globalFilter.toLowerCase();
+    const filterValue = this.globalFilter.toLowerCase();
 
-  //   for (let col of this.columns) {
-  //       if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
-  //           return true; 
-  //       }
-  //   }
+    for (let col of this.columns) {
+        if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
+            return true; 
+        }
+    }
 
-  //   return false;
-  // }
+    return false;
+  }
 
   onSearch(data: any): void {
     if (!this.globalFilter) {
@@ -130,7 +131,7 @@ export class TableComponent implements OnInit {
     this.addTrainingClick.emit()  
   }   
 
-  addResourceButton () {
+  addResourceButton() {
     this.addResourceButtonClick.emit();
   }
   addCalendar(){

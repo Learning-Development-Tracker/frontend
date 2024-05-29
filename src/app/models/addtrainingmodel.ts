@@ -1,4 +1,5 @@
-export class AddTrainingModel {
+import { TrainingLinksModel } from "./training-links-model";
+export class AddTrainingModel extends TrainingLinksModel {
     id?: string;
     trainingName?: string;
     trainingType?: string;
@@ -6,21 +7,25 @@ export class AddTrainingModel {
     startDate?: Date;
     dueDate?: Date;
     preReq?: string;
-    desc?: string;
-    trLink?: string;
-    role?: string;
-    required?: boolean;
-    hasCert?: boolean;
-    certName?: string;
-    duration?: string;
-    fees?: number;
-  //   currency?: string;
-    certLink?: string;
-    radio1?: boolean;
-    radio1value?: number;
-    radio2?: boolean;
-    radio2value?: number;
-    radio3?: boolean;
+    description?: string;
+    // trainingLink?: string;
+    trainingTags?: string;
+    isRequired?: boolean;
+    certification?: boolean;
     trCondition?: number;
     trConditionValue?: number;
+    active?: boolean;
+    //Certification_Dtl Table
+    certId?: string;
+    certName?: string;
+    duration?: string;
+    fee?: number;
+    currency?: string;
+    certLink?: string;
+    expiryDate?: Date;
+    renewable?: boolean;
+    skillId?: String;
+
+    trainingLinksLists: TrainingLinksModel[] = [];
+    
 }

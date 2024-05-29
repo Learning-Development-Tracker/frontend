@@ -153,53 +153,54 @@ export class ManageResourcesComponent implements OnInit{
     this.isResource=true;
   }
 
-  // getResources(){
-  //   var cert = [];
-  //   this.manageResourcesService.getResources().subscribe((res: any) => {
-  //     this.resourceList = [];
+  getResources(){
+    var cert = [];
+    this.manageResourcesService.getResources().subscribe((res: any) => {
+      this.resourceList = [];
+      
+      // console.log("res>>>>>>>>>>>>>>>>>>>>>", res.data);
+      const observables = res.data.map((item: any) => {
+        console.log("getAllResource>>>>>>>>>>>>>>>>>>>>>", item);
+        let _certifications: any[] = [];
     
-  //     const observables = res.map((item: any) => {
-  //       console.log("getAllResource>>>>>>>>>>>>>>>>>>>>>", item);
-  //       let _certifications: any[] = [];
+        return this.manageResourcesService.viewResourceCertification(item.empId).pipe(
+          map((certRes: any) => {
+            if (certRes && certRes.data) {
+              _certifications = certRes.data.map((cert: any) => cert.certificationName);
+            }
+            return _certifications;
+          }),
+          catchError(err => {
+            console.log(err, "<<<<< ERROR in fetching certifications");
+            return of([]);
+          }),
+          switchMap(() => this.setTrainingService.countUserTrainings(item.memberId).pipe(
+            map((count: any) => {
+              console.log("item>>>>>>>>>>>>>>>>>>>>>", item);
+              return {
+                memberId: item.memberId,
+                membername: item.membername,
+                employeeNum: item.employeeNum,
+                roleName: item.roleName,
+                teamName: item.teamName,
+                membertrainings: item.membertrainings,
+                certifications: item.certifications
+              };
+            }),
+            catchError(err => {
+              console.log(err, "<<<<< ERROR in counting trainings");
+              return of({});
+            })
+          ))
+        );
+      });
     
-  //       return this.manageResourcesService.viewResourceCertification(item.empId).pipe(
-  //         map((certRes: any) => {
-  //           if (certRes && certRes.data) {
-  //             _certifications = certRes.data.map((cert: any) => cert.certificationName);
-  //           }
-  //           return _certifications;
-  //         }),
-  //         catchError(err => {
-  //           console.log(err, "<<<<< ERROR in fetching certifications");
-  //           return of([]);
-  //         }),
-  //         switchMap(() => this.setTrainingService.countUserTrainings(item.memberId).pipe(
-  //           map((count: any) => {
-  //             console.log("item>>>>>>>>>>>>>>>>>>>>>", item);
-  //             return {
-  //               memberId: item.memberId,
-  //               membername: `${item.firstname} ${item.middlename} ${item.lastname}`,
-  //               employeeNum: item.empId,
-  //               roleName: item.role,
-  //               teamName: item.team,
-  //               memberTrainings: count,
-  //               certifications: _certifications
-  //             };
-  //           }),
-  //           catchError(err => {
-  //             console.log(err, "<<<<< ERROR in counting trainings");
-  //             return of({});
-  //           })
-  //         ))
-  //       );
-  //     });
-    
-  //     forkJoin(observables).subscribe((results: any) => {
-  //       this.resourceList = results.filter((result:any) => Object.keys(result).length !== 0); // Filter out empty results
-  //     });
-  //   }, err => {
-  //     console.log(err, "<<<<< ERROR in fetching resources");
-  //   });
+      forkJoin(observables).subscribe((results: any) => {
+        this.resourceList = results.filter((result:any) => Object.keys(result).length !== 0); // Filter out empty results
+      });
+    }, err => {
+      console.log(err, "<<<<< ERROR in fetching resources");
+    });
 
     // this.manageResourcesService.getResources().pipe(
     //   takeUntil(this.ngUnsubscribe)
@@ -223,7 +224,7 @@ export class ManageResourcesComponent implements OnInit{
     // }, (error: any) => {
       
   //   // });
-  // }
+  }
 
   onOpenClick() {
     this.isOpen = true;
@@ -250,18 +251,18 @@ export class ManageResourcesComponent implements OnInit{
     this.isOpen = true;
   }
 
-  getResources() {
-    this.manageResourcesService.getResources()
-    .subscribe((res: any) => {
-      // this.errMessage="";
-      this.resourceList = res.data;
-      this.getMemberCertList
-      console.log(this.resourceList, "<<<<<< RES")
-    }, err => {
-      // this.errMessage = err.error;
-      console.log(err, "<<<<< ERROR")
-    });
-  }
+  // getResources() {
+  //   this.manageResourcesService.getResources()
+  //   .subscribe((res: any) => {
+  //     // this.errMessage="";
+  //     this.resourceList = res.data;
+  //     this.getMemberCertList
+  //     console.log(this.resourceList, "<<<<<< RES")
+  //   }, err => {
+  //     // this.errMessage = err.error;
+  //     console.log(err, "<<<<< ERROR")
+  //   });
+  // }
 
   getMemberCertList(v_memberId: string){
     this.approverService.getMemberCertification(v_memberId)

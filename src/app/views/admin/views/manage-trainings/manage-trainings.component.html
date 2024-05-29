@@ -12,7 +12,8 @@
                         <div class="row ">
                             <app-table *ngIf="showViewManage" [data]="trainingList" [columns]="tableColumn"
                                 (sortChange)="onSort($event)" (view)="onView($event)" (edit)="onEdit($event)"
-                                (delete)="onDelete($event)" [showButtonManageTrainings]="true"
+                                (delete)="onDelete($event)" [showButtonManageTrainings]="true" 
+                                (addCalendarClick) = "viewCalendar()"
                                 (sort)="onSort2($event)" (addTrainingClick)="showPopup()"> </app-table>
                             <view-trainings *ngIf="!showViewManage" [showViewManage]="showViewManage"
                                 (showViewManageChange)="showViewManage = $event" [data]="viewData">

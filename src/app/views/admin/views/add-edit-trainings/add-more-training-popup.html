@@ -1,58 +1,20 @@
-<div class="popup-container">
-    <h6> Training Link/s </h6>
-    <div class="row">
-    <div class = "col-md-4">
-      <input class="text-name" placeholder="Name">
+<div class="popup-container" (click)="stopPropagation($event)">
+    <h6>Training Links</h6>
+  
+    <!-- Additional entries -->
+    <div *ngFor="let textBox of textBoxes; let i = index;">
+      <div class="row">
+        <div class="col-md-4">
+          <input type="text" class="text-name" [(ngModel)]="textBox.subTrName">
+        </div>
+        <div class="col-md-7">
+          <input type="text" class="text-link" [(ngModel)]="textBox.subTrLink">
+        </div>
+        <div class="col-md-1">
+          <span class="pi pi-trash" (click)="removeTextBox(i)"></span>
+        </div>
+      </div>
     </div>
-    <div class = "col-md-7">
-      <input class="text-link" placeholder="Training Link">
-    </div>
-    <div class = "col-md-1">
-        <span class = "pi pi-trash"></span>
-    </div>
-    </div>
-    <div class = "row">
-    <div class = "col-md-4">
-        <input class="text-name" placeholder="Name">
-    </div>
-    <div class = "col-md-7">
-        <input class="text-link" placeholder="Training Link">
-    </div>
-    <div class = "col-md-1">
-        <span class = "pi pi-trash"></span>
-    </div>
-    </div>
-    <div class = "row">
-    <div class = "col-md-4">
-        <input class="text-name" placeholder="Name">
-    </div>
-    <div class = "col-md-7">
-        <input class="text-link" placeholder="Training Link">
-    </div>
-    <div class = "col-md-1">
-        <span class = "pi pi-trash"></span>
-    </div>
-    </div>
-    <div *ngFor="let textBox of textBoxes">
-        <div class="row">
-            <div class = "col-md-4">
-              <input class="text-name" placeholder="Name">
-            </div>
-            <div class = "col-md-7">
-              <input class="text-link" placeholder="Training Link">
-            </div>
-            <div class = "col-md-1">
-                <span class = "pi pi-trash"></span>
-            </div>
-            </div>
-    </div>
-    <span class = "pi pi-plus" (click)="addTextBox()"> </span> Add More
-      <!-- Save and close buttons -->
-    <div class ="row">
-    <div class = "col-md-10">
-    </div>
-    <div class = "col-md-2">
-      <button class = "btn-button-save"(click)="closeAddMorePopup()">Close</button>
-    </div>
-    </div>
-</div>
+  
+    <span class="pi pi-plus" (click)="addTextBox()">+</span> Add More
+  </div>

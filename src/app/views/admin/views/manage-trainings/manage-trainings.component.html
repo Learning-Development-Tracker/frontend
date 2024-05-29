@@ -1,6 +1,6 @@
 <ng-container>
     <div class="row main-screen">
-        <div class="col-md-12">
+        <div class="col-md-12" [class.disabled] ="isPopupVisible" >
             <div class="row">
                 <label class="subHeader">
                     Manage Training List
@@ -13,8 +13,7 @@
                             <app-table *ngIf="showViewManage" [data]="trainingList" [columns]="tableColumn"
                                 (sortChange)="onSort($event)" (view)="onView($event)" (edit)="onEdit($event)"
                                 (delete)="onDelete($event)" [showButtonManageTrainings]="true"
-                                (addCalendarClick) = "viewCalendar()"
-                                (sort)="onSort2($event)"></app-table>
+                                (sort)="onSort2($event)" (addTrainingClick)="showPopup()"> </app-table>
                             <view-trainings *ngIf="!showViewManage" [showViewManage]="showViewManage"
                                 (showViewManageChange)="showViewManage = $event" [data]="viewData">
                             </view-trainings>
@@ -31,9 +30,10 @@
                 </div>
             </div>
         </div>
-        <add-edit-training-popup *ngIf="isPopupVisible" (close)="closePopup()">
+        <add-edit-training-popup *ngIf="isPopupVisible" [trainingDetails]="selectedTraining"
+            (close)="closePopup()">
         </add-edit-training-popup>
-        <p-dialog [(visible)]="viewCalendarPopup" [focusOnShow]="false" [responsive]="true" showEffect="fade"
+        <p-dialog *ngIf="viewCalendarPopup" [(visible)]="viewCalendarPopup" [focusOnShow]="false" [responsive]="true" showEffect="fade"
             [modal]="true" [style]="{height:'80%',width:'85%',overflow:'auto'}">
             <p-header class="">Training Calendar</p-header>
             <app-view-calendar></app-view-calendar>

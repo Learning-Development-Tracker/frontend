@@ -10,8 +10,8 @@ import { ApproverComponent } from './views/approver/approver.component';
 import { UserComponent } from './views/user/user.component';
 // import { MyTeamDashboardComponent } from './views/approver/my-team-dashboard/my-team-dashboard.component';
 // import { ReportResourcesComponent } from './views/admin/views/report-resources/report-resources.component';
-// import { CertTrackingComponent } from './views/approver/certification-tracking/cert-tracking/cert-tracking.component';
 import { ViewTrainingDetailsComponent } from './views/admin/views/manage-resources/resource-details/view-training-details/view-training-details/view-training-details.component';
+import { CertTrackingComponent } from './views/approver/certification-tracking/cert-tracking/cert-tracking.component';
 
 
 export const routes: Routes = [
@@ -36,7 +36,7 @@ export const routes: Routes = [
     { path: 'approver-certifications', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'approver-team', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'approver-dashboard', component: PageNotFoundComponent, canActivate: [loginGuard] },
-    { path: 'approver-cert-tracking', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'approver-cert-tracking', component: CertTrackingComponent, canActivate: [loginGuard] },
     { path: 'approver-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
     // { path: 'approver-team-dashboard', component: MyTeamDashboardComponent, canActivate: [loginGuard] },
     { path: 'admin-view-training-details', component: ViewTrainingDetailsComponent, canActivate: [loginGuard] },

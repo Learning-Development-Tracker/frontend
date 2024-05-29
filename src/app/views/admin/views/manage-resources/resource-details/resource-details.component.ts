@@ -11,12 +11,13 @@ import { ViewSkillsetComponent } from './../resource-details/view-skillset/view-
 import { ViewPersonalInfoComponent } from './../resource-details/view-personal-info/view-personal-info.component';
 import { ViewCertificationComponent } from './view-certification/view-certification.component';
 import { CustomBottonComponent } from '../../../../../shared/components/custom-button/custom-button.component';
+import { ViewTrainingDetailsComponent } from './view-training-details/view-training-details.component';
 
 @Component({
   selector: 'app-resource-details',
   standalone: true,
   imports: [CardModule, ProgressBarModule, TabViewModule, TabViewComponent, ViewSkillsetComponent, ViewPersonalInfoComponent, ViewCertificationComponent,CommonModule,
-    CustomBottonComponent
+    CustomBottonComponent, ViewTrainingDetailsComponent
   ],
   templateUrl: './resource-details.component.html',
   styleUrl: './resource-details.component.css',

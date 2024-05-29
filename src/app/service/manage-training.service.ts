@@ -2,6 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../authentication/config.services';
+import { AddTrainingModel } from '../models/addtrainingmodel';
+import { TrainingDetails } from '../models/admin/manage-resources/training-details';
+import { TrainingLinksModel } from '../models/training-links-model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +24,16 @@ export class ManageTrainingService {
         return this.httpClient.delete(this.configService.apiUrl + this.baseUrl + "/deleteTraining/" + id);
     }
 
+    addTraining(trainingDetails: AddTrainingModel) {
+        return this.httpClient.post(this.configService.apiUrl + this.baseUrl + "/addTraining", trainingDetails);
+    }
+
+    getTrainingLinks(id: string): Observable<TrainingLinksModel[]> {
+      return this.httpClient.get<TrainingLinksModel[]>(`${this.configService.apiUrl}${this.baseUrl}/getTrainingLinks/${id}`);
+    }
+
     getCalendarSchedule(){
-        return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewCalendarSchedule", {  });
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewCalendarSchedule", {  });
     }
 
 }

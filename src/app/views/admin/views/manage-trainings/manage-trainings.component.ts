@@ -12,13 +12,13 @@ import { CardModule } from 'primeng/card';
 import { AddEditTrainingComponent } from '../add-edit-trainings/add-edit-training';
 import { ViewCalendarComponent } from '../manage-trainings/view-calendar/view-calendar.component';
 import { DialogModule } from 'primeng/dialog';
+import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 
 
 @Component({
   selector: 'app-manage-trainings',
   standalone: true,
-  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, 
-    AddEditTrainingComponent, ViewCalendarComponent, DialogModule],
+  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, AddEditTrainingComponent],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css',
   providers: [ManageTrainingService]
@@ -37,6 +37,7 @@ export class ManageTrainingsComponent implements OnInit {
   selectedId: string = "";
   isPopupVisible: boolean = false;
   viewCalendarPopup: boolean = false;
+  selectedTraining: AddTrainingModel = new AddTrainingModel();
 
   constructor(private manageTrainingService: ManageTrainingService,
   ) { }
@@ -46,6 +47,7 @@ export class ManageTrainingsComponent implements OnInit {
     this.tableColumn = [
       { header: 'Name', field: 'trainingName' },
       { header: 'Total Hours', field: 'duration' },
+      { header: 'Due Date', field: 'dueDate' },
       { header: 'Type', field: 'trainingType' },
       { header: 'Actions', field: 'actions' }
     ];
@@ -79,8 +81,9 @@ export class ManageTrainingsComponent implements OnInit {
     this.toggleShowViewTraining();   
   }
 
-  onEdit(item: any){
-    console.log('Edit item: ', item)
+  onEdit(rowData: AddTrainingModel){
+    this.selectedTraining = rowData;
+    this.showPopup();
   }
 
   onDelete(rowData: any) {
@@ -125,11 +128,13 @@ export class ManageTrainingsComponent implements OnInit {
 
   closePopup() {
     this.isPopupVisible = false;
+    console.log ("Popup should be closed by now");
+    this.selectedTraining = new AddTrainingModel();
   }
 
   showPopup() {
     this.isPopupVisible = true;
-    console.log("true");
+    console.log("Popup should be shown by now");
   }
 
   viewCalendar(){

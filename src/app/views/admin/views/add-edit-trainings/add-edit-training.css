@@ -234,3 +234,43 @@
   pointer-events: none;
   opacity: 0.5; /* or any other styling to visually indicate disabled state */
 }
+
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.8; 
+}
+
+.selected-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.selected-tag {
+  background-color: #522a8b;
+  color: #fff;
+  position: relative;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selected-tag:hover {
+  opacity: 50%;
+}
+
+.remove-tag-btn {
+  position: absolute; /* Position the button relative to its parent */
+  right: 0; /* Align the button to the right of the tag */
+  background-color: transparent; /* Make the button transparent */
+  border: none; /* Remove border */
+  color: #555; /* Set button color */
+  cursor: pointer;
+  outline: none; /* Remove default focus outline */
+}
+
+.remove-tag-btn:hover {
+  color: #000; /* Change button color on hover */
+}

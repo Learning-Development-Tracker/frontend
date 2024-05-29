@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionInfoCardComponent } from '../../../../../../../shared/components/transaction-info-card/transaction-info-card.component';
+import { TransactionInfoCardComponent } from '../../../../../../shared/components/transaction-info-card/transaction-info-card.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { AccordionComponent } from '../../../../../../../shared/components/accordion/accordion.component';
-import { ManageResourcesService } from '../../../../../../../service/manage-resources.service';
+import { AccordionComponent } from '../../../../../../shared/components/accordion/accordion.component';
+import { ManageResourcesService } from '../../../../../../service/manage-resources.service';
 
 @Component({
   selector: 'app-view-training-details',
@@ -45,11 +45,11 @@ export class ViewTrainingDetailsComponent {
     this.manageResourcesService.getTrainingList().subscribe(
       (res: any) => {
         this.training = res;
-        // console.log('training', res);
-        const completedTraining = res.data.filter((item: any) => item.status === 'completed');
-        const inProgTraining = res.data.filter((item: any) => item.status === 'in-progress');
-        const overdueTraining = res.data.filter((item: any) => item.status === 'overdue');
-        const pendingTraining = res.data.filter((item: any) => item.status === 'pending');
+        console.log('training', res);
+        const completedTraining = res.data.filter((item: any) => item.status === 'Completed');
+        const inProgTraining = res.data.filter((item: any) => item.status === 'In Progress');
+        const overdueTraining = res.data.filter((item: any) => item.status === 'Overdue');
+        const pendingTraining = res.data.filter((item: any) => item.status === 'Pending');
         this.trnngCmpltdFilter = completedTraining;
         this.trnngInProgFilter = inProgTraining;
         this.trnngOverdueFilter = overdueTraining;

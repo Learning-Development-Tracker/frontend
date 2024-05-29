@@ -11,6 +11,7 @@ import { UserComponent } from './views/user/user.component';
 import { MyTeamDashboardComponent } from './views/approver/my-team-dashboard/my-team-dashboard.component';
 import { ReportResourcesComponent } from './views/admin/views/report-resources/report-resources.component';
 import { CertTrackingComponent } from './views/approver/certification-tracking/cert-tracking/cert-tracking.component';
+import { ReportTrainingsComponent } from './views/admin/views/report-trainings/report-trainings.component';
 import { ViewTrainingDetailsComponent } from './views/admin/views/manage-resources/resource-details/view-training-details/view-training-details.component';
 
 
@@ -24,7 +25,7 @@ export const routes: Routes = [
     { path: 'admin-manage-resources', component: ManageResourcesComponent, canActivate: [loginGuard] },
     { path: 'admin-report-certificates', component: ReportCertificatesComponent, canActivate: [loginGuard] },
     { path: 'admin-report-resources', component: ReportResourcesComponent, canActivate: [loginGuard] },
-    { path: 'admin-report-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'admin-report-trainings', component: ReportTrainingsComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-certification-demands', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'admin-notif-budget-request', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'user-profile', component: PageNotFoundComponent, canActivate: [loginGuard] },

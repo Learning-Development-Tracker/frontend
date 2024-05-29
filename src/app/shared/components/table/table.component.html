@@ -21,8 +21,8 @@
             <div *ngIf="showButtonManageResources" class="actions" > 
                 <app-custom-button label="Import" margin="5px" icon="pi pi-file-import"></app-custom-button>
                 <app-custom-button label="Export" margin="5px" icon="pi pi-file-export"></app-custom-button>
-                <app-custom-button label="Add Resource" margin="5px"></app-custom-button>
-                <app-custom-button label="Set Training" margin="5px"></app-custom-button>
+                <app-custom-button label="Add Resource" margin="5px" (buttonClicked)="addResourceButton()"></app-custom-button>
+                <app-custom-button label="Set Training" margin="5px" (buttonClicked)="setTrainigButton()"></app-custom-button>
             </div>
             <div *ngIf="showButtonReportTrainings" class="actions" > 
                 <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>

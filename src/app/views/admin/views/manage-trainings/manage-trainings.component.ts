@@ -17,8 +17,9 @@ import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 
 @Component({
   selector: 'app-manage-trainings',
-  standalone: true,
-  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, AddEditTrainingComponent],
+  standalone: true,  
+  imports: [TableComponent, CustomBottonComponent, DialogBoxComponent, ViewTrainingsComponent, CommonModule, CardModule, 
+    AddEditTrainingComponent, ViewCalendarComponent, DialogModule],
   templateUrl: './manage-trainings.component.html',
   styleUrl: './manage-trainings.component.css',
   providers: [ManageTrainingService]

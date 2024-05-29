@@ -45,7 +45,7 @@ export class TableComponent implements OnInit {
     const value = event.target.value.toLowerCase();
     this.searchChange.emit(value);
   }
-
+  
   ngOnChanges() {
     this.originalData = [...this.data];
   }
@@ -90,21 +90,21 @@ export class TableComponent implements OnInit {
   }
 
   
-  // matchesGlobalFilter(row: any): boolean {
-  //   if (!this.globalFilter) {
-  //       return true; 
-  //   }
+  matchesGlobalFilter(row: any): boolean {
+    if (!this.globalFilter) {
+        return true; 
+    }
 
-  //   const filterValue = this.globalFilter.toLowerCase();
+    const filterValue = this.globalFilter.toLowerCase();
 
-  //   for (let col of this.columns) {
-  //       if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
-  //           return true; 
-  //       }
-  //   }
+    for (let col of this.columns) {
+        if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
+            return true; 
+        }
+    }
 
-  //   return false;
-  // }
+    return false;
+  }
 
   onSearch(data: any): void {
     if (!this.globalFilter) {
@@ -142,7 +142,7 @@ export class TableComponent implements OnInit {
     this.click.emit()
   }
 
-  addResourceButton () {
+  addResourceButton() {
     this.addResourceButtonClick.emit();
   }
   addCalendar(){

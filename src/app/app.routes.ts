@@ -13,6 +13,11 @@ import { ReportResourcesComponent } from './views/admin/views/report-resources/r
 import { CertTrackingComponent } from './views/approver/certification-tracking/cert-tracking/cert-tracking.component';
 import { ReportTrainingsComponent } from './views/admin/views/report-trainings/report-trainings.component';
 import { ViewTrainingDetailsComponent } from './views/admin/views/manage-resources/resource-details/view-training-details/view-training-details.component';
+// import { MyTeamDashboardComponent } from './views/approver/my-team-dashboard/my-team-dashboard.component';
+// import { ReportResourcesComponent } from './views/admin/views/report-resources/report-resources.component';
+// import { ReportTrainingsComponent } from './views/admin/views/report-trainings/report-trainings.component';
+import { CertTrackFullDtlsComponent } from './views/approver/certification-tracking-full-details/cert-track-full-dtls/cert-track-full-dtls.component';
+
 
 
 export const routes: Routes = [

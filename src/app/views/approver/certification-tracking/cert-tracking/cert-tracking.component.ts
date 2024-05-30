@@ -97,7 +97,7 @@ export class CertTrackingComponent implements OnInit {
     // this.approverService.setCertTrackList(event.certTrackData);
     // this.approverService.getCertTrackingDtls(event.data);
     // this.router.navigate(['cert-track-full-dtls']);
-    this.router.navigate(['cert-track-full-dtls'], { state: { data: event.data } });
+    this.router.navigate(['approver-cert-tracking-full-details'], { state: { data: event.data } });
   };
 
   clearFilters() {

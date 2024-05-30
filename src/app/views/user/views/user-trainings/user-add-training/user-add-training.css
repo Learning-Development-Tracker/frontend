@@ -1,0 +1,66 @@
+
+.h6{
+  margin-top: 10px;
+  font-family: "Montserrat", sans-serif;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.container-violet {
+  background-color: rgb(88, 9, 88);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: -20px;
+  color: white; /* Fixed from text-emphasis-color */
+  box-sizing: border-box;
+}
+
+.textbox-name{
+  width: 400px;
+  border-radius: 5px;
+  padding-bottom: 5px;
+}
+
+.textbox-skill{
+  width: 400px;
+  border-radius: 5px;
+  padding-bottom: 5px;
+}
+
+.btn-search{
+  border-radius: 8px;
+  color: white;
+  background-color: rgb(88, 9, 88);
+  width: 100px;
+  height: 35px;
+}
+
+.textbox-date{
+  width: 180px;
+  border-radius: 5px;
+  margin-bottom: 13px;
+}
+
+.container-bordered {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}

@@ -14,6 +14,8 @@ import { CertTrackingComponent } from './views/approver/certification-tracking/c
 import { ReportTrainingsComponent } from './views/admin/views/report-trainings/report-trainings.component';
 import { ViewTrainingDetailsComponent } from './views/admin/views/manage-resources/resource-details/view-training-details/view-training-details.component';
 import { CertTrackFullDtlsComponent } from './views/approver/certification-tracking-full-details/cert-track-full-dtls/cert-track-full-dtls.component';
+import { UserTrainingsComponent } from './views/user/views/user-trainings/user-trainings.component';
+
 
 
 export const routes: Routes = [
@@ -32,7 +34,7 @@ export const routes: Routes = [
     { path: 'user-profile', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'user-calendar', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'user-certifications', component: PageNotFoundComponent, canActivate: [loginGuard] },
-    { path: 'user-trainings', component: PageNotFoundComponent, canActivate: [loginGuard] },
+    { path: 'user-trainings', component: UserTrainingsComponent, canActivate: [loginGuard] },
     { path: 'approver-profile', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'approver-calendar', component: PageNotFoundComponent, canActivate: [loginGuard] },
     { path: 'approver-certifications', component: PageNotFoundComponent, canActivate: [loginGuard] },

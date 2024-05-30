@@ -5,11 +5,12 @@ import { SortEvent } from 'primeng/api';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { FormsModule } from '@angular/forms'; 
+import { FilterComponent } from '../search-filter/filter.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, FilterComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
@@ -26,19 +27,25 @@ export class TableComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() click: EventEmitter<string> = new EventEmitter<string>();
   @Input() showButtonManageTrainings: boolean = false;
   @Input() showButtonManageResources: boolean = false;
+  @Input() showButtonReportTrainings: boolean = false;
+  @Input() showButtonResourceData: boolean = false;
+  @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() addCalendarClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() addResourceButtonClick = new EventEmitter<void>();
   @Output() setTrainingButtonClick = new EventEmitter<void>();
   @Input() showSearchField: boolean = true;
+  @Input() showCertApprovalBtn: boolean = false;
 
   onSearchChange(event: any) {
     const value = event.target.value.toLowerCase();
     this.searchChange.emit(value);
   }
-
+  
   ngOnChanges() {
     this.originalData = [...this.data];
   }
@@ -71,6 +78,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.showButtonManageTrainings = this.checkIfButtonShouldBeVisible();
+    
   }
 
   checkIfButtonShouldBeVisible(): boolean {
@@ -80,21 +88,23 @@ export class TableComponent implements OnInit {
       return false
      }
   }
-  // matchesGlobalFilter(row: any): boolean {
-  //   if (!this.globalFilter) {
-  //       return true; 
-  //   }
 
-  //   const filterValue = this.globalFilter.toLowerCase();
+  
+  matchesGlobalFilter(row: any): boolean {
+    if (!this.globalFilter) {
+        return true; 
+    }
 
-  //   for (let col of this.columns) {
-  //       if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
-  //           return true; 
-  //       }
-  //   }
+    const filterValue = this.globalFilter.toLowerCase();
 
-  //   return false;
-  // }
+    for (let col of this.columns) {
+        if (col.field && row[col.field] && row[col.field].toString().toLowerCase().includes(filterValue)) {
+            return true; 
+        }
+    }
+
+    return false;
+  }
 
   onSearch(data: any): void {
     if (!this.globalFilter) {
@@ -121,7 +131,25 @@ export class TableComponent implements OnInit {
   }
   
   addTraining() {
-    this.addTrainingClick.emit()
+    this.addTrainingClick.emit()  
+  }   
+
+  filter_col() {
+    this.filter.emit()
   }
 
+  toggleBoxContainer() {
+    this.click.emit()
+  }
+
+  addResourceButton() {
+    this.addResourceButtonClick.emit();
+  }
+  addCalendar(){
+    this.addCalendarClick.emit()
+  }
+
+  setTrainigButton () {
+    this.setTrainingButtonClick.emit();
+  }
 }

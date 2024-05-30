@@ -29,5 +29,9 @@ export class ManageResourcesService {
     getTrainingList() {
       return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewTrainingDtl", {});
     }
+  
+    viewResourceCertification(ownerId: string) {
+      return this.httpClient.get(this.configService.apiUrl + `/api/v1/authentication/viewResourceCertification/${ownerId}`);
+    }
 
 }

@@ -1,4 +1,4 @@
-﻿import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, inject } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { CommonModule } from '@angular/common';

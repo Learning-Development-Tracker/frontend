@@ -12,13 +12,6 @@ export const navbarData: INavbarData[] = [
         routeLink: 'admin-manage-resources',
         icon: 'pi pi-users',
         label: 'Manage Resources',
-        items: [
-            {
-                accesslevel: 'Admin',
-                routeLink: 'admin-view-training-details',
-                label: 'Training'
-            },
-        ]
     },
     {
         accesslevel: 'Admin',
@@ -117,7 +110,7 @@ export const navbarData: INavbarData[] = [
         items: [
             {
                 accesslevel: 'Approver',
-                routeLink: 'approver-dashboard',
+                routeLink: 'approver-team-dashboard',
                 label: 'DASHBOARD'
             },
             {

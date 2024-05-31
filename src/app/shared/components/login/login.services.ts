@@ -14,6 +14,7 @@ export class LoginService {
   readonly JWT_TOKEN = 'JWT_TOKEN';
   readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   readonly USER_NAME = 'USER_NAME';
+  readonly USER_ID = 'USER_ID';
   readonly ACCESS_LEVEL = 'ACCESS_LEVEL';
   constructor(
     private configService: ConfigService,
@@ -51,13 +52,9 @@ export class LoginService {
   public getAccessLevel() {
     return localStorage.getItem(this.ACCESS_LEVEL);
   }
-
+  
   public getRefreshToken() {
     return localStorage.getItem(this.REFRESH_TOKEN);
-  }
-
-  public storeJwtToken(jwt: any) {
-    localStorage.setItem(this.JWT_TOKEN, jwt);
   }
   
   public storeRefreshToken() {
@@ -65,12 +62,14 @@ export class LoginService {
       localStorage.setItem(this.REFRESH_TOKEN, res);
     });
   }
-
+  
   public storeUsername(username: any) {
     localStorage.setItem(this.USER_NAME, username);
   }
   
-  public storeAccLevel(accessName: any) {
+  public storeLogInDetails(id: string, jwt: string, accessName: string) {
+    localStorage.setItem(this.USER_ID, id);
+    localStorage.setItem(this.JWT_TOKEN, jwt);
     let accessLevel = accessName.charAt(0).toUpperCase() + accessName.slice(1).toLowerCase();
     localStorage.setItem(this.ACCESS_LEVEL, accessLevel);
   }

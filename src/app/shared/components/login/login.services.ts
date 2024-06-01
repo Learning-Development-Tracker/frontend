@@ -44,6 +44,10 @@ export class LoginService {
   public isLoggedIn() {
     return !!localStorage.getItem(this.JWT_TOKEN);
   }
+
+  public getUserId() {
+    return localStorage.getItem(this.USER_ID);
+  }
   
   public getUsername() {
     return localStorage.getItem(this.USER_NAME);

@@ -1,4 +1,4 @@
-﻿/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
 /* @import "primeicons/primeicons.css"; */
 @import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -36,6 +36,7 @@
    --tran-04: all 0.4s ease;
    --tran-05: all 0.5s ease;
 }
+
 html {
    scroll-behavior: smooth;
    width: 100vw;
@@ -44,7 +45,9 @@ html {
    overflow: hidden;
    font-family: 'Montserrat', sans-serif;
 }
-html, body {
+
+html,
+body {
    padding: 0;
    margin: 0;
    display: flex;
@@ -52,7 +55,8 @@ html, body {
    align-items: center; */
 }
 
-p, h5 {
+p,
+h5 {
    padding: 0;
    margin: 0;
 }

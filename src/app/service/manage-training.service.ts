@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../authentication/config.services';
 import { AddTrainingModel } from '../models/addtrainingmodel';
-import { TrainingDetails } from '../models/admin/manage-resources/training-details';
 import { TrainingLinksModel } from '../models/training-links-model';
 
 @Injectable({
@@ -34,6 +33,14 @@ export class ManageTrainingService {
 
     getCalendarSchedule(){
       return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getViewCalendarSchedule", {  });
+    }
+
+    getTrainingsbyUser(){
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getTrainingsbyUser", {  });
+    }
+
+    searchTrainingbyCriteria(criteria: any): Observable<{ data: AddTrainingModel[] }> {
+      return this.httpClient.get<{ data: AddTrainingModel[] }>(`${this.configService.apiUrl}${this.baseUrl}/searchTraining/ ${criteria}`);
     }
 
 }

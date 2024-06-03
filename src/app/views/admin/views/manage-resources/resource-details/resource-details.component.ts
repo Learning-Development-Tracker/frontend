@@ -8,7 +8,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { TabViewComponent } from '../../../../../shared/components/tab-view/tab-view.component';
 import { ViewSkillsetComponent } from './../resource-details/view-skillset/view-skillset.component';
-import { ViewPersonalInfoComponent } from '../resource-details/view-personal-info/view-personal-info.component';
+import { ViewPersonalInfoComponent } from './../resource-details/view-personal-info/view-personal-info.component';
 import { ViewCertificationComponent } from './view-certification/view-certification.component';
 import { CustomBottonComponent } from '../../../../../shared/components/custom-button/custom-button.component';
 import { ViewTrainingDetailsComponent } from './view-training-details/view-training-details.component';

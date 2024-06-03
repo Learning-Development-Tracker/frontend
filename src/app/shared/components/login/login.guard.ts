@@ -35,4 +35,3 @@ export const loginGuard: CanActivateFn = (route, state) => {
   }
   return true;
 };
-

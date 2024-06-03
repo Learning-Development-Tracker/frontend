@@ -13,3 +13,5 @@ import { CommonModule } from '@angular/common';
 export class AccordionComponent {
   @Input() headerTexts: string[] = []
 }
+
+

@@ -27,6 +27,9 @@
             <div *ngIf="showButtonReportTrainings" class="actions" > 
                 <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
             </div>
+            <div *ngIf="showButtonResourceData" class="actions" > 
+                <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
+            </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -68,6 +71,10 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr *ngIf="matchesGlobalFilter(rowData)">
             <td *ngIf="showButtonManageResources" class="table-multiple-checkbox">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
+            <td *ngIf="showButtonResourceData" class="table-multiple-checkbox">
                 <p-tableCheckbox [value]="rowData">
                 </p-tableCheckbox>
             </td>

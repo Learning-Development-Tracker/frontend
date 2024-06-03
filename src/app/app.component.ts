@@ -1,4 +1,4 @@
-﻿import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -11,6 +11,7 @@ import { AdminComponent } from './views/admin/admin.component';
 import { BodyComponent } from './views/admin/views/body/body.component';
 import { ApproverComponent } from './views/approver/approver.component';
 import { UserComponent } from './views/user/user.component';
+
 
 @Component({
   selector: 'app-root',

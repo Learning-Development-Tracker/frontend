@@ -13,7 +13,11 @@ export class ResourceDataModel {
         expiryDate: Date,
         startDate: Date,
         dueDate: Date,
-        status:String
+        status:String,
+        certId:String,
+        trainingId: String,
+        certFlag:Boolean,
+        // delayed: String,        
         // ongoingTrainings: String,
         // overdueCertifications: String
 

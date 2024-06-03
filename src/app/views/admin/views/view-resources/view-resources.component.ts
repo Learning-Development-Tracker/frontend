@@ -49,8 +49,8 @@ export class ViewResourcesComponent implements OnInit{
     ];
 
     // this.filteredData = this.resourceList;
-    this.completedList = this.resourceList.filter(resource => resource.status === 'Completed' && resource.memberId === this.data.memberId);
-    this.notcompletedList = this.resourceList.filter(resource => resource.status !== 'Completed' && resource.memberId === this.data.memberId);
+    this.completedList = this.resourceList.filter(resource => resource.status === 'Completed' && resource.memberId === this.data.memberId && resource.certId === this.data.certId);
+    this.notcompletedList = this.resourceList.filter(resource => resource.status !== 'Completed' && resource.memberId === this.data.memberId && resource.certId === this.data.certId);
   }   
   
   onClickToggleB(){

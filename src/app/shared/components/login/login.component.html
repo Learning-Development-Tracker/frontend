@@ -107,7 +107,7 @@
                     </ng-template>
                 </div>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                    (buttonClicked)="openPopupTemplate3_2(vcrCreatePassword)" [disabled]="thirdForm.invalid"></app-custom-button>
+                    (buttonClicked)="openPopupTemplate3_2(vcrStatus)" [disabled]="thirdForm.invalid"></app-custom-button>
             </form>
         </div>
         <div *ngSwitchCase="updatePassword">
@@ -225,7 +225,7 @@
                 </div>
                 <p class="error-message" *ngIf="nameNotFound">{{ nameNotFound }}</p>
                 <app-custom-button [label]="'Submit'" [width]="buttonWidth" [backgroundColor]="buttonColor"
-                (buttonClicked)="openUserNameInput()" [disabled]="disableBtnChUN"></app-custom-button>
+                (buttonClicked)="openUserNameInput()" [disabled]="disableBtnChPW"></app-custom-button>
             </div>
         </form>
     </ng-template>

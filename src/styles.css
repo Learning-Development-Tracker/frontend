@@ -74,23 +74,23 @@ h5 {
    font-size: 2em;
    background-color: #EBDDFF;
 }
-
+ 
 .contentScreen {
    display: contents;
    margin: 10px;
 }
-
+ 
 .contentCard {
-   display: inline-table;
+   display: grid;
    margin: 10px;
    width: calc(100% - 10rem);
    max-width: 82vw;
-   max-width: 82vw;
-   height: 20px;
-   overflow-y: auto;
+   min-width: 82vw;
+   height: 60vh;
    overflow-x: auto;
+   overflow-y: auto;
 }
-
+ 
 .titleScreen {
    background-color: #EBDDFF;
    height: 100%;
@@ -100,14 +100,14 @@ h5 {
    overflow-y: auto;
    overflow-x: auto;
 }
-
+ 
 .titleLabel {
    font-family: "Montserrat", sans-serif;
    font-weight: 500;
    font-size: large;
    color: #522A8B;
 }
-
+ 
 .main-screen {
    width: calc(100% - 5rem);
    min-width: 100vw;

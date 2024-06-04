@@ -45,7 +45,7 @@ export class ReportResourcesComponent {
         { header: 'For Certifications', field: 'forCertification', width: '300px' },
         { header: 'Upcoming Certifications', field: 'upcomingCertication', width: '250px' },
         { header: 'Ongoing Trainings', field: 'productName', width: '300px' },
-        { header: 'Overdue Certifications', field: 'overdueCertifications', width: '250px'  },
+        { header: 'Overdue Certifications', field: 'delayed', width: '250px'  },
         { header: 'Certifications', field: 'certName', width: '300ppx' },
         { header: 'Action', field: 'actions', width: '300px' }
       ];

@@ -48,7 +48,7 @@ export class LoginComponent {
   isUsernameInput: boolean = false;
   isPasswordInput: boolean = false;
   disableBtn: boolean = true;
-  disableBtnChUN: boolean = true;
+  disableBtnChPW: boolean = true;
   secondForm: FormGroup;
   thirdForm: FormGroup;
   fourthForm: FormGroup;
@@ -145,14 +145,10 @@ export class LoginComponent {
 
   onUsernameChPW(username: Event) {
     const target = username.target as HTMLInputElement;
-    if (!target.value) {
-      this.isUsernameInput = false;
-    } 
-    if(target.value.length > 5) {
-      this.disableBtnChUN = false;
-      this.isUsernameInput = true;
+    if (!target.value.length) {
+      this.disableBtnChPW = true;
     } else {
-      this.disableBtnChUN = true;
+      this.disableBtnChPW = false;
     }
   }
 
@@ -170,9 +166,12 @@ export class LoginComponent {
         else if (this.loginData.data.updatedDate == null) {
           this.forgotPassword = this.updatePassword;
         } else {
-          this.loginService.storeJwtToken(this.loginData.data.token);
           this.loginService.storeRefreshToken();
-          this.loginService.storeAccLevel(this.loginData.data.accessName);
+          this.loginService.storeLogInDetails(
+            this.loginData.data.userId,
+            this.loginData.data.token,
+            this.loginData.data.accessName
+          )
           this.redirectAfterSuccess();
         }
       }
@@ -322,7 +321,7 @@ export class LoginComponent {
         console.log(loginMessages.consoleErr, error);
       }
     )
-    this.popupService.open(this.vcrCreatePassword, view, this.options);
+    this.popupService.open(this.vcrStatus, view, this.options);
   }
 
   openPopupTemplate4(view: TemplateRef<Element>) {
@@ -332,12 +331,10 @@ export class LoginComponent {
       (res: any) => {
         this.popupTitle = loginMessages.successUp;
         this.popupContent = loginMessages.passUpdSuccess;
-        console.log('>>> RES', res);
       },
       (error: HttpErrorResponse) => {
         this.popupTitle = loginMessages.errorUp;
         this.popupContent = loginMessages.passUpdFail;
-        console.log('>>> ERR', error);
       }
     )
     this.popupService.open(this.vcrStatus, view, this.options);
@@ -358,18 +355,20 @@ export class LoginComponent {
   }
 
   openUserNameInput() {
-  // openUserNameInput(view: TemplateRef<Element>) {
-    // this.close();
     let uName = this.checkUNForm.get(loginMessages.userName)?.value
     this.loginService.deleteUsername();
     this.loginService.isExistUsername(uName).subscribe((res:any) => {
-      console.log(res)
+      console.log(loginMessages.consoleRes, res);
       let status = res.status;
       this.nameNotFound = res.message;
       if(status == loginMessages.successDown) {
         this.openCreatePass();
         this.loginService.storeUsername(uName);      
       }
+    }, (err: any) => {
+      let e = err.error;
+      console.log(loginMessages.consoleErr, e);
+      this.nameNotFound = e.errors[0].message;
     });
   }
 

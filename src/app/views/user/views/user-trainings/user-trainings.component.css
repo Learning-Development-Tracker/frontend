@@ -21,6 +21,7 @@ body {
 .container-label {
     color: white;
     font-size: small;
+    cursor: pointer;
 }
 
 .main-container {
@@ -40,6 +41,7 @@ body {
     padding-top: 7px;
     border-radius: 20px;
     font-family: "Montserrat", sans-serif;
+    cursor: pointer; 
 }
 
 .not-started {
@@ -61,20 +63,14 @@ body {
 
 .training-container {
     border: 3px solid #ddd; 
-    padding: 15px;
+    padding: 20px;
     margin-bottom: 20px;
-    height: 280px;
-    width: 220px;
+    height: 380px;
+    width: 280px;
     background-color: #f9f9f9; 
     border-radius:10px; 
     overflow: hidden;
-}
-
-.p{
-    font-size: 12px;
-    margin-bottom: -1px;
-    font-weight: bold;
-    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
 }
 
 .p-detail{
@@ -82,3 +78,19 @@ body {
     margin-bottom: -1px;
     font-family: "Montserrat", sans-serif;
 }
+
+.bold-text {
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: -3px;
+  }
+  
+.p{
+    margin-top: 8px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: normal;
+  }
+  
+.bold-text span {
+    font-weight: normal;
+  }

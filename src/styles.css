@@ -81,14 +81,16 @@ h5 {
 }
 
 .contentCard {
-   display: inline-table;
+   display: grid;
    margin: 10px;
    width: calc(100% - 10rem);
    max-width: 82vw;
-   max-width: 82vw;
-   height: 20px;
+   min-width: 82vw;
+   height: 70vh;
+   max-height: 70vh;
    overflow-y: auto;
    overflow-x: auto;
+   z-index: 0;
 }
 
 .titleScreen {
@@ -97,7 +99,7 @@ h5 {
    min-height: 100%;
    overflow: auto;
    background-color: #EBDDFF;
-   overflow-y: auto;
+   overflow-y: auto !important;
    overflow-x: auto;
 }
 
@@ -111,8 +113,8 @@ h5 {
 .main-screen {
    width: calc(100% - 5rem);
    min-width: 100vw;
-   height: 100vh;
-   max-height: 100vh;
+   height: 90vh;
+   max-height: 90vh;
    z-index: 0;
    transition: all .5s ease;
    margin-top: -1.4em !important;

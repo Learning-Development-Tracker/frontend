@@ -24,7 +24,7 @@ export class AddTrainingModel extends TrainingLinksModel {
     certLink?: string;
     expiryDate?: Date;
     renewable?: boolean;
-    skillId?: String;
+    skillId?: string;
 
     trainingLinksLists: TrainingLinksModel[] = [];
     

@@ -57,3 +57,14 @@
   margin-right: 2px;
   cursor: pointer;
 }
+
+.action-button {
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+
+.del-img {
+  background-image: url("/assets/img/Delete.png");
+  color: #D54147;
+  padding-left: 1em;
+}

@@ -88,7 +88,7 @@
       <!-- Display selected tags here -->
       <span *ngFor="let tag of selectedTags" class="selected-tag">
         {{ tag }}
-        <span class="pi pi-trash" (click)="removeTag(tag)">--</span>
+        <span class="action-button del-img" (click)="removeTag(tag)"></span>
       </span>
     </div>
   </div>

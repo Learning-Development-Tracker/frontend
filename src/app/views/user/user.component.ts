@@ -19,7 +19,6 @@ export class UserComponent implements OnInit{
 
   public errMessage: any;
   public response: any;
-  unknownError: string = 'Unknown error. Please contact administrator.';
   loginObj: LoginModel = new LoginModel();
 
   constructor(private loginService: LoginService) { }
@@ -43,10 +42,10 @@ export class UserComponent implements OnInit{
         this.response = res;
         console.log(res, "<<<<<< RES")
       }, err => {
-        if(err.error) {
+        if(err.error.message) {
           this.errMessage = String(err.error.message);
         } else {
-          this.errMessage = this.unknownError;
+          this.errMessage = String(err.message);
         }
         console.log(err, "<<<<< ERROR")
       });

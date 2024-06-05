@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { ConfigService } from '../authentication/config.services';
 
 @Injectable({
@@ -15,6 +14,10 @@ export class UserInfoService {
 
     getProfileInformation(id: string){
         return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/get-profile-info/"+ id);
+    }
+
+    getUserRoles(){
+      return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getUserRoles", {  });
     }
 
 }

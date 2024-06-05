@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../authentication/config.services';
 import { AddTrainingModel } from '../models/addtrainingmodel';
 import { TrainingLinksModel } from '../models/training-links-model';
+import { SkillDetail } from '../models/skills.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,9 +39,21 @@ export class ManageTrainingService {
     getTrainingsbyUser(){
       return this.httpClient.get(this.configService.apiUrl + this.baseUrl + "/getTrainingsbyUser", {  });
     }
-
+    
     searchTrainingbyCriteria(criteria: any): Observable<{ data: AddTrainingModel[] }> {
-      return this.httpClient.get<{ data: AddTrainingModel[] }>(`${this.configService.apiUrl}${this.baseUrl}/searchTraining/ ${criteria}`);
+      let params = new HttpParams();
+    
+      for (let key in criteria) {
+        if (criteria[key]) { 
+          params = params.append(key, criteria[key]);
+        }
+      }
+    
+      return this.httpClient.get<{ data: AddTrainingModel[] }>(`${this.configService.apiUrl}${this.baseUrl}/searchTraining`, { params });
     }
+
+    registerUserTraining(userTrainings: SkillDetail) {
+      return this.httpClient.post(this.configService.apiUrl + this.baseUrl + "/registerUserTraining", userTrainings);
+  }
 
 }

@@ -6,9 +6,7 @@ import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 import { TrainingLinksModel } from '../../../../models/training-links-model';
 import { HttpClient } from '@angular/common/http';
 import { PopupComponent } from './add-more-training-popup';
-import { trainingsModel } from '../../../../models/trainings.model';
 import { ManageTrainingsComponent } from '../manage-trainings/manage-trainings.component';
-import { map } from 'rxjs/operators';
 import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dialog-box.component';
 import { ManageTrainingService } from '../../../../service/manage-training.service';
 

@@ -25,11 +25,7 @@
     <div class="row" style="padding-left: 5px;">
       <div class="col-md-12">
         <select id="skill" name="skill" class="textbox-skill" [(ngModel)]="searchCriteria.skillName">
-          <option value="Java">Java</option>
-          <option value="React">React</option>
-          <option value="Node.js">Node.js</option>
-          <option value="HTML">HTML</option>
-          <option value="CSS">CSS</option>
+          <option *ngFor="let skill of skillsList" [value]="skill.skillName">{{ skill.skillName }}</option>
         </select>
       </div>
     </div>
@@ -57,9 +53,40 @@
       </div>
     </div>
 
-    <div class="container-bordered">
-      <p>This is the new container with a border.</p>
-    </div>
+    <ng-container *ngIf="trainingList && trainingList.length > 0; else noResults">
+      <div class="container-bordered" *ngFor="let training of trainingList">
+        <!-- Display each training item here -->
+        <div>
+          <p class="bold-text">{{ training.trainingName }}</p>
+          <p class="p"><span>{{ training.description }}</span></p>
+          <p class="bold-text">Has Certification: <span>{{ training.certification ? 'Yes' : 'No' }}</span></p>
+          <p class="bold-text">Training Type: <span>{{ training.trainingType }}</span></p>
+          <p class="bold-text">Multiple Sessions: <span>{{ training.isRequired ? 'Yes' : 'No' }}</span></p>
+          <p class="bold-text">Due Date: <span>{{ training.dueDate }}</span></p>
+        </div>
+          <div class = "row">
+                <div class = "col-md-4">
+                    <div class = "container-tag"> Java </div>
+                </div>
+                <div class = "col-md-4">
+                    <div class = "container-tag"> Spring </div>
+                </div>
+                <div class = "col-md-2">
+                  
+                </div>
+                <div class = "col-md-2">
+                    <button class="btn-register" (click)="register(training)">Register</button>
+                </div>
+          </div>
+        </div>
+    </ng-container>
+
+    <!-- Displayed when no results found -->
+    <ng-template #noResults>
+      <div class="container-bordered">
+        <p>No results found.</p>
+      </div>
+    </ng-template>
 
     <div class="row">
       <div class="col-md-12">

@@ -274,3 +274,19 @@
 .remove-tag-btn:hover {
   color: #000; /* Change button color on hover */
 }
+
+.trash {
+  background-image: url("../../../../../assets/delete.png");
+}
+
+.action-button {
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+
+.del-img {
+  background-image: url("/assets/img/Delete.png");
+  color: #D54147;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}

@@ -1,6 +1,6 @@
 <ng-container>
     <div class="row">
-        <p-tabView>
+        <p-tabView [(activeIndex)]="activeIndex">
             <p-tabPanel header="Personal Information" class="col-md-3" [selected]="true">
                 <app-view-personal-info [memberDtl]="memberDtl"></app-view-personal-info>
             </p-tabPanel>
@@ -15,5 +15,17 @@
                 <app-view-certification></app-view-certification>
             </p-tabPanel>
         </p-tabView>
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <app-custom-button 
+                    [label]="'Back'" 
+                    (buttonClicked)="goBack()" 
+                    [disabled]="activeIndex === 0" 
+                    class="btn-back"
+                    [backgroundColor]="'transparent'"
+                    [textColor]="'black'"/>
+            </div>
+        </div>
     </div>
 </ng-container>

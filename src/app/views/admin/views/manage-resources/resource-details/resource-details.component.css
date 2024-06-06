@@ -41,3 +41,6 @@ app-view-certification {
     grid-column: 2 / 2;
     background: dodgerblue;
 }
+.btn-back {
+    float: right;
+}

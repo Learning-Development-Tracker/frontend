@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, numberAttribute, NO_ERRORS_SCHEMA} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, numberAttribute, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule} from '@angular/forms';
 import { TableComponent } from '../../../../shared/components/table/table.component';
@@ -6,18 +6,19 @@ import { AddTrainingModel } from '../../../../models/addtrainingmodel';
 import { TrainingLinksModel } from '../../../../models/training-links-model';
 import { HttpClient } from '@angular/common/http';
 import { PopupComponent } from './add-more-training-popup';
-import { trainingsModel } from '../../../../models/trainings.model';
 import { ManageTrainingsComponent } from '../manage-trainings/manage-trainings.component';
-import { map } from 'rxjs/operators';
 import { DialogBoxComponent } from '../../../../shared/components/dialog-box/dialog-box.component';
 import { ManageTrainingService } from '../../../../service/manage-training.service';
+import { UserInfoService } from '../../../../service/user-info.service';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'add-edit-training-popup',
   standalone: true,
-  imports: [FormsModule, CommonModule, TableComponent, PopupComponent, ManageTrainingsComponent, DialogBoxComponent],
+  imports: [FormsModule, CommonModule, TableComponent, PopupComponent, ManageTrainingsComponent, DialogBoxComponent, MultiSelectModule],
   templateUrl: './add-edit-training.html',
-  styleUrl: './add-edit-training.css'
+  styleUrl: './add-edit-training.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AddEditTrainingComponent implements OnInit{
@@ -33,33 +34,24 @@ export class AddEditTrainingComponent implements OnInit{
   isOpen: boolean = false;
   isSuccess: boolean = false;
   isError: boolean = false;
-  selectedTags: string[] = [];
-  selectedTag: string | null = null;
-  availableTags: string[] = ['Admin', 'Developer', 'Solutions Developer', 'Front End Developer', 'Full Stack Developer', 'Database Admin'];
   trainingLinksLists: TrainingLinksModel[] = [];
+  public errMessage: string | null = null;
+  maxDisplay: number = 4;
 
-  constructor(private manageTrainingService: ManageTrainingService, private httpClient: HttpClient) { 
+  @Input() rolesList: [] = []; 
+  @Output() selectedRolesChange = new EventEmitter<string[]>(); 
+
+  selectedRoles: string[] = [];
+  info = { placeholder: 'Select Roles', field: 'roles' }; 
+
+  constructor(private manageTrainingService: ManageTrainingService, 
+              private userInfoService: UserInfoService,
+              private httpClient: HttpClient,
+              private cdr: ChangeDetectorRef) { 
   }
 
   ngOnInit() {
-    console.log("Training Details", this.trainingDetails);
-    this.selectedTags = this.trainingDetails.trainingTags ? this.trainingDetails.trainingTags.split(',') : [];
-  }
-
-  addTag() {
-    if (this.selectedTag && !this.selectedTags.includes(this.selectedTag)) {
-      // Add the selected tag
-      this.selectedTags.push(this.selectedTag);
-      // Update trainingTags property with comma-separated tags
-      this.trainingDetails.trainingTags = this.selectedTags.join(', ');
-    }
-  }
-
-  removeTag(tagToRemove: string) {
-    // Remove the tag from the selected tags array
-    this.selectedTags = this.selectedTags.filter(tag => tag !== tagToRemove);
-    // Update trainingTags property with comma-separated tags
-    this.trainingDetails.trainingTags = this.selectedTags.join(', ');
+    this.getUserRoles();
   }
 
   showPopup() {
@@ -74,14 +66,14 @@ export class AddEditTrainingComponent implements OnInit{
 
   initializeTrainingDetails() {
     this.trainingDetails = new AddTrainingModel();
-    this.selectedTags = []; // Reset selected tags
-
   }
 
-  onSaveClick(){
+  onSaveClick() {
+    const roleNames = this.selectedRoles.map((role: any) => role.roleName);
+    this.trainingDetails.trainingTags = roleNames.join(', ');
     console.log("Training details before save:", this.trainingDetails);
     this.isOpen = true;
-  }
+}
 
   onCloseClick(){
     this.isOpen = false;
@@ -121,16 +113,15 @@ export class AddEditTrainingComponent implements OnInit{
       trainingDetails.trainingName?.trim() !== '' &&
       trainingDetails.trainingType?.trim() !== '' &&
       trainingDetails.productName?.trim() !== '' &&
-      trainingDetails.startDate !== undefined && // Ensure startDate is not undefined
-      trainingDetails.dueDate !== undefined && // Ensure dueDate is not undefined
-      this.isValidDate(trainingDetails.startDate) && // Validate startDate
-      this.isValidDate(trainingDetails.dueDate) &&// Validate dueDate
+      trainingDetails.startDate !== undefined && 
+      trainingDetails.dueDate !== undefined && 
+      this.isValidDate(trainingDetails.startDate) && 
+      this.isValidDate(trainingDetails.dueDate) &&
       trainingDetails.description?.trim() !== '' 
     );
   }
 
   private isValidDate(dateString: any): boolean {
-    //Check if date input is valid
     const date = new Date(dateString);
     return !isNaN(date.getTime());
   }
@@ -147,4 +138,55 @@ export class AddEditTrainingComponent implements OnInit{
   closeAddMorePopup(): void {
     this.isAddMorePopupVisible = false;
   }
+
+  getUserRoles() {
+    this.userInfoService.getUserRoles().subscribe(
+      (res: any) => {
+        this.rolesList = res.data;
+        let selRoles = this.trainingDetails.trainingTags
+          ? this.trainingDetails.trainingTags.split(',').map(tag => tag.trim())
+          : [];
+        this.selectedRoles = this.rolesList.filter(data => {
+          console.log(data);
+          if(selRoles.includes(data['roleName'])) return true;
+          return false;
+        });
+        /*this.selectedRoles = this.trainingDetails.trainingTags
+          ? this.trainingDetails.trainingTags.split(',').map(tag => tag.trim())
+          : [];*/
+  
+        console.log('Tags:', this.trainingDetails.trainingTags);
+        console.log('Roles List:', this.rolesList);
+        console.log('Selected Roles:', this.selectedRoles);
+  
+        this.cdr.detectChanges();
+      },
+      err => {
+        this.errMessage = err.error;
+        console.log('Error Retrieving User Roles List!', err);
+      }
+    );
+  }
+
+
+  onRoleSelectionChange(event: any) {
+    console.log("Selected roles:", event.value);
+    this.selectedRoles = event.value.map((role: any) => role.name);
+    console.log("Selected role names:", this.selectedRoles);
+  }
+
+  onMultiSelectChange(field: string, event: any) {
+    this.selectedRolesChange.emit(this.selectedRoles);
+  }
+
+  toggleSelection(event: { originalEvent: Event, value: any }) {
+    const selectedRole = event.value;
+    const index = this.selectedRoles.indexOf(selectedRole);
+    if (index > -1) {
+      this.selectedRoles.splice(index, 1);
+    } else {
+      this.selectedRoles.push(selectedRole);
+    }
+  }
+
 }

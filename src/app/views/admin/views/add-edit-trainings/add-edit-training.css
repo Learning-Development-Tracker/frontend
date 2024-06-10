@@ -274,3 +274,76 @@
 .remove-tag-btn:hover {
   color: #000; /* Change button color on hover */
 }
+
+.trash {
+  background-image: url("../../../../../assets/delete.png");
+}
+
+.action-button {
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+
+.del-img {
+  background-image: url("/assets/img/Delete.png");
+  color: #D54147;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+
+.multiselect .p-multiselect-label {
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #979292;
+  border-radius: 5px;
+  width: 675px;
+}
+
+.multiselect-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.multiselect-panel .singleselect-panel, ul{
+  padding: 0;
+  font-size: 12px;
+}
+
+.multiselect-panel input{
+  height: 2em;
+  width: 100%;
+}
+
+.p-multiselect-header {
+  padding: 1em;
+}
+
+.multiselect-panel li{
+  padding: 0 0 0.5em 1em;
+  display: flex;
+  align-items: center;
+}
+
+.multiselect-panel span{
+  font-size: 12px;
+}
+
+.p-multiselect-token{
+  font-size: 12px;
+  height: 100%;
+  margin-top: 5px;
+}
+
+.singleselect-panel {
+  padding: 0;
+  font-size: 12px;
+}
+
+.singleselect-panel li{
+  padding: 1em 0 0.5em 1em;
+  display: flex;
+  align-items: center;
+}

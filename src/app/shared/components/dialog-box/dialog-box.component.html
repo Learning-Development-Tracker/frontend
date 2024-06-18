@@ -4,14 +4,14 @@
             <img [src]="imgStatus" alt="" />
             <p>{{ msg }}</p>
         </div>
-        <app-custom-button [label]="'Ok'" (buttonClicked)="onCancelClose()"></app-custom-button>
+        <app-custom-button [label]="'OK'" (buttonClicked)="onCancelClose()"></app-custom-button>
     </ng-container>
     <ng-container *ngIf="msgStatus === 'error'">
         <div class="message-dialog-box">
             <img [src]="imgStatus" alt="" />
             <p>{{ msg }}</p>
         </div>
-        <app-custom-button [label]="'Ok'" (buttonClicked)="onCancelClose()"></app-custom-button>
+        <app-custom-button [label]="'OK'" (buttonClicked)="onCancelClose()"></app-custom-button>
     </ng-container>
     <ng-container *ngIf="msgStatus === 'options'">
         <div class="message-dialog-box">

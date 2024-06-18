@@ -108,7 +108,7 @@ export class ManageTrainingsComponent implements OnInit {
 
     
   proceedDelete() {
-  this.deleteTraining(this.selectedId);
+    this.deleteTraining(this.selectedId);
   }
 
   deleteTraining(selectedId: string){

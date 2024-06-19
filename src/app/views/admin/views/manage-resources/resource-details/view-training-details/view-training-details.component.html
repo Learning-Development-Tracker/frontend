@@ -1,37 +1,20 @@
 <ng-container>
-    <div class="row main-screen">
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <label class="subHeader">
-                </label>
-            </div>
-            <div class="row">
-                <label class="subHeader">
-                </label>
-            </div>
-            <div class="col-md-12 main-page">
-                <div class="contentScreen">
-                    <app-accordion [headerTexts]="inProgHeader">
-                        <app-transaction-info-card [trainingInfo]="trnngInProgFilter"></app-transaction-info-card>
-                    </app-accordion>
-                    <app-accordion [headerTexts]="completedHeader">
-                        <app-transaction-info-card [trainingInfo]="trnngCmpltdFilter"></app-transaction-info-card>
-                    </app-accordion>
-                    <app-accordion [headerTexts]="overdueHeader">
-                        <app-transaction-info-card [trainingInfo]="trnngOverdueFilter"></app-transaction-info-card>
-                    </app-accordion>
-                    <app-accordion [headerTexts]="pendingHeader">
-                        <ul>
-                            <li *ngFor="let link of links">
-                                <a [href]="link.url" target="_blank">{{ link.label }}</a>
-                            </li>
-                        </ul>
-                    </app-accordion>
-                </div>
-            </div>
-
-
-        </div>
-
+    <div class="col-md-12 main">
+        <app-accordion [headerTexts]="inProgHeader">
+            <app-transaction-info-card [trainingInfo]="trnngInProgFilter"></app-transaction-info-card>
+        </app-accordion>
+        <app-accordion [headerTexts]="completedHeader">
+            <app-transaction-info-card [trainingInfo]="trnngCmpltdFilter"></app-transaction-info-card>
+        </app-accordion>
+        <app-accordion [headerTexts]="overdueHeader">
+            <app-transaction-info-card [trainingInfo]="trnngOverdueFilter"></app-transaction-info-card>
+        </app-accordion>
+        <app-accordion [headerTexts]="pendingHeader">
+            <ul>
+                <li *ngFor="let link of links">
+                    <a [href]="link.url" target="_blank">{{ link.label }}</a>
+                </li>
+            </ul>
+        </app-accordion>
     </div>
 </ng-container>

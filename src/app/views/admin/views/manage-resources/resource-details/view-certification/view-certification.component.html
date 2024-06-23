@@ -1,1 +1,35 @@
-    <div id="pdfRenderer"></div>
+<div class="row">
+   <div class="col">
+      <div class="custom-info-card" *ngFor="let cert of certInfo">
+         <img src="./../../../../assets/img/🦆 icon_check_cert.png">
+         <h2 class="custom-header">
+            {{ cert.certName || 'No Certificate Name' }}
+        </h2>
+         <p class="p-custom-date">
+            {{ cert.certDate || 'No Certificate Date' }}
+         </p>
+         <button [class]="getButtonClass(cert)" (click)="onClickShow(cert)">
+            {{ getButtonLabel(cert) }}
+        </button>
+     </div>
+   </div>
+   <div class="col">
+      <div class="black-background" [hidden]="!certIsVisible">
+            <div class="custom-pos-img">
+               <img src="./../../../../assets/img/dehaze.png">
+            </div>
+               <p class="header-label">Certificate Preview</p>
+               <button class="custom-button-close" (click)="onClickHide()">
+                  Close
+               </button>
+      </div>
+      <div class="pdf-container" [hidden]="!certIsVisible">
+         <pdf-viewer [src]="pdfSrc"
+         *ngIf="certIsVisible"
+         [render-text]="true"
+         [original-size]="false"
+         style="width: 500px; height: 500px; margin: 0 auto;"
+         ></pdf-viewer>
+      </div>   
+   </div>
+</div>

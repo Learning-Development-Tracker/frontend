@@ -1,1 +1,38 @@
-<p>report-certificates works!</p>
+<ng-container>
+    <div class="row main-screen">
+        <div class="col-md-12">
+            <div class="row">
+                <label class="subHeader">Reports</label>
+            </div>
+            <div class="col-md-12">
+                <div class="contentScreen">
+                    <p-card class="contentCard">
+                        <div class="row table">
+                            <app-table 
+                                [showDropdownCert] = "true"
+                                dropdownLabel1 ="Select Certification:"
+                                dropdownLabel2 ="Select Team:"
+                                [dropdownOptions1]="dropdownOptions1"
+                                [dropdownOptions2]="dropdownOptions2"
+                                [showSubLabel]="true"
+                                subLabel="Certifications Data"
+                                [data]="certList" 
+                                [columns]="tableColumn"
+                                [showViewButton]="showViewButton"
+                                [showEditButton]="showEditButton"
+                                [showCheckBox]="showCheckBox"
+                                [showDeleteButton]="showDeleteButton"
+                                [showButtonCertData]="true"
+                                (view)="onView($event)">
+                            </app-table>
+                            <view-certificate *ngIf="!showViewCert" [showViewCert]="showViewCert"
+                            (showViewCertChange)="showViewCert = $event" [data]="viewData">
+                            </view-certificate>
+                        </div>
+                    </p-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ngx-extended-pdf-viewer [base64Src]="test" useBrowserLocale="true" height="80vh"></ngx-extended-pdf-viewer> -->
+</ng-container>

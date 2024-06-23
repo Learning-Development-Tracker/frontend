@@ -118,6 +118,41 @@
     opacity: 0.5;
     /* background-color: #0056b3; Change the hover background color as needed */
 }
+.subLabel{
+    color: #522A8B;
+    padding-bottom:1em;
+    font-weight: 600;
+    font-size: 1.5em;
+    align-content: center;
+}
+
+.dropdown-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0%;
+}
+
+.dropdown-container .col {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-container .col:last-child {
+  margin-right: 8px;
+}
+
+.dropdown-container .col:last-child {
+  justify-content: flex-end; /* Align items to the right */
+}
+
+.dropdown-label {
+  margin-left: 15px;
+  margin-right: 10px;
+  color: #522A8B;
+  font-size: 12px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  font-style: 'Montserrat';
+}
 
 .search-box-container {
     display: flex;

@@ -1,3 +1,99 @@
 div {
     height: 100%;
 }
+
+.custom-info-card {
+    border: 2px solid #8C55D9; /* Border color */
+    background-color: #EBDDFF; /* Background color */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Optional: Add padding inside the card */
+    color: #414145; /* Optional: Text color to contrast with the background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+    margin-top: 20px;
+}
+
+.custom-header{
+    margin-top: -40px;
+    font-size: 24px;
+    font-style: 'Montserrat';
+    color: #414145;
+    margin-left: 55px;
+}
+
+.p-custom-date{
+    font-size: 14px;
+    font-style: 'Montserrat';
+    color: #414145;
+    margin-left: 55px;
+    margin-bottom: 20px;
+}
+
+.custom-button-enable {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif; /* Corrected font-family syntax */
+    background-color: #EBDDFF;
+    border: none; /* Remove border */
+    border-radius: 0; /* No rounded corners */
+    text-decoration: underline; /* Add underline */
+    padding: 10px 20px; /* Optional: Add padding for better appearance */
+    color: #333; /* Optional: Set a text color */
+    cursor: pointer; /* Optional: Change cursor to pointer on hover */
+}
+
+.custom-button-disable {
+    font-size: 14px;
+    font-style: 'Montserrat';
+    background-color: #EBDDFF;
+    border: none; /* Remove border */
+    border-radius: 0; /* No rounded corners */
+    cursor: not-allowed; /* Change cursor to indicate button is disabled */
+    pointer-events: none; /* Disable pointer events */
+}
+
+.header-label {
+    font-size: large;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: left;
+    display: flex;
+    padding: 10px; /* Optional: Adds padding for better appearance */
+    margin-top: 15px;
+    
+}
+
+.black-background {
+    background-color:#444444; /* Black background color */
+    width: auto; /* Set specific width, adjust as needed */
+    height: 80px; /* Set specific height, adjust as needed */
+    display: flex; /* Flexbox to center content */
+    justify-content: left; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    margin-bottom: 0;
+    margin-top: 30px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5); /* Add black shadow */
+  }
+
+  .custom-pos-img{
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 25px;
+  }
+
+  .custom-button-close {
+    font-size: 14px;
+    font-style: 'Montserrat';
+    background-color: white;
+    border-radius: 8px; /* Rounded edges */
+    display: flex;
+    cursor: pointer;
+    margin-left: auto; /* Pushes the button to the right */
+    margin-right: 20px; /* Maintain space from the right edge */
+}
+
+.pdf-container {
+    background-color: gray;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}

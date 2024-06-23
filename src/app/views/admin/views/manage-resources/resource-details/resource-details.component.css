@@ -29,6 +29,7 @@ div.title {
     font-size: 30px;
     grid-row: 1 / 4;
     grid-column: 1 / 2;
+    color: #414145;
 }
 
 div#pn_id_4_content p {

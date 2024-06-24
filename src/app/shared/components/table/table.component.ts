@@ -1,24 +1,44 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { SortEvent } from 'primeng/api';
+import { Dropdown } from 'primeng/dropdown';
 import { TagModule } from "primeng/tag";
 import { CustomBottonComponent } from '../custom-button/custom-button.component';
 import { FormsModule } from '@angular/forms'; 
+import { DropdownModule } from 'primeng/dropdown';
+
 import { FilterComponent } from '../search-filter/filter.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, FilterComponent],
+  imports: [TableModule, CommonModule, CustomBottonComponent, TagModule, FormsModule, DropdownModule, FilterComponent],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+  styleUrl: './table.component.css',
+  // encapsulation: ViewEncapsulation.None
+
 })
 export class TableComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() originalData: any[] = [];
   @Input() columns: any[] = [];
+  @Input() showViewButton: boolean = true;
+  @Input() showEditButton: boolean = true;
+  @Input() showDeleteButton: boolean = true;
+  @Input() subLabel: string = '';
+  @Input() showSubLabel: boolean = false;
+  @Input() dropdownLabel1: string ='';
+  @Input() dropdownLabel2: string ='';
+  @Input() dropdownOptions1: any[] = [];
+  @Input() dropdownOptions2: any[] = [];
+  selectedCert1: any;
+  selectedCert2: any;
+  @Input() selectedCertification: string = ''; // Input property to receive the selected certification
+  @Input() selectedTeam: string = '';
+  @Input() showDropdownCert : boolean = false;
+  @Input() showCheckBox : boolean = false;
   globalFilter: string = '';
   filters: { [key: string]: any } = {};
   filterMode: string = 'global';
@@ -33,8 +53,59 @@ export class TableComponent implements OnInit {
   @Input() showButtonManageResources: boolean = false;
   @Input() showButtonReportTrainings: boolean = false;
   @Input() showButtonResourceData: boolean = false;
+  @Input() showButtonCertData: boolean = false;
   @Input() showButtonResourceDataTable: boolean = false;
   @Output() addTrainingClick: EventEmitter<any> = new EventEmitter<any>();
+  minWidth: number = 1500; // Adjust the value as needed
+  minHeight: number = 300; // Adjust the value as needed
+
+  getStatusColor(status: string): string {
+    return status === 'Active' ? 'green' : status === 'Expired' ? 'red' : 'black';
+  }
+
+  onCertChange(event: any) {
+    console.log('Selected Certification:', this.selectedCert1);
+    this.globalFilter = this.selectedCert1;
+    this.onSearchCert('');
+    this.globalFilter = '';
+    // this.onSearch();
+    
+  }
+
+  onTeamChange(event: any) {
+    console.log('Selected Team:', this.selectedCert2);
+    this.globalFilter = this.selectedCert2;
+    this.onSearchCert('');
+    this.globalFilter = '';
+    // this.onSearch();
+  }
+
+  onSearchCert(data: any): void {
+    if (!this.globalFilter) {
+      // If the search input is empty, reload the original data
+      this.data = [...this.originalData];
+    } else {
+      // If there is a search input, filter the original data
+      this.data = this.filterDataCert(this.globalFilter);
+    }
+  }
+ 
+  filterDataCert(searchText: string): any[] {
+    return this.originalData.filter(item =>
+      this.checkItemMatchesSearchTextCert(item, searchText)
+    );
+  }
+ 
+  checkItemMatchesSearchTextCert(item: any, searchText: string): boolean {
+    searchText = searchText.toLowerCase();
+    for (let key in item) {
+      if (item.hasOwnProperty(key) && typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   @Output() addCalendarClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() addResourceButtonClick = new EventEmitter<void>();
   @Output() setTrainingButtonClick = new EventEmitter<void>();

@@ -1,0 +1,68 @@
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:	#5A5A5A;
+  padding: 0;
+  /* box-shadow: 0 2px 5px rgba(15, 15, 15, 0.5); */
+  z-index: 1000;
+  height: 80%;
+  width: 780px; /* Adjust width as needed */
+  border-radius: 10px; /* Rounded corners */
+  overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 999; /* Ensure overlay is below popup */
+}
+
+.custom-back-button {
+  background-color: #522A8B; /* Blue background color */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded edges */
+  height: 40px; /* Set specific height */
+  width: 100px; /* Set specific width */
+  display: flex; /* Flexbox for centering content */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  font-size: 16px; /* Font size */
+  font-weight: bold;
+  font-style: 'Montserrat';
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  margin-left: 625px;
+  margin-bottom: 30px;
+}
+
+.custom-back-button:hover {
+  background-color: #763fc5; /* Lighter blue color on hover */
+}
+
+.header-label {
+    font-size: large;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.black-background {
+  background-color:#444444; /* Black background color */
+  width: auto; /* Set specific width, adjust as needed */
+  height: 80px; /* Set specific height, adjust as needed */
+  display: flex; /* Flexbox to center content */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  margin-bottom: 40px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5); /* Add black shadow */
+}

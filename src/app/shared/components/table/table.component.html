@@ -6,6 +6,9 @@
     [tableStyle]="{ 'min-width': '50rem' }"
     [paginator]="true" [rows]="5"> 
     <ng-template pTemplate="caption">
+        <div>
+            <Label class="subLabel" *ngIf="showSubLabel">{{ subLabel }}</Label>
+        </div>
         <div class="flex">
             <div class="search"> 
             <i class="pi pi-search"></i>
@@ -29,6 +32,22 @@
             </div>
             <div *ngIf="showButtonResourceData" class="actions" > 
                 <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
+            </div>
+            <div class="row dropdown-container" *ngIf="showDropdownCert">
+                <div class="col">
+                    <div class="col" *ngIf="showDropdownCert">
+                        <label for="dropdown1" class="dropdown-label">{{ dropdownLabel1 }}</label>
+                        <p-dropdown id="dropdown1" [options]="dropdownOptions1" [(ngModel)]="selectedCert1" (onChange)="onCertChange($event)" class="custom-ripple"></p-dropdown>
+                    </div>
+                </div>
+                <div class="col" *ngIf="showDropdownCert">
+                        <label for="dropdown2" class="dropdown-label">{{ dropdownLabel2 }}</label>
+                        <p-dropdown id="dropdown2" [options]="dropdownOptions2" [(ngModel)]="selectedCert2" (onChange)="onTeamChange($event)"></p-dropdown>
+                </div>
+                <!-- <div class="col"></div> -->
+                <div class="col" *ngIf="showButtonCertData"> 
+                    <app-custom-button label="Download" margin="5px" icon="pi pi-file-import"></app-custom-button>
+                </div>
             </div>
         </div>
     </ng-template>
@@ -79,7 +98,7 @@
                 </p-tableCheckbox>
             </td>
             <ng-container *ngFor="let col of columns">
-                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'certifications' && col.field !== 'actions'; else tags">
+                <td *ngIf="col.field !== 'tags' && col.field !== 'trainings' && col.field !== 'certifications' && col.field !== 'actions' && col.field !== 'status'; else tags">
                     {{ rowData[col.field] }}
                 </td>
                 <ng-template #tags>
@@ -87,6 +106,11 @@
                         <p-tag *ngFor="let tag of rowData[col.field]" class="p-mr-1">{{tag}}</p-tag>
                     </td>
                 </ng-template>               
+                <td *ngIf="col.field == 'status'">
+                    <span [ngStyle]="{'color': getStatusColor(rowData.status)}">
+                        {{ rowData.status }}
+                    </span>
+                </td>
                 <td *ngIf="col.field == 'trainings'">
                     <ng-container *ngIf="hasTrainings(rowData); else button">
                         <span *ngFor="let training of rowData.trainings" class="p-mr-1">{{training}}</span>
@@ -96,12 +120,12 @@
                     </ng-template>
                 </td>
                 <td *ngIf="col.field == 'certifications'" class="certifications">
-                        <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
+                    <span *ngFor="let certification of rowData[col.field]" class="badge">{{certification}}</span>
                 </td>                             
                 <td *ngIf="col.field == 'actions' && !showButtonResourceData && !showCertApprovalBtn">
-                    <span class="action-button eye-img" (click)="onView(rowData)"></span>
-                    <span class="action-button edit-img" (click)="onEdit(rowData)"></span>
-                    <span class="action-button del-img" (click)="onDelete(rowData)"></span>
+                    <span *ngIf="showViewButton" class="action-button eye-img" (click)="onView(rowData)"></span>
+                    <span *ngIf="showEditButton" class="action-button edit-img" (click)="onEdit(rowData)"></span>
+                    <span *ngIf="showDeleteButton" class="action-button del-img" (click)="onDelete(rowData)"></span>
                 </td>
                 <td *ngIf="col.field == 'actions' && showButtonResourceData">
                     <span class="action-button eye-img" (click)="onView(rowData)"></span>                

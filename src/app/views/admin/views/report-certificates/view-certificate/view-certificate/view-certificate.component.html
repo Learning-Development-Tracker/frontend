@@ -1,0 +1,17 @@
+
+<div class="overlay">
+<div class="popup-container">
+<div class="black-background">
+  <p class="header-label">Certificate Preview</p>
+</div>
+  <div *ngIf="pdfSrc">
+    <pdf-viewer
+            [src]="pdfSrc"
+            [render-text]="true"
+            style="display: block; height: 100vh;"
+    ></pdf-viewer>
+    <button class="custom-back-button"(click)="onClickToggleB()">{{ back }}</button>
+    </div>
+</div>
+</div>
+

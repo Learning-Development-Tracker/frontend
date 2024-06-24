@@ -1,167 +1,91 @@
-import { AfterContentInit, Component, inject } from '@angular/core';
-import jsPDF from 'jspdf';
-// @ts-ignore 
-import * as PDFObject from 'pdfobject';
-import { DataService } from './data.service';
+import { Component, CUSTOM_ELEMENTS_SCHEMA,Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TransactionInfoCardComponent } from '../../../../../../shared/components/transaction-info-card/transaction-info-card.component';
+import { CardModule } from 'primeng/card';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ManageCertListService } from '../../../../../../service/cert-list.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-view-certification',
   standalone: true,
-  imports: [],
+  imports: [TransactionInfoCardComponent,CommonModule, CardModule, PdfViewerModule],
   templateUrl: './view-certification.component.html',
-  styleUrl: './view-certification.component.css'
+  styleUrl: './view-certification.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ViewCertificationComponent implements AfterContentInit {
-  dataService = inject(DataService);
-  trustedUrl: any = '';
-  
-  ngAfterContentInit(): void {
-    this.generatePDF();
+export class ViewCertificationComponent implements OnInit {
+  @Input() certIsVisible: boolean = false;
+  @Input() memberDtl: any = {};
+  certInfo: any[] = [];
+  public errMessage: any;
+  fileContent2: string | null = null;
+  pdfSrc: any = null;
+
+  constructor(private manageCertListService: ManageCertListService, private sanitizer: DomSanitizer) {
   }
+
+  ngOnInit(): void {
+    this.getCertInfo();
+    console.log('MemberId:', this.memberDtl.memberId);
+
+  }
+
   
-  generatePDF() {
-    var image = new Image();
-    image.src = 'assets/img/profile-image.png';
-    const doc = new jsPDF();
-    doc.addImage(
-      image,
-      'PNG',
-      10,
-      10,
-      50,
-      50
-    );
-    doc.setFont('Helvetica', 'bold');
-    doc.setFontSize(23);
-    doc.setTextColor(0,0,255);
-    doc.text(
-      this.dataService.clientData.name,
-      70,
-      20
-    );
-    doc.setFont('Helvetica','normal');
-    doc.setFontSize(12);
-    doc.setTextColor(0,0,0);
-    doc.text(this.dataService.clientData.profession, 70, 30);
 
-    doc.setFont('Helvetica','italic');
-    var splitInfo_1 = doc.splitTextToSize(this.dataService.clientData.info_1, 120);
-    doc.text(splitInfo_1, 70, 40);
-    doc.setFont('Helvetica','normal');
-    var splitInfo_2 = doc.splitTextToSize(this.dataService.clientData.info_2, 120);
-    doc.text(splitInfo_2, 70, 50);
-    
-    doc.setFont('Helvetica', 'bold');
-    doc.setFontSize(23);
-    doc.text(
-      this.dataService.section1,
-      10,
-      90
-    );
-    doc.text(
-      this.dataService.section2,
-      10,
-      190
-    );
-    doc.setFont('Helvetica','normal');
-    doc.setFontSize(12);
-    var splitProfile_1 = doc.splitTextToSize(this.dataService.clientData.profile_1, 180);
-    doc.text(
-      splitProfile_1,
-      10,
-      100
-    );
-    var splitProfile_2 = doc.splitTextToSize(this.dataService.clientData.profile_2, 180);
-    doc.text(
-      splitProfile_2,
-      10,
-      130
-    );
-    let yPos = 200;
-    this.dataService.clientData.certifications.forEach((certification) => {
-      doc.text(`${certification.date} - ${certification.description} $${certification.amount.toFixed(2)}`,
-        10,
-        yPos
-      );
-      yPos += 10;
-    });
-    var imgTel = new Image();
-    imgTel.src = this.dataService.imgTel;
-    doc.addImage(
-      imgTel,
-      'png',
-      70,
-      60,
-      5,
-      5,
-      undefined,
-      'FAST'
-    );
-    doc.text(
-      this.dataService.clientData.mobile,
-      75,
-      65
-    );
-    var imgMail = new Image();
-    imgMail.src = this.dataService.imgMail;
-    doc.addImage(
-      imgMail,
-      'png',
-      70,
-      70,
-      5,
-      5,
-      undefined,
-      'FAST'
-    );
-    doc.text(
-      this.dataService.clientData.email,
-      75,
-      75
-    );
-    var imgBag = new Image();
-    imgBag.src = this.dataService.imgBag;
-    doc.addImage(
-      imgBag,
-      'png',
-      130,
-      60,
-      5,
-      5,
-      undefined,
-      'FAST'
-    );
-    doc.text(
-      this.dataService.clientData.skills,
-      135,
-      65
-    );
-    var imgBldg = new Image();
-    imgBldg.src = this.dataService.imgBldg;
-    doc.addImage(
-      imgBldg,
-      'png',
-      130,
-      70,
-      5,
-      5,
-      undefined,
-      'FAST'
-    );
-    doc.text(
-      this.dataService.clientData.office,
-      135,
-      75
-    );
-    doc.setFontSize(14);
-    doc.text(
-      `Total Price: $${this.dataService.totalPrice.toFixed(2)}`,
-      10,
-      yPos + 10
-    );
-    var blobPDF = new Blob([doc.output('blob')], { type: 'application/pdf' });
-    PDFObject.embed(window.URL.createObjectURL(blobPDF), "#pdfRenderer");
-    // doc.save('monthly-report.pdf');
+// In your component class
+getButtonLabel(cert: any): string {
+  if (!cert || !cert.fileContent2) {
+    return "No document attached";
+  } else {
+    return "View Document";
+  }
+}
 
+getButtonClass(cert: any): string {
+  if (!cert || !cert.fileContent2) {
+    return "custom-button-disable";
+  } else {
+    return "custom-button-enable";
+  }
+}
+
+base64ToArrayBuffer(base64: string) {
+  const binaryString = window.atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
+onClickShow(cert: any): void {
+  if (cert && cert.fileContent2) {
+    const documentContent = cert.fileContent2;
+    console.log('File Content', documentContent);
+    this.certIsVisible = true;
+    // this.pdfSrc = documentContent;
+    this.pdfSrc = this.base64ToArrayBuffer(documentContent+"");
+    // Here you can display the document content, for example, in a modal
+    // Or you can navigate to a different component/route to display it
+  }
+}
+  onClickHide(): void {
+    this.certIsVisible = false;
+  }
+
+  getCertInfo() {
+    this.manageCertListService.getCertPerMemberId(this.memberDtl.memberId)
+      .subscribe((res: any) => {
+        this.errMessage = "";
+        this.certInfo = res.data || []; // Assign an empty array if data is null or undefined
+        console.log('Cert Information:', this.certInfo);
+        // If there are certificates, set the first one as default for preview
+      }, (err: any) => {
+        this.errMessage = err.error;
+        console.log(err, "<<<<< ERROR");
+      });
   }
 }

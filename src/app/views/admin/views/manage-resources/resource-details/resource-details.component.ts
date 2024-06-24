@@ -28,14 +28,6 @@ export class ResourceDetailsComponent implements OnInit{
 
   @Input() memberDtl: any = {};
 
-  activeIndex: number = 0;
-
-  goBack(): void {
-    if (this.activeIndex > 0) {
-      this.activeIndex--;
-    }
-  }
-
   ngOnInit(): void {
     console.log(this.memberDtl)
   }
